@@ -2,14 +2,11 @@ import com.github.alphahelix00.ordinator.Ordinator;
 import com.github.alphahelix00.ordinator.commands.Command;
 import com.github.alphahelix00.ordinator.commands.CommandRegistry;
 import com.github.alphahelix00.ordinator.commands.handler.CommandHandler;
-import org.jooq.lambda.tuple.Tuple3;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * Created on:   6/23/2016

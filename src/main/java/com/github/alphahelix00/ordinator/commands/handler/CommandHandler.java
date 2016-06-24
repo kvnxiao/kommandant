@@ -40,7 +40,7 @@ public class CommandHandler {
         return Tuple.tuple(isValid, optPrefix, optMessageArgs);
     }
 
-    public List<String> splitMessage(String message) {
+    public static List<String> splitMessage(String message) {
         return new ArrayList<>(Arrays.asList(message.split("\\s+")));
     }
 
