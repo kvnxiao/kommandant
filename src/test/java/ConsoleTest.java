@@ -2,11 +2,14 @@ import com.github.alphahelix00.ordinator.Ordinator;
 import com.github.alphahelix00.ordinator.commands.Command;
 import com.github.alphahelix00.ordinator.commands.CommandRegistry;
 import com.github.alphahelix00.ordinator.commands.handler.CommandHandler;
+import org.jooq.lambda.tuple.Tuple3;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Created on:   6/23/2016
@@ -16,17 +19,21 @@ public class ConsoleTest {
 
     private CommandRegistry commandRegistry = Ordinator.getCommandRegistry();
     private CommandHandler commandHandler = commandRegistry.getCommandHandler();
+    private static boolean setUpDone = false;
 
     @Before
     public void setup() {
-        commandRegistry.addCommand(Command.of(true, "-", "one", Collections.singletonList("one"), "command one", new ArrayList<>()));
-        commandRegistry.addCommand(Command.of(true, "-", "two", Collections.singletonList("two"), "command two", new ArrayList<>()));
+        if (!setUpDone) {
+            commandRegistry.addCommand(Command.builder("one", "command one", "one").prefix("-").build((executor) -> System.out.println("command 1.")));
+            commandRegistry.addCommand(Command.builder("two", "command two", "two").prefix("-").build((executor) -> System.out.println("command 2.")));
+            setUpDone = true;
+        }
     }
 
     @Test
     public void testUniqueKeysCommands() {
-        commandRegistry.addCommand(Command.of(true, "-", "one", Collections.singletonList("one"), "command one", new ArrayList<>()));
-        commandRegistry.addCommand(Command.of(true, "-", "two", Collections.singletonList("two"), "command two", new ArrayList<>()));
+        commandRegistry.addCommand(Command.builder("one", "command one", "one").prefix("-").build((executor) -> System.out.println("command 1.")));
+        commandRegistry.addCommand(Command.builder("two", "command two", "two").prefix("-").build((executor) -> System.out.println("command 2.")));
     }
 
     @Test
@@ -46,6 +53,12 @@ public class ConsoleTest {
     public void testValidation() {
         System.out.println(commandHandler.validateMessage("-one"));
         System.out.println(commandHandler.validateMessage("!one"));
+    }
+
+    @Test
+    public void TestExecution() {
+        commandHandler.validateParse("-one");
+        commandHandler.validateParse("-!one");
     }
 
 }

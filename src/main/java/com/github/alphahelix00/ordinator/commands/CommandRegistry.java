@@ -9,7 +9,7 @@ import java.util.*;
  * Created on:   6/23/2016
  * Author:       Kevin Xiao (github.com/alphahelix00)
  */
-@Slf4j
+@Slf4j(topic = "CommandRegistry")
 public class CommandRegistry {
 
     private final Map<String, Map<String, Command>> prefixMap = new HashMap<>();

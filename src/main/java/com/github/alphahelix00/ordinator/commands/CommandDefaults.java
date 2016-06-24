@@ -8,4 +8,5 @@ public class CommandDefaults {
 
     public static final String PREFIX = "!";
     public static final boolean ESSENTIAL = false;
+    public static final boolean ENABLED = true;
 }
