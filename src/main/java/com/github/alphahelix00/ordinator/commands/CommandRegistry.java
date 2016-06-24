@@ -1,5 +1,6 @@
 package com.github.alphahelix00.ordinator.commands;
 
+import com.github.alphahelix00.ordinator.commands.handler.AbstractCommandHandler;
 import com.github.alphahelix00.ordinator.commands.handler.CommandHandler;
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,13 +15,13 @@ public class CommandRegistry {
 
     private final Map<String, Map<String, Command>> prefixMap = new HashMap<>();
     private final List<Command> mainCommandList = new ArrayList<>();
-    private final CommandHandler commandHandler = new CommandHandler(this);
+    private AbstractCommandHandler commandHandler;
 
     public boolean prefixExists(String prefix) {
         return prefixMap.containsKey(prefix);
     }
 
-    public void addCommand(Command command) {
+    public boolean addCommand(Command command) {
         String prefix = command.getPrefix();
         String name = command.getName();
 
@@ -30,16 +31,22 @@ public class CommandRegistry {
         }
         // Get command map for specified prefix, which could be null
         Map<String, Command> commandMap = prefixMap.get(prefix);
-        addCommand(commandMap, name, command);
+        return addCommand(commandMap, name, command);
     }
 
-    private void addCommand(Map<String, Command> commandMap, String commandName, Command command) {
+    private boolean addCommand(Map<String, Command> commandMap, String commandName, Command command) {
         if (!commandMap.containsKey(commandName)) {
-            log.info("Registering command " + command.getName());
+            log.info("Registered command.");
             commandMap.put(commandName, command);
+            return true;
         } else {
-            log.info("A command with name \"" + commandName + "\" already exists!");
+            log.info("A command with that name already exists!");
+            return false;
         }
+    }
+
+    public boolean commandExists(String prefix, String name) {
+        return getCommandByName(prefix, name).isPresent();
     }
 
     public Optional<Map<String, Command>> getCommandMap(String prefix) {
@@ -68,7 +75,12 @@ public class CommandRegistry {
                 .map(stringCommandMap -> stringCommandMap.get(name));
     }
 
-    public CommandHandler getCommandHandler() {
+    public AbstractCommandHandler setCommandHandler(AbstractCommandHandler commandHandler) {
+        this.commandHandler = commandHandler;
+        return this.commandHandler;
+    }
+
+    public AbstractCommandHandler getCommandHandler() {
         return commandHandler;
     }
 }

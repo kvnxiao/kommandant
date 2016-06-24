@@ -1,7 +1,7 @@
 package com.github.alphahelix00.ordinator;
 
 import com.github.alphahelix00.ordinator.commands.CommandRegistry;
-import com.github.alphahelix00.ordinator.commands.handler.CommandHandler;
+import com.github.alphahelix00.ordinator.commands.handler.AbstractCommandHandler;
 
 /**
  * Created on:   6/23/2016
@@ -10,8 +10,6 @@ import com.github.alphahelix00.ordinator.commands.handler.CommandHandler;
 public class Ordinator {
 
     private static final CommandRegistry commandRegistry = new CommandRegistry();
-    private static final CommandHandler commandHandler = commandRegistry.getCommandHandler();
-
     public static CommandRegistry getCommandRegistry() {
         return commandRegistry;
     }

@@ -6,7 +6,8 @@ package com.github.alphahelix00.ordinator.commands;
  */
 public class CommandDefaults {
 
-    public static final String PREFIX = "!";
+    public static final String PREFIX = "-";
+    public static final String NO_PREFIX = "";
     public static final boolean ESSENTIAL = false;
     public static final boolean ENABLED = true;
 }
