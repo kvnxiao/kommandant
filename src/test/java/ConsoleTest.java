@@ -24,7 +24,11 @@ public class ConsoleTest {
     @Before
     public void setup() {
         if (!setUpDone) {
-            commandRegistry.addCommand(Command.builder("one", "command one", "one").prefix("-").build((executor) -> System.out.println("command 1.")));
+            Command sub = Command.builder("subcommand", "command one's sub command", "sub").prefix("-").addSubCommand(
+                    Command.builder("tertiary", "command one's second sub command", "sub").build((executor) -> System.out.println("command 1 tertiary command"))
+            ).build((executor) -> System.out.println("command 1 sub command."));
+            Command main = Command.builder("one", "command one", "one").prefix("-").addSubCommand(sub).build((executor) -> System.out.println("command 1."));
+            commandRegistry.addCommand(main);
             commandRegistry.addCommand(Command.builder("two", "command two", "two").prefix("-").build((executor) -> System.out.println("command 2.")));
             setUpDone = true;
         }
@@ -59,6 +63,8 @@ public class ConsoleTest {
     public void TestExecution() {
         commandHandler.validateParse("-one");
         commandHandler.validateParse("-!one");
+        commandHandler.validateParse("-one sub");
+        commandHandler.validateParse("-one sub sub");
     }
 
 }

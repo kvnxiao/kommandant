@@ -26,9 +26,9 @@ public class CommandHandler {
     public boolean validateParse(String message) {
         Tuple3<Boolean, Optional<String>, Optional<List<String>>> validMessage = validateMessage(message);
         if (validMessage.v1 && validMessage.v2.isPresent() && validMessage.v3.isPresent()) {
-            parseForCommands(validMessage.v2.get(), validMessage.v3.get());
+            return parseForCommands(validMessage.v2.get(), validMessage.v3.get());
         }
-        return validMessage.v1;
+        return false;
     }
 
     public Tuple3<Boolean, Optional<String>, Optional<List<String>>> validateMessage(String message) {
@@ -48,16 +48,19 @@ public class CommandHandler {
         return Tuple.tuple(isValid, optPrefix, optMessageArgs);
     }
 
-    public void parseForCommands(String prefix, List<String> messageArgs, Object... extraArgs) {
+    public boolean parseForCommands(String prefix, List<String> messageArgs, Object... extraArgs) {
         // Get and remove first argument from message
         String argFirst = messageArgs.get(0);
         messageArgs.remove(0);
         // Use and prefix and first argument String as command alias to try and retrieve a command from registry
         Optional<Command> optCommand = commandRegistry.getCommandByAlias(prefix, argFirst);
         if (optCommand.isPresent()) {
+            LOGGER.info("Executing command arguments: " + prefix + argFirst + " " + String.join(" ", messageArgs));
             executeCommands(optCommand.get(), messageArgs, extraArgs);
+            return true;
         } else {
             LOGGER.info("Attempted to execute a command that doesn't exist: " + prefix + argFirst);
+            return false;
         }
     }
 
@@ -66,7 +69,7 @@ public class CommandHandler {
     }
 
     public void executeCommand(Command command, List<String> args, Object... extraArgs) throws IllegalAccessException, InvocationTargetException {
-        LOGGER.info("Executing command: \"" + command.getName() + "\"");
+        LOGGER.info("Executing command: \"" + command.toString() + ", with arguments: " + args + "\"");
         executeCommand(command, args);
     }
 

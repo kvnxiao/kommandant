@@ -65,8 +65,8 @@ public abstract class Command implements CommandExecutor {
             }
         }
 
-        public CommandBuilder addSubCommand(String name, Command subCommand) {
-            this.subCommandMap.put(name, subCommand);
+        public CommandBuilder addSubCommand(Command subCommand) {
+            this.subCommandMap.put(subCommand.getName(), subCommand);
             return this;
         }
 
@@ -98,6 +98,6 @@ public abstract class Command implements CommandExecutor {
 
     @Override
     public String toString() {
-        return name;
+        return "(" + prefix + ")" + aliases + " <" + name + " --- " + description + ">";
     }
 }
