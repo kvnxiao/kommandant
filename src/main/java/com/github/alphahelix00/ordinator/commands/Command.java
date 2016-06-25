@@ -1,10 +1,5 @@
 package com.github.alphahelix00.ordinator.commands;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NonNull;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -13,30 +8,29 @@ import java.util.*;
  * Created on:   6/23/2016
  * Author:       Kevin Xiao (github.com/alphahelix00)
  */
-@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class Command implements CommandExecutor {
 
-    @Getter
-    @NonNull
     protected String prefix;
-    @Getter
-    @NonNull
     protected String name;
-    @Getter
-    @NonNull
     protected String description;
-    @Getter
-    @NonNull
     protected List<String> aliases;
-    @Getter
     protected boolean isMain;
-    @Getter
     protected boolean isEnabled;
-    @Getter
     protected boolean isEssential;
-    @Getter
     protected Map<String, Command> subCommandMap;
     protected Map<String, String> subCommandNames;
+
+    public Command(String prefix, String name, String description, List<String> aliases, boolean isMain, boolean isEnabled, boolean isEssential, Map<String, Command> subCommandMap, Map<String, String> subCommandNames) {
+        this.prefix = prefix;
+        this.name = name;
+        this.description = description;
+        this.aliases = aliases;
+        this.isMain = isMain;
+        this.isEnabled = isEnabled;
+        this.isEssential = isEssential;
+        this.subCommandMap = subCommandMap;
+        this.subCommandNames = subCommandNames;
+    }
 
     public void addSubCommand(Command subCommand) {
         subCommandMap.put(subCommand.getName(), subCommand);
@@ -143,6 +137,38 @@ public abstract class Command implements CommandExecutor {
             };
         }
 
+    }
+
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public List<String> getAliases() {
+        return aliases;
+    }
+
+    public boolean isMain() {
+        return isMain;
+    }
+
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    public boolean isEssential() {
+        return isEssential;
+    }
+
+    public Map<String, Command> getSubCommandMap() {
+        return subCommandMap;
     }
 
     @Override

@@ -1,8 +1,8 @@
 package com.github.alphahelix00.ordinator.commands;
 
 import com.github.alphahelix00.ordinator.commands.handler.AbstractCommandHandler;
-import com.github.alphahelix00.ordinator.commands.handler.CommandHandler;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
@@ -10,8 +10,9 @@ import java.util.*;
  * Created on:   6/23/2016
  * Author:       Kevin Xiao (github.com/alphahelix00)
  */
-@Slf4j(topic = "CommandRegistry")
 public class CommandRegistry {
+
+    protected final Logger LOGGER = LoggerFactory.getLogger("CommandRegistry");
 
     private final Map<String, Map<String, Command>> prefixMap = new HashMap<>();
     private final List<Command> mainCommandList = new ArrayList<>();
@@ -36,11 +37,11 @@ public class CommandRegistry {
 
     private boolean addCommand(Map<String, Command> commandMap, String commandName, Command command) {
         if (!commandMap.containsKey(commandName)) {
-            log.info("Registered command.");
+            LOGGER.info("Registered command.");
             commandMap.put(commandName, command);
             return true;
         } else {
-            log.info("A command with that name already exists!");
+            LOGGER.info("A command with that name already exists!");
             return false;
         }
     }

@@ -20,7 +20,7 @@ public class CommandHandler extends AbstractCommandHandler{
     }
 
     public void executeCommand(Command command, List<String> args, Object... extraArgs) throws IllegalAccessException, InvocationTargetException {
-        LOGGER.info("Executing command: \"" + command.toString() + ", with arguments: " + args + "\"");
+        LOGGER.info("Executing" + ((command.isMain()) ? " main " : " sub ") + "command: \"" + command.toString() + ", with arguments: " + args + "\"");
         executeCommand(command, args);
     }
 

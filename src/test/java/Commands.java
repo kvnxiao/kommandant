@@ -22,7 +22,7 @@ public class Commands {
             name = "main",
             alias = "main",
             description = "sub command test",
-            subCommands = {"sub1"}
+            subCommands = "sub1"
     )
     public void mainCommand(List<String> args) {
         System.out.println("main command test!");
@@ -31,9 +31,19 @@ public class Commands {
     @SubCommand(
             name = "sub1",
             alias = "sub1",
+            description = "sub command of main",
+            subCommands = "sub2"
+    )
+    public void subCommandOne(List<String> args) {
+        System.out.println("sub1 command test!");
+    }
+
+    @SubCommand(
+            name = "sub2",
+            alias = {"sub2", "subtwo"},
             description = "sub command of main"
     )
-    public void subCommand(List<String> args) {
-        System.out.println("sub command test!");
+    public void subCommandTwo(List<String> args) {
+        System.out.println("sub2 command test!");
     }
 }

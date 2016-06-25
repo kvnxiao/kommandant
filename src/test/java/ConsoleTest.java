@@ -24,7 +24,7 @@ public class ConsoleTest {
     @Before
     public void setup() {
         if (!setUpDone) {
-            Command sub = Command.builder("subcommand", "command one's sub command").prefix("-").addSubCommand(
+            Command sub = Command.builder("sub", "command one's sub command").prefix("-").isMain(false).addSubCommand(
                     Command.builder("tertiary", "command one's second sub command").build((executor) -> {
                         System.out.println("command 1 tertiary command");
                         return Optional.empty();
@@ -83,8 +83,8 @@ public class ConsoleTest {
         assertTrue(commandHandler.validateParse("-one"));
         assertFalse(commandHandler.validateParse("-!one"));
         assertTrue(commandHandler.validateParse("-one sub"));
+        System.out.println(commandRegistry.getCommandByAlias("-", "one").get().getSubCommandMap());
         assertTrue(commandHandler.validateParse("-one sub sub"));
-        System.out.println("TEST: " + "test".startsWith(""));
     }
 
     @Test

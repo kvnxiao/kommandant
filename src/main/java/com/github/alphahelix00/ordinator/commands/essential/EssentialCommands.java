@@ -1,7 +1,6 @@
 package com.github.alphahelix00.ordinator.commands.essential;
 
 import com.github.alphahelix00.ordinator.commands.Command;
-import lombok.AllArgsConstructor;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -12,7 +11,6 @@ import java.util.Optional;
  * Created on:   6/24/2016
  * Author:       Kevin Xiao (github.com/alphahelix00)
  */
-@AllArgsConstructor
 public class EssentialCommands {
 
     public static class Enable extends Command {
