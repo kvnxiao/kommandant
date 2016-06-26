@@ -28,6 +28,17 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': rootProject.name,
+                'Implementation-Version': version
+    }
+    baseName = project.name + '-fatjar'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+
+
 task wrapper(type: Wrapper) {
     gradleVersion = '2.14'
 }
