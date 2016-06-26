@@ -28,16 +28,16 @@ public abstract class AbstractCommandHandler {
     }
 
     // Required implementations in sub-concrete classes
-    public abstract void executeCommand(Command command, List<String> args, Object... extraArgs) throws IllegalAccessException, InvocationTargetException;
+    protected abstract void executeCommand(Command command, List<String> args, Object... extraArgs) throws IllegalAccessException, InvocationTargetException;
 
     protected abstract Command createMainCommand(MainCommand annotation, Object obj, Method method, boolean isMainCommand);
 
     protected abstract Command createSubCommand(SubCommand annotation, Object obj, Method method, boolean isMainCommand);
 
-    public boolean validateParse(String message) {
+    public boolean validateParse(String message, Object... extraArgs) {
         Tuple3<Boolean, Optional<String>, Optional<List<String>>> validMessage = validatePrefix(message);
         if (validMessage.v1 && validMessage.v2.isPresent() && validMessage.v3.isPresent()) {
-            return parseForCommands(validMessage.v2.get(), validMessage.v3.get());
+            return parseForCommands(validMessage.v2.get(), validMessage.v3.get(), extraArgs);
         }
         return false;
     }
