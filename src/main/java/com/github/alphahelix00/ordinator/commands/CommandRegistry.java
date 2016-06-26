@@ -38,7 +38,7 @@ public class CommandRegistry {
 
     private boolean addCommand(Map<String, Command> commandMap, String commandName, Command command) {
         if (!commandMap.containsKey(commandName)) {
-            LOGGER.info("Registered command.");
+            LOGGER.info("Registered command " + command.getName());
             commandMap.put(commandName, command);
             mainCommandList.add(command);
             return true;

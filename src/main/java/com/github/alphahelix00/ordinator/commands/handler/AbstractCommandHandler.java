@@ -137,19 +137,17 @@ public abstract class AbstractCommandHandler {
     protected boolean registerMainCommands(Object obj, List<Method> methodsMain, List<Method> methodsSub) {
         for (Method method : methodsMain) {
             List<Annotation> annotationList = Arrays.asList(method.getAnnotations());
-            for (Annotation ann : annotationList) {
-                if (ann instanceof MainCommand) {
-                    final MainCommand annotation = (MainCommand) ann;
-                    if (!commandRegistry.commandExists(annotation.prefix(), annotation.name())) {
-                        Command command = createMainCommand(annotation, obj, method, true);
-                        // Check if command is a repeating command or if it has sub commands
-                        if (command.isRepeating()) {
-                            command.addSubCommand(command);
-                        } else if (command.hasSubCommand()) {
-                            registerSubCommands(obj, methodsSub, command);
-                        }
-                        registerCommand(command);
+            if (method.isAnnotationPresent(MainCommand.class)) {
+                final MainCommand annotation = method.getAnnotation(MainCommand.class);
+                if (!commandRegistry.commandExists(annotation.prefix(), annotation.name())) {
+                    Command command = createMainCommand(annotation, obj, method, true);
+                    // Check if command is a repeating command or if it has sub commands
+                    if (command.isRepeating()) {
+                        command.addSubCommand(command);
+                    } else if (command.hasSubCommand()) {
+                        registerSubCommands(obj, methodsSub, command);
                     }
+                    registerCommand(command);
                 }
             }
         }
