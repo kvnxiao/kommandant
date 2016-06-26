@@ -76,14 +76,14 @@ public class EssentialCommands {
         public Optional execute(List<String> args) throws IllegalAccessException, InvocationTargetException {
             if (args.isEmpty()) {
                 String commandList = getCommandListQuote();
-                System.out.println(commandList);
+//                System.out.println(commandList);
                 return Optional.of(commandList);
             } else {
                 AbstractCommandHandler commandHandler = Ordinator.getCommandRegistry().getCommandHandler();
                 Optional<Command> command = commandHandler.gotoCommand(args);
                 if (command.isPresent()) {
                     String commandInfo = getCommandInfoQuote(command.get());
-                    System.out.println(commandInfo);
+//                    System.out.println(commandInfo);
                     return Optional.of(commandInfo);
                 }
             }
