@@ -10,17 +10,17 @@ import java.util.*;
  */
 public abstract class Command implements CommandExecutor {
 
-    protected String prefix;
-    protected String name;
-    protected String description;
-    protected List<String> aliases;
-    protected boolean isMain;
-    protected boolean isEnabled;
-    protected boolean isEssential;
-    protected Map<String, Command> subCommandMap;
-    protected Map<String, String> subCommandNames;
+    private String prefix;
+    private String name;
+    private String description;
+    private List<String> aliases;
+    private boolean isMain;
+    private boolean isEnabled;
+    private boolean isEssential;
+    private Map<String, Command> subCommandMap;
+    private Map<String, String> subCommandNames;
 
-    public Command(String prefix, String name, String description, List<String> aliases, boolean isMain, boolean isEnabled, boolean isEssential, Map<String, Command> subCommandMap, Map<String, String> subCommandNames) {
+    protected Command(String prefix, String name, String description, List<String> aliases, boolean isMain, boolean isEnabled, boolean isEssential, Map<String, Command> subCommandMap, Map<String, String> subCommandNames) {
         this.prefix = prefix;
         this.name = name;
         this.description = description;
@@ -54,6 +54,10 @@ public abstract class Command implements CommandExecutor {
 
     public boolean subCommandExists(String name) {
         return subCommandMap.containsKey(name);
+    }
+
+    public void setEnabled(boolean isEnabled) {
+        this.isEnabled = isEnabled;
     }
 
     /**
@@ -122,7 +126,7 @@ public abstract class Command implements CommandExecutor {
         public Command build(CommandExecutor executor) {
             return new Command(prefix, name, description, aliases, isMain, isEnabled, isEssential, subCommandMap, subCommandNames) {
                 @Override
-                public Optional<Object> execute(List<String> args) throws IllegalAccessException, InvocationTargetException {
+                public Optional execute(List<String> args) throws IllegalAccessException, InvocationTargetException {
                     return executor.execute(args);
                 }
             };
@@ -131,7 +135,7 @@ public abstract class Command implements CommandExecutor {
         public Command build(Object obj, Method method) {
             return new Command(prefix, name, description, aliases, isMain, isEnabled, isEssential, subCommandMap, subCommandNames) {
                 @Override
-                public Optional<Object> execute(List<String> args) throws IllegalAccessException, InvocationTargetException {
+                public Optional execute(List<String> args) throws IllegalAccessException, InvocationTargetException {
                     return Optional.ofNullable(method.invoke(obj, args));
                 }
             };

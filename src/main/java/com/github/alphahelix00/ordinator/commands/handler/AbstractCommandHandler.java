@@ -42,6 +42,39 @@ public abstract class AbstractCommandHandler {
         return false;
     }
 
+    public Optional<Command> gotoCommand(List<String> args) {
+        Tuple3<Boolean, Optional<String>, Optional<List<String>>> validMessage = validatePrefix(args.get(0));
+        args.remove(0);
+        if (validMessage.v1 && validMessage.v2.isPresent() && validMessage.v3.isPresent()) {
+            String msgPrefix = validMessage.v2.get();
+            List<String> msgArgs = validMessage.v3.get();
+            Optional<Command> mainCommand = commandRegistry.getCommandByAlias(msgPrefix, msgArgs.get(0));
+            if (mainCommand.isPresent() && !args.isEmpty()) {
+                System.out.println(args);
+                return gotoSubCommand(mainCommand.get(), args);
+            } else if (mainCommand.isPresent() && args.isEmpty()) {
+                return mainCommand;
+            }
+        }
+        return Optional.empty();
+    }
+
+    public Optional<Command> gotoSubCommand(Command parentCommand, List<String> args) {
+        String alias = args.get(0);
+        args.remove(0);
+
+        for (Command command : parentCommand.getSubCommandMap().values()) {
+            if (command.getAliases().contains(alias)) {
+                if (!args.isEmpty()) {
+                    return gotoSubCommand(command, args);
+                } else {
+                    return Optional.of(command);
+                }
+            }
+        }
+        return Optional.empty();
+    }
+
     public Tuple3<Boolean, Optional<String>, Optional<List<String>>> validatePrefix(String message) {
         boolean isValid = false;
         Optional<String> optPrefix = Optional.empty();
@@ -170,6 +203,24 @@ public abstract class AbstractCommandHandler {
             }
         } else {
             LOGGER.warn("Command \"" + command.getName() + "\" is disabled and will not be executed!");
+        }
+    }
+
+    public void enableCommand(Command command) {
+        if (!command.isEssential()) {
+            LOGGER.info("ENABLING COMMAND: " + command.toString());
+            command.setEnabled(true);
+        } else {
+            LOGGER.info("Cannot enable an essential command (already enabled)!");
+        }
+    }
+
+    public void disableCommand(Command command) {
+        if (!command.isEssential()) {
+            LOGGER.info("Disabling command: " + command.toString());
+            command.setEnabled(false);
+        } else {
+            LOGGER.info("Cannot disable an essential command!");
         }
     }
 

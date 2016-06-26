@@ -1,6 +1,7 @@
 import com.github.alphahelix00.ordinator.Ordinator;
 import com.github.alphahelix00.ordinator.commands.Command;
 import com.github.alphahelix00.ordinator.commands.CommandRegistry;
+import com.github.alphahelix00.ordinator.commands.essential.EssentialCommands;
 import com.github.alphahelix00.ordinator.commands.handler.AbstractCommandHandler;
 import com.github.alphahelix00.ordinator.commands.handler.CommandHandler;
 import org.junit.Before;
@@ -27,22 +28,25 @@ public class ConsoleTest {
             Command sub = Command.builder("sub", "command one's sub command").prefix("-").isMain(false).addSubCommand(
                     Command.builder("tertiary", "command one's second sub command").build((executor) -> {
                         System.out.println("command 1 tertiary command");
-                        return Optional.empty();
+                        return null;
                     })
             ).build((executor) -> {
                 System.out.println("command 1 sub command.");
-                return Optional.empty();
+                return null;
             });
             Command main = Command.builder("one", "command one").prefix("-").addSubCommand(sub).build((executor) -> {
                 System.out.println("command 1.");
-                return Optional.empty();
+                return null;
             });
             commandHandler.registerCommand(main);
             commandHandler.registerCommand(Command.builder("two", "command two").prefix("-").build((executor) -> {
                 System.out.println("command 2.");
-                return Optional.empty();
+                return null;
             }));
             commandHandler.registerAnnotatedCommands(new Commands());
+            commandHandler.registerCommand(new EssentialCommands.Enable());
+            commandHandler.registerCommand(new EssentialCommands.Disable());
+            commandHandler.registerCommand(new EssentialCommands.Help());
             setUpDone = true;
         }
     }
@@ -75,7 +79,7 @@ public class ConsoleTest {
     @Test
     public void testValidation() {
         assertTrue(commandHandler.validatePrefix("-one").v1);
-        assertFalse(commandHandler.validatePrefix("!one").v1);
+        assertTrue(commandHandler.validatePrefix("!one").v1);
     }
 
     @Test
@@ -83,7 +87,6 @@ public class ConsoleTest {
         assertTrue(commandHandler.validateParse("-one"));
         assertFalse(commandHandler.validateParse("-!one"));
         assertTrue(commandHandler.validateParse("-one sub"));
-        System.out.println(commandRegistry.getCommandByAlias("-", "one").get().getSubCommandMap());
         assertTrue(commandHandler.validateParse("-one sub sub"));
     }
 
@@ -92,7 +95,19 @@ public class ConsoleTest {
         assertTrue(commandHandler.validateParse("-single"));
         assertTrue(commandHandler.validateParse("-main"));
         assertTrue(commandHandler.validateParse("-main sub1"));
+        assertTrue(commandHandler.validateParse("-main sub1 sub2"));
         assertTrue(commandHandler.validateParse("-main sub1 test blah"));
+    }
+
+    @Test
+    public void TestEssentialCommands() {
+        assertTrue(commandHandler.validateParse("!enable"));
+        assertTrue(commandHandler.validateParse("!disable"));
+        assertTrue(commandHandler.validateParse("!disable -main sub1 sub2"));
+        assertTrue(commandHandler.validateParse("!enable -main sub1 sub2"));
+        assertTrue(commandHandler.validateParse("!disable !enable"));
+        assertTrue(commandHandler.validateParse("!help"));
+        assertTrue(commandHandler.validateParse("!help !enable"));
     }
 
 }

@@ -1,7 +1,6 @@
 package com.github.alphahelix00.ordinator;
 
 import com.github.alphahelix00.ordinator.commands.CommandRegistry;
-import com.github.alphahelix00.ordinator.commands.handler.AbstractCommandHandler;
 
 /**
  * Created on:   6/23/2016

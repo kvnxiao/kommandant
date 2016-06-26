@@ -11,6 +11,6 @@ import java.util.Optional;
 @FunctionalInterface
 public interface CommandExecutor {
 
-    Optional<Object> execute(List<String> args) throws IllegalAccessException, InvocationTargetException;
+    Optional execute(List<String> args) throws IllegalAccessException, InvocationTargetException;
 }
 

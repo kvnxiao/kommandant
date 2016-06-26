@@ -15,6 +15,7 @@ public class CommandRegistry {
     protected final Logger LOGGER = LoggerFactory.getLogger("CommandRegistry");
 
     private final Map<String, Map<String, Command>> prefixMap = new HashMap<>();
+
     private final List<Command> mainCommandList = new ArrayList<>();
     private AbstractCommandHandler commandHandler;
 
@@ -39,6 +40,7 @@ public class CommandRegistry {
         if (!commandMap.containsKey(commandName)) {
             LOGGER.info("Registered command.");
             commandMap.put(commandName, command);
+            mainCommandList.add(command);
             return true;
         } else {
             LOGGER.info("A command with that name already exists!");
@@ -56,6 +58,10 @@ public class CommandRegistry {
 
     public Map<String, Map<String, Command>> getPrefixMap() {
         return Collections.unmodifiableMap(prefixMap);
+    }
+
+    public List<Command> getCommandList() {
+        return mainCommandList;
     }
 
     public Optional<Command> getCommandByAlias(String prefix, String alias) {
