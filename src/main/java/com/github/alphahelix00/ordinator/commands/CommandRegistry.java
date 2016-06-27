@@ -12,7 +12,7 @@ import java.util.*;
  */
 public class CommandRegistry {
 
-    protected final Logger LOGGER = LoggerFactory.getLogger("CommandRegistry");
+    public final Logger LOGGER = LoggerFactory.getLogger("CommandRegistry");
 
     private final Map<String, Map<String, Command>> prefixMap = new HashMap<>();
 

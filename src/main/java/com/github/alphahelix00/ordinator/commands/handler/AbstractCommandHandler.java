@@ -20,7 +20,7 @@ import java.util.*;
  */
 public abstract class AbstractCommandHandler {
 
-    protected static final Logger LOGGER = LoggerFactory.getLogger("CommandHandler");
+    public final Logger LOGGER = LoggerFactory.getLogger("CommandHandler");
     protected final CommandRegistry commandRegistry;
 
     public AbstractCommandHandler(final CommandRegistry commandRegistry) {
