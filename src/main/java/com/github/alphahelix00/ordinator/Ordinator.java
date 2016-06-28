@@ -9,6 +9,13 @@ import com.github.alphahelix00.ordinator.commands.CommandRegistry;
 public class Ordinator {
 
     private static final CommandRegistry commandRegistry = new CommandRegistry();
+
+    /**
+     * Returns a singleton instance of the command registry that can be easily referenced elsewhere
+     * due to its static call
+     *
+     * @return singleton instance of command registry
+     */
     public static CommandRegistry getCommandRegistry() {
         return commandRegistry;
     }

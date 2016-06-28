@@ -11,6 +11,15 @@ import java.util.Optional;
 @FunctionalInterface
 public interface CommandExecutor {
 
+    /**
+     * Required method to be overrided when declaring commands to declare what
+     * actions the command will perform
+     *
+     * @param args a list of string as arguments for the command
+     * @return Optional object that may or may not wrap another object
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     */
     Optional execute(List<String> args) throws IllegalAccessException, InvocationTargetException;
 }
 

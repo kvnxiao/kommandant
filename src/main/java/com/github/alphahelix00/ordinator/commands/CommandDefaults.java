@@ -6,8 +6,24 @@ package com.github.alphahelix00.ordinator.commands;
  */
 public class CommandDefaults {
 
+    /**
+     * Default prefix for annotated (main) commands
+     */
     public static final String PREFIX = "-";
+
+    /**
+     * Default prefix for annotated (sub) commands
+     */
     public static final String NO_PREFIX = "";
+
+    /**
+     * Default boolean value denoting whether or not a command is essential
+     * for annotated commands
+     */
     public static final boolean ESSENTIAL = false;
+
+    /**
+     * Default boolean value denoting whether or not a command is enabled
+     */
     public static final boolean ENABLED = true;
 }
