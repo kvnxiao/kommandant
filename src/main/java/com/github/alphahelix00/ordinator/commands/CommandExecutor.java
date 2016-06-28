@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * Single functional interface that all commands must implement
+ *
  * Created on:   6/23/2016
  * Author:       Kevin Xiao (github.com/alphahelix00)
  */

@@ -15,35 +15,86 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 /**
+ * An abstract Command Handler class that should be completed by filling out
+ * the executeCommand, createMainCommand, and createSubCommand methods in order to properly
+ * handle the execution of commands and registration of annotated commands
+ *
  * Created on:   6/23/2016
  * Author:       Kevin Xiao (github.com/alphahelix00)
  */
 public abstract class AbstractCommandHandler {
 
+    /**
+     * Logger for any AbstractCommandHandler implementation
+     */
     public static final Logger LOGGER = LoggerFactory.getLogger("CommandHandler");
     protected final CommandRegistry commandRegistry;
 
+    /**
+     * Constructor that takes a command registry instance to be linked
+     *
+     * @param commandRegistry command registry instance
+     */
     public AbstractCommandHandler(final CommandRegistry commandRegistry) {
         this.commandRegistry = commandRegistry;
     }
 
-    // Required implementations in sub-concrete classes
+    /**
+     * Required implementation in concrete sub-classes. Executes a command with given arguments
+     *
+     * @param command   command to execute
+     * @param args      list of string arguments to pass to the command
+     * @param extraArgs an optional Object array of extra arguments to be passed to the command for execution
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     */
     protected abstract void executeCommand(Command command, List<String> args, Object... extraArgs) throws IllegalAccessException, InvocationTargetException;
 
-    protected abstract Command createMainCommand(MainCommand annotation, Object obj, Method method, boolean isMainCommand);
+    /**
+     * Required implementation in concrete sub-classes.
+     * Is called by #registerAnnotatedCommands to create main commands from annotations
+     *
+     * @param annotation MainCommand annotation
+     * @param obj        object instance with methods
+     * @param method     method containing the MainCommand annotation
+     * @return new command with properties defined by annotated method
+     */
+    protected abstract Command createMainCommand(MainCommand annotation, Object obj, Method method);
 
-    protected abstract Command createSubCommand(SubCommand annotation, Object obj, Method method, boolean isMainCommand);
+    /**
+     * Required implementation in concrete sub-classes.
+     * Is called by #registerAnnotatedCommands to create sub commands from annotations
+     *
+     * @param annotation SubCommand annotation
+     * @param obj        object instance with methods
+     * @param method     method containing the SubCommand annotation
+     * @return new command with properties defined by annotated method
+     */
+    protected abstract Command createSubCommand(SubCommand annotation, Object obj, Method method);
 
-    public boolean validateParse(String message, Object... extraArgs) {
-        Tuple3<Boolean, Optional<String>, Optional<List<String>>> validMessage = validatePrefix(message);
+    /**
+     * Validates a message for valid command prefixes and further attempts to parse the message for command calls
+     *
+     * @param message   message to validate and parse for commands
+     * @param extraArgs an optional Object array of extra arguments to be passed to the command for execution
+     * @return true if message was successfully validated and parsed
+     */
+    public boolean validateAndParse(String message, Object... extraArgs) {
+        Tuple3<Boolean, Optional<String>, Optional<List<String>>> validMessage = validateMessage(message);
         if (validMessage.v1 && validMessage.v2.isPresent() && validMessage.v3.isPresent()) {
             return parseForCommands(validMessage.v2.get(), validMessage.v3.get(), extraArgs);
         }
         return false;
     }
 
+    /**
+     * Attempts to go to and retrieve a command through the given list of message arguments
+     *
+     * @param args list of string arguments denoting which command / sub-command to go to
+     * @return Optional object containing command if it exists, empty otherwise
+     */
     public Optional<Command> gotoCommand(List<String> args) {
-        Tuple3<Boolean, Optional<String>, Optional<List<String>>> validMessage = validatePrefix(args.get(0));
+        Tuple3<Boolean, Optional<String>, Optional<List<String>>> validMessage = validateMessage(args.get(0));
         args.remove(0);
         if (validMessage.v1 && validMessage.v2.isPresent() && validMessage.v3.isPresent()) {
             String msgPrefix = validMessage.v2.get();
@@ -59,6 +110,14 @@ public abstract class AbstractCommandHandler {
         return Optional.empty();
     }
 
+    /**
+     * Attempts to go to and retreive a sub command through a given parent command and a list of message arguments
+     * following the parent command
+     *
+     * @param parentCommand parent command to start at
+     * @param args          list of string arguments denoting which sub-command to go to
+     * @return Optional object containing command if it exists, empty otherwise
+     */
     public Optional<Command> gotoSubCommand(Command parentCommand, List<String> args) {
         String alias = args.get(0);
         args.remove(0);
@@ -75,7 +134,14 @@ public abstract class AbstractCommandHandler {
         return Optional.empty();
     }
 
-    public Tuple3<Boolean, Optional<String>, Optional<List<String>>> validatePrefix(String message) {
+    /**
+     * Returns a Tuple3 containing a boolean for prefix validation, an optional string containing the prefix,
+     * and a list of message args split from the original message by white space
+     *
+     * @param message message to parse for valid prefix and command calls
+     * @return Tuple3 containing valid prefix boolean, (optional) prefix string, and (optional) list of message args
+     */
+    public Tuple3<Boolean, Optional<String>, Optional<List<String>>> validateMessage(String message) {
         boolean isValid = false;
         Optional<String> optPrefix = Optional.empty();
         Optional<List<String>> optMessageArgs = Optional.empty();
@@ -92,6 +158,14 @@ public abstract class AbstractCommandHandler {
         return Tuple.tuple(isValid, optPrefix, optMessageArgs);
     }
 
+    /**
+     * Attempts to parse a command, given a prefix, the list of message args, and any extra arguments to pass to the command
+     *
+     * @param prefix      command prefix string
+     * @param messageArgs list of message arguments to parse for command aliases
+     * @param extraArgs   an optional Object array of extra arguments to be passed to the command for execution
+     * @return true if successfully parsed command, false if command does not exist
+     */
     public boolean parseForCommands(String prefix, List<String> messageArgs, Object... extraArgs) {
         // Get and remove first argument from message
         String argFirst = messageArgs.get(0);
@@ -108,11 +182,23 @@ public abstract class AbstractCommandHandler {
         }
     }
 
+    /**
+     * Registers a command into the command registry linked to this command handler
+     *
+     * @param command command to register
+     * @return true if command was successfully registered
+     */
     public boolean registerCommand(Command command) {
         LOGGER.info("Attempting to register command: " + command.toString());
         return commandRegistry.addCommand(command);
     }
 
+    /**
+     * Parses a class instance for methods annotated with MainCommand and SubCommand to create commands from these
+     * annotations and have them added to the registry
+     *
+     * @param obj object containing methods annotated with MainCommand and SubCommand
+     */
     public void registerAnnotatedCommands(Object obj) {
         List<Method> methodsMain = new ArrayList<>();
         List<Method> methodsSub = new ArrayList<>();
@@ -140,7 +226,7 @@ public abstract class AbstractCommandHandler {
             if (method.isAnnotationPresent(MainCommand.class)) {
                 final MainCommand annotation = method.getAnnotation(MainCommand.class);
                 if (!commandRegistry.commandExists(annotation.prefix(), annotation.name())) {
-                    Command command = createMainCommand(annotation, obj, method, true);
+                    Command command = createMainCommand(annotation, obj, method);
                     // Check if command is a repeating command or if it has sub commands
                     if (command.isRepeating()) {
                         command.addSubCommand(command);
@@ -161,7 +247,7 @@ public abstract class AbstractCommandHandler {
             for (Method method : methodsSub) {
                 final SubCommand annotation = method.getAnnotation(SubCommand.class);
                 if (subCommandName.equals(annotation.name()) && !parentCommand.subCommandExists(annotation.name())) {
-                    Command command = createSubCommand(annotation, obj, method, false);
+                    Command command = createSubCommand(annotation, obj, method);
                     LOGGER.info("Registering sub command: \"" + command.getName() + "\" of parent \"" + parentCommand.getName() + "\"");
                     if (command.hasSubCommand()) {
                         registerSubCommands(obj, methodsSub, command);

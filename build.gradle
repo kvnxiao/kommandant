@@ -41,6 +41,10 @@ task javadocJar(type: Jar, dependsOn: javadocs) {
     from javadoc.destinationDir
 }
 
+artifacts {
+    archives javadocJar
+}
+
 task fatJar(type: Jar) {
     manifest {
         attributes 'Implementation-Title': rootProject.name,

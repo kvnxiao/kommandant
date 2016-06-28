@@ -1,6 +1,8 @@
 package com.github.alphahelix00.ordinator.commands;
 
 /**
+ * Class contains static final default values for some command definitions
+ *
  * Created on:   6/23/2016
  * Author:       Kevin Xiao (github.com/alphahelix00)
  */

@@ -6,6 +6,8 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * Method annotation for main commands
+ *
  * Created on:   6/23/2016
  * Author:       Kevin Xiao (github.com/alphahelix00)
  */

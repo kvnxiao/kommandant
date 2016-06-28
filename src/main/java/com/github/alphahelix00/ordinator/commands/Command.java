@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 /**
+ * The command class, containing all the defining information of a command
+ *
  * Created on:   6/23/2016
  * Author:       Kevin Xiao (github.com/alphahelix00)
  */

@@ -7,6 +7,9 @@ import org.slf4j.LoggerFactory;
 import java.util.*;
 
 /**
+ * The registry is the storage containing all the main commands in both a list and for each prefix, a separate command map
+ * A single prefix map exists which holds values to the command maps pertaining to a specific prefix key.
+ *
  * Created on:   6/23/2016
  * Author:       Kevin Xiao (github.com/alphahelix00)
  */
