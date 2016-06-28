@@ -13,8 +13,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created on:   6/23/2016
- * Author:       Kevin Xiao (github.com/alphahelix00)
+ * Test class containing a whole bunch of tests for command registration, parsing, and execution
+ *
+ * <p>Created on:   6/23/2016</p>
+ * <p>Author:       Kevin Xiao (github.com/alphahelix00)</p>
  */
 public class ConsoleTest {
 
@@ -78,36 +80,36 @@ public class ConsoleTest {
 
     @Test
     public void testValidation() {
-        assertTrue(commandHandler.validatePrefix("-one").v1);
-        assertTrue(commandHandler.validatePrefix("!one").v1);
+        assertTrue(commandHandler.validateMessage("-one").v1);
+        assertTrue(commandHandler.validateMessage("!one").v1);
     }
 
     @Test
     public void TestExecution() {
-        assertTrue(commandHandler.validateParse("-one"));
-        assertFalse(commandHandler.validateParse("-!one"));
-        assertTrue(commandHandler.validateParse("-one sub"));
-        assertTrue(commandHandler.validateParse("-one sub sub"));
+        assertTrue(commandHandler.validateAndParse("-one"));
+        assertFalse(commandHandler.validateAndParse("-!one"));
+        assertTrue(commandHandler.validateAndParse("-one sub"));
+        assertTrue(commandHandler.validateAndParse("-one sub sub"));
     }
 
     @Test
     public void TestAnnotatedCommands() {
-        assertTrue(commandHandler.validateParse("-single"));
-        assertTrue(commandHandler.validateParse("-main"));
-        assertTrue(commandHandler.validateParse("-main sub1"));
-        assertTrue(commandHandler.validateParse("-main sub1 sub2"));
-        assertTrue(commandHandler.validateParse("-main sub1 test blah"));
+        assertTrue(commandHandler.validateAndParse("-single"));
+        assertTrue(commandHandler.validateAndParse("-main"));
+        assertTrue(commandHandler.validateAndParse("-main sub1"));
+        assertTrue(commandHandler.validateAndParse("-main sub1 sub2"));
+        assertTrue(commandHandler.validateAndParse("-main sub1 test blah"));
     }
 
     @Test
     public void TestEssentialCommands() {
-        assertTrue(commandHandler.validateParse("!enable"));
-        assertTrue(commandHandler.validateParse("!disable"));
-        assertTrue(commandHandler.validateParse("!disable -main sub1 sub2"));
-        assertTrue(commandHandler.validateParse("!enable -main sub1 sub2"));
-        assertTrue(commandHandler.validateParse("!disable !enable"));
-//        assertTrue(commandHandler.validateParse("!help"));
-//        assertTrue(commandHandler.validateParse("!help !enable"));
+        assertTrue(commandHandler.validateAndParse("!enable"));
+        assertTrue(commandHandler.validateAndParse("!disable"));
+        assertTrue(commandHandler.validateAndParse("!disable -main sub1 sub2"));
+        assertTrue(commandHandler.validateAndParse("!enable -main sub1 sub2"));
+        assertTrue(commandHandler.validateAndParse("!disable !enable"));
+//        assertTrue(commandHandler.validateAndParse("!help"));
+//        assertTrue(commandHandler.validateAndParse("!help !enable"));
     }
 
 }

@@ -8,11 +8,17 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
- * Created on:   6/24/2016
- * Author:       Kevin Xiao (github.com/alphahelix00)
+ * Essential command implementations:
+ * enable, disable, and help command
+ *
+ * <p>Created on:   6/24/2016</p>
+ * <p>Author:       Kevin Xiao (github.com/alphahelix00)</p>
  */
 public class EssentialCommands {
 
+    /**
+     * Enable command which helps enable any disabled commands so that they may be called again
+     */
     public static class Enable extends Command {
 
         private static final String NAME = "Enable Command";
@@ -37,6 +43,9 @@ public class EssentialCommands {
 
     }
 
+    /**
+     * Disable command which disables any non-essential commands and prevents them from being called
+     */
     public static class Disable extends Command {
 
         private static final String NAME = "Disable Command";
@@ -61,6 +70,10 @@ public class EssentialCommands {
 
     }
 
+    /**
+     * Help command which can retrieve a formatted list of all main commands, or retrieve more information
+     * regarding a specific command
+     */
     public static class Help extends Command {
 
         private static final String NAME = "Help Command";
@@ -90,7 +103,13 @@ public class EssentialCommands {
             return Optional.empty();
         }
 
-        protected String getCommandInfoQuote(Command command) {
+        /**
+         * Gets more information regarding a specific command
+         *
+         * @param command command to get information
+         * @return a formatted string containing a command's name, description, and any sub commands that it has
+         */
+        public static String getCommandInfoQuote(Command command) {
             List<String> text = new ArrayList<>();
             text.add(String.format("%1$-12s: %2$s", "Command Name", command.getName()));
             text.add(String.format("%1$-12s: %2$s", "Description", command.getDescription()));
@@ -98,7 +117,12 @@ public class EssentialCommands {
             return String.join("\r\n", text);
         }
 
-        protected String getCommandListQuote() {
+        /**
+         * Gets a formatted list of all main commands currently stored in the registry
+         *
+         * @return a formatted string containing a list of all main commands and their descriptions
+         */
+        public static String getCommandListQuote() {
             List<Command> mainCommands = Ordinator.getCommandRegistry().getCommandList();
             List<String> text = new ArrayList<>();
             text.add("[COMMAND LIST]");
@@ -107,7 +131,13 @@ public class EssentialCommands {
             return String.join("\r\n", text);
         }
 
-        protected String getFormattedString(Command command) {
+        /**
+         * Gets the prefix, command aliases, and description of a command in a formatted string
+         *
+         * @param command command to retrieve information from
+         * @return a formatted string of prefix + command aliases, followed by the description for a command
+         */
+        public static String getFormattedString(Command command) {
             String prefix = command.getPrefix();
             List<String> aliasList = command.getAliases();
             Collections.sort(aliasList);
@@ -116,7 +146,11 @@ public class EssentialCommands {
             return String.format("%1$-16s - %2$s", aliases, description);
         }
 
-        protected static final Comparator<Command> COMMAND_COMPARATOR = (o1, o2) -> {
+        /**
+         * Comparator to sort commands, which first sorts the aliases of each command by alphabetical order,
+         * and then sorts all commands by the natural occurence of prefixes followed by the first sorted alias
+         */
+        public static final Comparator<Command> COMMAND_COMPARATOR = (o1, o2) -> {
             List<String> o1alias = o1.getAliases(), o2alias = o2.getAliases();
             Collections.sort(o1alias);
             Collections.sort(o2alias);

@@ -1,7 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'maven'
 group = 'com.github.alphahelix00'
-version = '1.0.1'
+version = '1.1.0'
 
 sourceCompatibility = 1.8
 
@@ -28,6 +28,23 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
+// custom javadocs task
+task javadocs(type: Javadoc) {
+    failOnError = false
+    source += sourceSets.main.allJava
+    classpath += configurations.compile
+}
+
+// build a jar with javadocs task
+task javadocJar(type: Jar, dependsOn: javadocs) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives javadocJar
+}
+
 task fatJar(type: Jar) {
     manifest {
         attributes 'Implementation-Title': rootProject.name,
@@ -38,6 +55,7 @@ task fatJar(type: Jar) {
     with jar
 }
 
+task jarItUp(dependsOn: [clean, jar, fatJar, javadocJar])
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.14'
