@@ -10,9 +10,9 @@ import java.util.*;
 /**
  * Essential command implementations:
  * enable, disable, and help command
- * <p>
- * Created on:   6/24/2016
- * Author:       Kevin Xiao (github.com/alphahelix00)
+ *
+ * <p>Created on:   6/24/2016</p>
+ * <p>Author:       Kevin Xiao (github.com/alphahelix00)</p>
  */
 public class EssentialCommands {
 

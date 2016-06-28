@@ -13,8 +13,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created on:   6/23/2016
- * Author:       Kevin Xiao (github.com/alphahelix00)
+ * Test class containing a whole bunch of tests for command registration, parsing, and execution
+ *
+ * <p>Created on:   6/23/2016</p>
+ * <p>Author:       Kevin Xiao (github.com/alphahelix00)</p>
  */
 public class ConsoleTest {
 

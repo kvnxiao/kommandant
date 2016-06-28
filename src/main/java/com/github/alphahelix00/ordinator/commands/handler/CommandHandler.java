@@ -14,8 +14,9 @@ import java.util.List;
  * with completed method bodies to create main and sub commands from annotations,
  * as well as executing commands with no extra arguments
  *
- * Created on:   6/24/2016
- * Author:       Kevin Xiao (github.com/alphahelix00)
+ * <p>Created on:   6/24/2016</p>
+ * <p>Author:       Kevin Xiao (github.com/alphahelix00)</p>
+ * @see AbstractCommandHandler
  */
 public class CommandHandler extends AbstractCommandHandler {
 

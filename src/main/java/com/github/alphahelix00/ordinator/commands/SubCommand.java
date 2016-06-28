@@ -8,8 +8,8 @@ import java.lang.annotation.Target;
 /**
  * Method annotation for sub commands
  *
- * Created on:   6/24/2016
- * Author:       Kevin Xiao (github.com/alphahelix00)
+ * <p>Created on:   6/23/2016</p>
+ * <p>Author:       Kevin Xiao (github.com/alphahelix00)</p>
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)

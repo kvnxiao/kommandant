@@ -7,8 +7,8 @@ import java.util.Optional;
 /**
  * Single functional interface that all commands must implement
  *
- * Created on:   6/23/2016
- * Author:       Kevin Xiao (github.com/alphahelix00)
+ * <p>Created on:   6/23/2016</p>
+ * <p>Author:       Kevin Xiao (github.com/alphahelix00)</p>
  */
 @FunctionalInterface
 public interface CommandExecutor {

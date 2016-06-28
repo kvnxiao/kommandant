@@ -19,8 +19,8 @@ import java.util.*;
  * the executeCommand, createMainCommand, and createSubCommand methods in order to properly
  * handle the execution of commands and registration of annotated commands
  *
- * Created on:   6/23/2016
- * Author:       Kevin Xiao (github.com/alphahelix00)
+ * <p>Created on:   6/23/2016</p>
+ * <p>Author:       Kevin Xiao (github.com/alphahelix00)</p>
  */
 public abstract class AbstractCommandHandler {
 

@@ -4,8 +4,10 @@ import com.github.alphahelix00.ordinator.commands.SubCommand;
 import java.util.List;
 
 /**
- * Created on:   6/24/2016
- * Author:       Kevin Xiao (github.com/alphahelix00)
+ * A bunch of annotated commands defined for testing purposes
+ *
+ * <p>Created on:   6/24/2016</p>
+ * <p>Author:       Kevin Xiao (github.com/alphahelix00)</p>
  */
 public class Commands {
 

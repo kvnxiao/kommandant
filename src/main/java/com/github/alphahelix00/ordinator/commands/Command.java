@@ -7,8 +7,8 @@ import java.util.*;
 /**
  * The command class, containing all the defining information of a command
  *
- * Created on:   6/23/2016
- * Author:       Kevin Xiao (github.com/alphahelix00)
+ * <p>Created on:   6/23/2016</p>
+ * <p>Author:       Kevin Xiao (github.com/alphahelix00)</p>
  */
 public abstract class Command implements CommandExecutor {
 
