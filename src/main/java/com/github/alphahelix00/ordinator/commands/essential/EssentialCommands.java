@@ -109,7 +109,7 @@ public class EssentialCommands {
          * @param command command to get information
          * @return a formatted string containing a command's name, description, and any sub commands that it has
          */
-        protected String getCommandInfoQuote(Command command) {
+        public static String getCommandInfoQuote(Command command) {
             List<String> text = new ArrayList<>();
             text.add(String.format("%1$-12s: %2$s", "Command Name", command.getName()));
             text.add(String.format("%1$-12s: %2$s", "Description", command.getDescription()));
@@ -122,7 +122,7 @@ public class EssentialCommands {
          *
          * @return a formatted string containing a list of all main commands and their descriptions
          */
-        protected String getCommandListQuote() {
+        public static String getCommandListQuote() {
             List<Command> mainCommands = Ordinator.getCommandRegistry().getCommandList();
             List<String> text = new ArrayList<>();
             text.add("[COMMAND LIST]");
@@ -137,7 +137,7 @@ public class EssentialCommands {
          * @param command command to retrieve information from
          * @return a formatted string of prefix + command aliases, followed by the description for a command
          */
-        protected String getFormattedString(Command command) {
+        public static String getFormattedString(Command command) {
             String prefix = command.getPrefix();
             List<String> aliasList = command.getAliases();
             Collections.sort(aliasList);
@@ -150,7 +150,7 @@ public class EssentialCommands {
          * Comparator to sort commands, which first sorts the aliases of each command by alphabetical order,
          * and then sorts all commands by the natural occurence of prefixes followed by the first sorted alias
          */
-        protected static final Comparator<Command> COMMAND_COMPARATOR = (o1, o2) -> {
+        public static final Comparator<Command> COMMAND_COMPARATOR = (o1, o2) -> {
             List<String> o1alias = o1.getAliases(), o2alias = o2.getAliases();
             Collections.sort(o1alias);
             Collections.sort(o2alias);
