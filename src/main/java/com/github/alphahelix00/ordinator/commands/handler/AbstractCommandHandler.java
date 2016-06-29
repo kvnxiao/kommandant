@@ -173,11 +173,11 @@ public abstract class AbstractCommandHandler {
         // Use and prefix and first argument String as command alias to try and retrieve a command from registry
         Optional<Command> optCommand = commandRegistry.getCommandByAlias(prefix, argFirst);
         if (optCommand.isPresent()) {
-            LOGGER.info("Executing command arguments: " + prefix + argFirst + " " + String.join(" ", messageArgs));
+            LOGGER.info("Parsing command arguments: " + prefix + argFirst + " " + String.join(" ", messageArgs));
             executeCommands(optCommand.get(), messageArgs, extraArgs);
             return true;
         } else {
-            LOGGER.info("Attempted to execute a command that doesn't exist: " + prefix + argFirst);
+            LOGGER.info("Attempted to parse a command that doesn't exist: " + prefix + argFirst);
             return false;
         }
     }
