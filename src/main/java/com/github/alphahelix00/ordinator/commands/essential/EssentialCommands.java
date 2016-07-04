@@ -127,6 +127,7 @@ public class EssentialCommands {
         public static String getSubCommandAliases(Command command) {
             if (!command.getSubCommandNames().isEmpty()) {
                 List<String> aliases = command.getSubCommandMap().values().stream().map(command1 -> command1.getAliases().toString()).collect(Collectors.toList());
+                Collections.sort(aliases);
                 return String.join(", ", aliases);
             }
             return "N/A";
