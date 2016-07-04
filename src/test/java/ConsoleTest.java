@@ -109,7 +109,7 @@ public class ConsoleTest {
         assertTrue(commandHandler.validateAndParse("!enable -main sub1 sub2"));
         assertTrue(commandHandler.validateAndParse("!disable !enable"));
 //        assertTrue(commandHandler.validateAndParse("!help"));
-//        assertTrue(commandHandler.validateAndParse("!help !enable"));
+//        assertTrue(commandHandler.validateAndParse("!help -main"));
     }
 
 }

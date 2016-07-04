@@ -6,6 +6,7 @@ import com.github.alphahelix00.ordinator.commands.handler.AbstractCommandHandler
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Essential command implementations:
@@ -113,8 +114,22 @@ public class EssentialCommands {
             List<String> text = new ArrayList<>();
             text.add(String.format("%1$-12s: %2$s", "Command Name", command.getName()));
             text.add(String.format("%1$-12s: %2$s", "Description", command.getDescription()));
-            text.add(String.format("%1$-12s: %2$s", "Sub-Commands", (!command.getSubCommandNames().isEmpty()) ? command.getSubCommandNames().toString() : "N/A"));
+            text.add(String.format("%1$-12s: %2$s", "Sub-Commands", (getSubCommandAliases(command))));
             return String.join("\r\n", text);
+        }
+
+        /**
+         * Gets a string list of sub commands by their alias for a specified command
+         *
+         * @param command the parent command to get sub command information from
+         * @return formatted string of sub command aliases, separated by commas
+         */
+        public static String getSubCommandAliases(Command command) {
+            if (!command.getSubCommandNames().isEmpty()) {
+                List<String> aliases = command.getSubCommandMap().values().stream().map(command1 -> command1.getAliases().toString()).collect(Collectors.toList());
+                return String.join(", ", aliases);
+            }
+            return "N/A";
         }
 
         /**
