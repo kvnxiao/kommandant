@@ -14,7 +14,8 @@ public class Commands {
     @MainCommand(
             name = "single",
             alias = "single",
-            description = "single command test"
+            description = "single command test",
+            usage = "<single>"
     )
     public void singleCommandTest(List<String> args) {
         System.out.println("single command test!");
