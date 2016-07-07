@@ -24,11 +24,12 @@ public class EssentialCommands {
 
         private static final String NAME = "Enable Command";
         private static final String DESCRIPTION = "enables the specified command";
+        private static final String USAGE = "";
         private static final List<String> ALIAS = Collections.singletonList("enable");
         private static final String PREFIX = "!";
 
         public Enable() {
-            super(PREFIX, NAME, DESCRIPTION, ALIAS, true, true, true, new HashMap<>(), new HashMap<>());
+            super(PREFIX, NAME, DESCRIPTION, USAGE, ALIAS, true, true, true, new HashMap<>(), new HashMap<>());
         }
 
         @Override
@@ -51,11 +52,12 @@ public class EssentialCommands {
 
         private static final String NAME = "Disable Command";
         private static final String DESCRIPTION = "disables the specified command";
+        private static final String USAGE = "";
         private static final List<String> ALIAS = Collections.singletonList("disable");
         private static final String PREFIX = "!";
 
         public Disable() {
-            super(PREFIX, NAME, DESCRIPTION, ALIAS, true, true, true, new HashMap<>(), new HashMap<>());
+            super(PREFIX, NAME, DESCRIPTION, USAGE, ALIAS, true, true, true, new HashMap<>(), new HashMap<>());
         }
 
         @Override
@@ -79,11 +81,12 @@ public class EssentialCommands {
 
         private static final String NAME = "Help Command";
         private static final String DESCRIPTION = "lists all commands, or info about a specific command";
+        private static final String USAGE = "";
         private static final List<String> ALIAS = Collections.singletonList("help");
         private static final String PREFIX = "!";
 
         public Help() {
-            super(PREFIX, NAME, DESCRIPTION, ALIAS, true, true, true, new HashMap<>(), new HashMap<>());
+            super(PREFIX, NAME, DESCRIPTION, USAGE, ALIAS, true, true, true, new HashMap<>(), new HashMap<>());
         }
 
         @Override

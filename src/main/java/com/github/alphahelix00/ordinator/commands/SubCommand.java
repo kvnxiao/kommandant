@@ -51,6 +51,13 @@ public @interface SubCommand {
     String description();
 
     /**
+     * Gets the usage information for the command
+     *
+     * @return usage info on how to use the command
+     */
+    String usage() default "";
+
+    /**
      * Gets the names of all sub commands assigned to this command
      *
      * @return simple String array of sub command name identifiers (not aliases). default to none

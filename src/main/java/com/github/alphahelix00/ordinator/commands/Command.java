@@ -6,7 +6,7 @@ import java.util.*;
 
 /**
  * The command class, containing all the defining information of a command
- *
+ * <p>
  * <p>Created on:   6/23/2016</p>
  * <p>Author:       Kevin Xiao (github.com/alphahelix00)</p>
  */
@@ -15,6 +15,7 @@ public abstract class Command implements CommandExecutor {
     private String prefix;
     private String name;
     private String description;
+    private String usage;
     private List<String> aliases;
     private boolean isMain;
     private boolean isEnabled;
@@ -35,10 +36,11 @@ public abstract class Command implements CommandExecutor {
      * @param subCommandMap
      * @param subCommandNames
      */
-    protected Command(String prefix, String name, String description, List<String> aliases, boolean isMain, boolean isEnabled, boolean isEssential, Map<String, Command> subCommandMap, Map<String, String> subCommandNames) {
+    protected Command(String prefix, String name, String description, String usage, List<String> aliases, boolean isMain, boolean isEnabled, boolean isEssential, Map<String, Command> subCommandMap, Map<String, String> subCommandNames) {
         this.prefix = prefix;
         this.name = name;
         this.description = description;
+        this.usage = usage;
         this.aliases = aliases;
         this.isMain = isMain;
         this.isEnabled = isEnabled;
@@ -122,6 +124,7 @@ public abstract class Command implements CommandExecutor {
         private boolean isEssential = CommandDefaults.ESSENTIAL;
         private boolean isEnabled = CommandDefaults.ENABLED;
         private String prefix = CommandDefaults.PREFIX;
+        private String usage = CommandDefaults.USAGE;
         private final String name, description;
         private List<String> aliases;
         private Map<String, Command> subCommandMap = new HashMap<>();
@@ -172,6 +175,17 @@ public abstract class Command implements CommandExecutor {
             } else {
                 this.aliases = Collections.singletonList(name.split("\\s+")[0]);
             }
+            return this;
+        }
+
+        /**
+         * Sets the command usage information
+         *
+         * @param usage information on how to use the command
+         * @return the current command builder instance
+         */
+        public CommandBuilder usage(String usage) {
+            this.usage = usage;
             return this;
         }
 
@@ -227,7 +241,7 @@ public abstract class Command implements CommandExecutor {
          * @return complete Command that has been built
          */
         public Command build(CommandExecutor executor) {
-            return new Command(prefix, name, description, aliases, isMain, isEnabled, isEssential, subCommandMap, subCommandNames) {
+            return new Command(prefix, name, description, usage, aliases, isMain, isEnabled, isEssential, subCommandMap, subCommandNames) {
                 @Override
                 public Optional execute(List<String> args) throws IllegalAccessException, InvocationTargetException {
                     return executor.execute(args);
@@ -244,7 +258,7 @@ public abstract class Command implements CommandExecutor {
          * @return complete Command that has been built
          */
         public Command build(Object obj, Method method) {
-            return new Command(prefix, name, description, aliases, isMain, isEnabled, isEssential, subCommandMap, subCommandNames) {
+            return new Command(prefix, name, description, usage, aliases, isMain, isEnabled, isEssential, subCommandMap, subCommandNames) {
                 @Override
                 public Optional execute(List<String> args) throws IllegalAccessException, InvocationTargetException {
                     return Optional.ofNullable(method.invoke(obj, args));
@@ -279,6 +293,15 @@ public abstract class Command implements CommandExecutor {
      */
     public String getDescription() {
         return description;
+    }
+
+    /**
+     * Gets the usage info of the command
+     *
+     * @return usage info of command
+     */
+    public String getUsage() {
+        return usage;
     }
 
     /**
@@ -328,6 +351,6 @@ public abstract class Command implements CommandExecutor {
 
     @Override
     public String toString() {
-        return "(" + prefix + ")" + aliases + " <" + name + " --- " + description + ">";
+        return "\"" + name + "\"::(" + prefix + ")" + aliases.toString() + "::<" + description + " - \"" + usage + "\">";
     }
 }

@@ -111,7 +111,7 @@ public abstract class AbstractCommandHandler {
     }
 
     /**
-     * Attempts to go to and retreive a sub command through a given parent command and a list of message arguments
+     * Attempts to go to and retrieve a sub command through a given parent command and a list of message arguments
      * following the parent command
      *
      * @param parentCommand parent command to start at
@@ -222,7 +222,6 @@ public abstract class AbstractCommandHandler {
 
     protected boolean registerMainCommands(Object obj, List<Method> methodsMain, List<Method> methodsSub) {
         for (Method method : methodsMain) {
-            List<Annotation> annotationList = Arrays.asList(method.getAnnotations());
             if (method.isAnnotationPresent(MainCommand.class)) {
                 final MainCommand annotation = method.getAnnotation(MainCommand.class);
                 if (!commandRegistry.commandExists(annotation.prefix(), annotation.name())) {

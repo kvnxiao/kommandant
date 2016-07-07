@@ -19,6 +19,11 @@ public class CommandDefaults {
     public static final String NO_PREFIX = "";
 
     /**
+     * Default usage string for commands
+     */
+    public static final String USAGE = "usage not defined";
+
+    /**
      * Default boolean value denoting whether or not a command is essential
      * for annotated commands
      */
