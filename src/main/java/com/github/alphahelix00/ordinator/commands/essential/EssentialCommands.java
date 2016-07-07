@@ -83,7 +83,7 @@ public class EssentialCommands {
         private static final String DESCRIPTION = "lists all commands, or info about a specific command";
         private static final List<String> ALIAS = Collections.singletonList("help");
         private static final String PREFIX = "!";
-        private static final String USAGE = PREFIX + ALIAS.get(0) + " ||| " + PREFIX + ALIAS.get(0) + " <command alias>";
+        private static final String USAGE = PREFIX + ALIAS.get(0) + " || " + PREFIX + ALIAS.get(0) + " <command alias>";
 
         public Help() {
             super(PREFIX, NAME, DESCRIPTION, USAGE, ALIAS, true, true, true, new HashMap<>(), new HashMap<>());
