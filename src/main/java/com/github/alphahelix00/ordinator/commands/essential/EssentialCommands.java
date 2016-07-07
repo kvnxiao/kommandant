@@ -24,9 +24,9 @@ public class EssentialCommands {
 
         private static final String NAME = "Enable Command";
         private static final String DESCRIPTION = "enables the specified command";
-        private static final String USAGE = "";
         private static final List<String> ALIAS = Collections.singletonList("enable");
         private static final String PREFIX = "!";
+        private static final String USAGE = PREFIX + ALIAS.get(0) + " <command alias>";
 
         public Enable() {
             super(PREFIX, NAME, DESCRIPTION, USAGE, ALIAS, true, true, true, new HashMap<>(), new HashMap<>());
@@ -52,9 +52,9 @@ public class EssentialCommands {
 
         private static final String NAME = "Disable Command";
         private static final String DESCRIPTION = "disables the specified command";
-        private static final String USAGE = "";
         private static final List<String> ALIAS = Collections.singletonList("disable");
         private static final String PREFIX = "!";
+        private static final String USAGE = PREFIX + ALIAS.get(0) + " <command alias>";
 
         public Disable() {
             super(PREFIX, NAME, DESCRIPTION, USAGE, ALIAS, true, true, true, new HashMap<>(), new HashMap<>());
@@ -81,9 +81,9 @@ public class EssentialCommands {
 
         private static final String NAME = "Help Command";
         private static final String DESCRIPTION = "lists all commands, or info about a specific command";
-        private static final String USAGE = "";
         private static final List<String> ALIAS = Collections.singletonList("help");
         private static final String PREFIX = "!";
+        private static final String USAGE = PREFIX + ALIAS.get(0) + " ||| " + PREFIX + ALIAS.get(0) + " <command alias>";
 
         public Help() {
             super(PREFIX, NAME, DESCRIPTION, USAGE, ALIAS, true, true, true, new HashMap<>(), new HashMap<>());
@@ -93,14 +93,14 @@ public class EssentialCommands {
         public Optional execute(List<String> args) throws IllegalAccessException, InvocationTargetException {
             if (args.isEmpty()) {
                 String commandList = getCommandListQuote();
-//                System.out.println(commandList);
+                System.out.println(commandList);
                 return Optional.of(commandList);
             } else {
                 AbstractCommandHandler commandHandler = Ordinator.getCommandRegistry().getCommandHandler();
                 Optional<Command> command = commandHandler.gotoCommand(args);
                 if (command.isPresent()) {
                     String commandInfo = getCommandInfoQuote(command.get());
-//                    System.out.println(commandInfo);
+                    System.out.println(commandInfo);
                     return Optional.of(commandInfo);
                 }
             }
@@ -117,6 +117,7 @@ public class EssentialCommands {
             List<String> text = new ArrayList<>();
             text.add(String.format("%1$-12s: %2$s", "Command Name", command.getName()));
             text.add(String.format("%1$-12s: %2$s", "Description", command.getDescription()));
+            text.add(String.format("%1$-12s: %2$s", "Usage", command.getUsage()));
             text.add(String.format("%1$-12s: %2$s", "Sub-Commands", (getSubCommandAliases(command))));
             return String.join("\r\n", text);
         }

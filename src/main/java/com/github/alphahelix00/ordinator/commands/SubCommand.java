@@ -55,7 +55,7 @@ public @interface SubCommand {
      *
      * @return usage info on how to use the command
      */
-    String usage() default "";
+    String usage() default CommandDefaults.USAGE;
 
     /**
      * Gets the names of all sub commands assigned to this command
