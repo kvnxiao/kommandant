@@ -22,14 +22,18 @@ public class EssentialCommands {
      */
     public static class Enable extends Command {
 
-        private static final String NAME = "Enable Command";
-        private static final String DESCRIPTION = "enables the specified command";
-        private static final List<String> ALIAS = Collections.singletonList("enable");
+        protected static final String NAME = "Enable Command";
+        protected static final String DESCRIPTION = "enables the specified command";
+        protected static final List<String> ALIAS = Collections.singletonList("enable");
         private static final String PREFIX = "!";
         private static final String USAGE = PREFIX + ALIAS.get(0) + " <command alias>";
 
         public Enable() {
             super(PREFIX, NAME, DESCRIPTION, USAGE, ALIAS, true, true, true, new HashMap<>(), new HashMap<>());
+        }
+
+        public Enable(String prefix, String usage) {
+            super(prefix, NAME, DESCRIPTION, usage, ALIAS, true, true, true, new HashMap<>(), new HashMap<>());
         }
 
         @Override
@@ -50,14 +54,18 @@ public class EssentialCommands {
      */
     public static class Disable extends Command {
 
-        private static final String NAME = "Disable Command";
-        private static final String DESCRIPTION = "disables the specified command";
-        private static final List<String> ALIAS = Collections.singletonList("disable");
+        protected static final String NAME = "Disable Command";
+        protected static final String DESCRIPTION = "disables the specified command";
+        protected static final List<String> ALIAS = Collections.singletonList("disable");
         private static final String PREFIX = "!";
         private static final String USAGE = PREFIX + ALIAS.get(0) + " <command alias>";
 
         public Disable() {
             super(PREFIX, NAME, DESCRIPTION, USAGE, ALIAS, true, true, true, new HashMap<>(), new HashMap<>());
+        }
+
+        public Disable(String prefix, String usage) {
+            super(prefix, NAME, DESCRIPTION, usage, ALIAS, true, true, true, new HashMap<>(), new HashMap<>());
         }
 
         @Override
@@ -79,14 +87,18 @@ public class EssentialCommands {
      */
     public static class Help extends Command {
 
-        private static final String NAME = "Help Command";
-        private static final String DESCRIPTION = "lists all commands, or info about a specific command";
-        private static final List<String> ALIAS = Collections.singletonList("help");
+        protected static final String NAME = "Help Command";
+        protected static final String DESCRIPTION = "lists all commands, or info about a specific command";
+        protected static final List<String> ALIAS = Collections.singletonList("help");
         private static final String PREFIX = "!";
         private static final String USAGE = PREFIX + ALIAS.get(0) + " || " + PREFIX + ALIAS.get(0) + " <command alias>";
 
         public Help() {
             super(PREFIX, NAME, DESCRIPTION, USAGE, ALIAS, true, true, true, new HashMap<>(), new HashMap<>());
+        }
+
+        public Help(String prefix, String usage) {
+            super(prefix, NAME, DESCRIPTION, usage, ALIAS, true, true, true, new HashMap<>(), new HashMap<>());
         }
 
         @Override
