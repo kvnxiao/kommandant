@@ -25,7 +25,7 @@ public @interface SubCommand {
     /**
      * Gets the prefix string of the sub command
      *
-     * @return prefix of the command (default = "" -> no prefix)
+     * @return prefix of the command (default = "" --- no prefix)
      */
     String prefix() default CommandDefaults.NO_PREFIX;
 

@@ -308,8 +308,7 @@ public abstract class AbstractCommandHandler {
     }
 
     public static List<String> splitMessage(String message) {
-        return new ArrayList<>(Arrays.asList(message.split("\\s+")));
+        return new LinkedList<>(Arrays.asList(message.split("\\s+")));
     }
-
 
 }
