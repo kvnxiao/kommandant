@@ -55,8 +55,6 @@ task fatJar(type: Jar) {
     with jar
 }
 
-task jarItUp(dependsOn: [clean, jar, fatJar, javadocJar])
-
 task wrapper(type: Wrapper) {
     gradleVersion = '2.14'
 }
