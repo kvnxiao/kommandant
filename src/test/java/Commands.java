@@ -1,6 +1,7 @@
 import com.github.alphahelix00.ordinator.commands.MainCommand;
 import com.github.alphahelix00.ordinator.commands.SubCommand;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -38,7 +39,9 @@ public class Commands {
             subCommands = "sub2"
     )
     public void subCommandOne(List<String> args) {
+        LinkedList<String> argsList = (LinkedList<String>) args;
         System.out.println("sub1 command test!");
+        System.out.println(argsList.peek());
     }
 
     @SubCommand(

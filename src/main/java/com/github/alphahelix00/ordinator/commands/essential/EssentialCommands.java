@@ -105,14 +105,14 @@ public class EssentialCommands {
         public Optional execute(List<String> args) throws IllegalAccessException, InvocationTargetException {
             if (args.isEmpty()) {
                 String commandList = getCommandListQuote();
-                System.out.println(commandList);
+//                System.out.println(commandList);
                 return Optional.of(commandList);
             } else {
                 AbstractCommandHandler commandHandler = Ordinator.getCommandRegistry().getCommandHandler();
                 Optional<Command> command = commandHandler.gotoCommand(args);
                 if (command.isPresent()) {
                     String commandInfo = getCommandInfoQuote(command.get());
-                    System.out.println(commandInfo);
+//                    System.out.println(commandInfo);
                     return Optional.of(commandInfo);
                 }
             }
@@ -155,12 +155,20 @@ public class EssentialCommands {
          * @return a formatted string containing a list of all main commands and their descriptions
          */
         public static String getCommandListQuote() {
+            return "[COMMAND LIST]\r\n" + String.join("\r\n", getCommandList());
+        }
+
+        /**
+         * Gets a list of strings for all main commands currently stored in the registry
+         *
+         * @return a list of strings containing each main command and their descriptions
+         */
+        public static List<String> getCommandList() {
             List<Command> mainCommands = Ordinator.getCommandRegistry().getCommandList();
             List<String> text = new ArrayList<>();
-            text.add("[COMMAND LIST]");
             Collections.sort(mainCommands, COMMAND_COMPARATOR);
             mainCommands.forEach(command -> text.add(getFormattedString(command)));
-            return String.join("\r\n", text);
+            return text;
         }
 
         /**
