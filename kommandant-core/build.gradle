@@ -1,0 +1,10 @@
+plugins {
+    id "me.champeau.gradle.jmh" version "0.3.1"
+}
+
+apply plugin: 'me.champeau.gradle.jmh'
+
+dependencies {
+    jmh "org.openjdk.jmh:jmh-core:1.17.5"
+    jmh "ch.qos.logback:logback-classic:$logback_version"
+}
