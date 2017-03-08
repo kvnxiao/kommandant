@@ -23,7 +23,7 @@ public class ProcessingBenchmark {
     @Setup
     public void setup() {
         kommandant = new Kommandant();
-        kommandant.addCommand(new ICommand<String>("/", "testCommand", CommandDefaults.NO_DESCRIPTION, CommandDefaults.NO_USAGE, CommandDefaults.EXEC_WITH_SUBCOMMANDS, "asdf", "test") {
+        kommandant.addCommand(new ICommand<String>("/", "testCommand", CommandDefaults.NO_DESCRIPTION, CommandDefaults.NO_USAGE, CommandDefaults.EXEC_WITH_SUBCOMMANDS, CommandDefaults.IS_DISABLED, "asdf", "test") {
             @Override
             public String execute(@NotNull CommandContext context, @NotNull Object... opt) {
                 return "a";
