@@ -62,7 +62,7 @@ open class CommandBuilder<T>(private val uniqueName: String) {
 
     companion object {
         @JvmStatic
-        fun <T> executor(handler: (CommandContext, Array<out Any>) -> T): ICommandExecutable<T> {
+        fun <T> execute(handler: (CommandContext, Array<out Any>) -> T): ICommandExecutable<T> {
             return object : ICommandExecutable<T> {
                 override fun execute(context: CommandContext, vararg opt: Any): T = handler(context, opt)
             }
