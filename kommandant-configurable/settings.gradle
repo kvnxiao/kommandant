@@ -1,0 +1,2 @@
+include ":kommandant-core"
+project(":kommandant-core").projectDir = new File(settingsDir, "../kommandant-core")
