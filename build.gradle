@@ -21,7 +21,7 @@ plugins {
 
 allprojects {
     group 'com.github.kvnxiao'
-    version = "1.0"
+    version = "2.0-SNAPSHOT"
 
     task wrapper(type: Wrapper) {
         gradleVersion = '3.4'
