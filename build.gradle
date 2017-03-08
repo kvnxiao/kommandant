@@ -21,6 +21,7 @@ plugins {
 
 allprojects {
     group 'com.github.kvnxiao'
+    version = "1.0"
 
     task wrapper(type: Wrapper) {
         gradleVersion = '3.4'
@@ -36,9 +37,11 @@ subprojects {
 
     apply plugin: 'java'
     apply plugin: 'kotlin'
+    apply plugin: 'maven'
     apply plugin: 'com.github.johnrengelman.shadow'
 
     sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 
     dependencies {
         compile "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
