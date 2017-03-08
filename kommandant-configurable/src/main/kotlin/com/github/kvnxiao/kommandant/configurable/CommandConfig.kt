@@ -13,8 +13,6 @@ import java.nio.file.Paths
 open class CommandConfig {
 
     companion object {
-        const val JSON_PROPERTIES = "properties"
-        const val JSON_SETTINGS = "settings"
 
         @JvmStatic
         fun getConfigs(command: ICommand<*>, currentPath: String, configMap: MutableMap<String, ByteArray?> = mutableMapOf()): Map<String, ByteArray?> {
@@ -74,4 +72,5 @@ open class CommandConfig {
         }
 
     }
+
 }
