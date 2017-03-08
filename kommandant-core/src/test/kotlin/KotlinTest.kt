@@ -42,4 +42,19 @@ class KotlinTest {
         assertEquals("this is a kotlin based command!", annotated.result)
     }
 
+    @Test
+    fun testDeleteCommand() {
+        kommandant.addAnnotatedCommands(KotlinCommand::class)
+        assertEquals(1, kommandant.getPrefixes().size)
+        assertTrue(kommandant.getPrefixes().contains("/"))
+        assertEquals(1, kommandant.getCommandsUnique().size)
+        assertTrue(kommandant.process<String>("/kotlin").success)
+
+        kommandant.deleteCommand(kommandant.getCommand("/kotlin"))
+        assertFalse(kommandant.process<String>("/kotlin").success)
+        assertTrue(kommandant.getPrefixes().isEmpty())
+        assertTrue(kommandant.getCommandsUnique().isEmpty())
+        assertTrue(kommandant.getAllCommands().isEmpty())
+    }
+
 }
