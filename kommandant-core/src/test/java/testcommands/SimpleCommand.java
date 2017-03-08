@@ -17,23 +17,4 @@ public class SimpleCommand {
         System.out.println("this is a simple command!");
     }
 
-    @CommandAnn(
-            uniqueName = "parent",
-            aliases = "parent"
-    )
-    public String parentCommand(CommandContext context, Object... opt) {
-        System.out.println("Parent test");
-        return "I am the parent command.";
-    }
-
-    @CommandAnn(
-            uniqueName = "child",
-            aliases = "child",
-            parentName = "parent"
-    )
-    public String childCommand(CommandContext context, Object... opt) {
-        System.out.println("Child test");
-        return "I am the child command.";
-    }
-
 }

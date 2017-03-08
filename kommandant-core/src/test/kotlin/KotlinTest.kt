@@ -1,9 +1,11 @@
 import com.github.kvnxiao.kommandant.Kommandant
 import com.github.kvnxiao.kommandant.command.CommandBuilder
-import com.github.kvnxiao.kommandant.command.CommandBuilder.Companion.executor
+import com.github.kvnxiao.kommandant.command.CommandBuilder.Companion.execute
+import org.junit.Assert.*
+import org.junit.Before
 import org.junit.BeforeClass
 import org.junit.Test
-import testcommands.KotlinBasedCommands
+import testcommands.KotlinCommand
 
 /**
  * Created on:   2017-03-05
@@ -14,23 +16,32 @@ class KotlinTest {
 
     companion object {
 
-        private val kommandant = Kommandant()
+        private var kommandant: Kommandant = Kommandant()
 
-        @BeforeClass
-        @JvmStatic
+        @Before
         fun setup() {
-            kommandant.addAnnotatedCommands(KotlinBasedCommands::class)
-            kommandant.addCommand(CommandBuilder<Unit>("test").withAliases("a").build(executor {
-                context, opt ->
-                println("HELLO WORLD!")
-            }))
+            kommandant = Kommandant()
         }
     }
 
     @Test
-    fun test() {
-        kommandant.process<Any>("/kotlin")
-        println(kommandant.process<Any>("/a"))
+    fun testBasic() {
+        kommandant.addAnnotatedCommands(KotlinCommand::class)
+        kommandant.addCommand(CommandBuilder<Unit>("kotlintest").withPrefix("-").withAliases("ktest").build(execute {
+            context, opt ->
+            println("HELLO WORLD!")
+        }))
+
+        // Test command added with kotlin lambda
+        val fail = kommandant.process<Unit>("/ktest")
+        assertFalse(fail.success)
+        val success = kommandant.process<Unit>("-ktest")
+        assertTrue(success.success)
+
+        // Test annotated command
+        val annotated = kommandant.process<String>("/kotlin")
+        assertTrue(annotated.success)
+        assertEquals("this is a kotlin based command!", annotated.result)
     }
 
 }
