@@ -13,8 +13,8 @@ abstract class ICommand<T>(var props: CommandProperties) : ICommandExecutable<T>
     val subCommandMap: CommandMap = TreeMap()
     val subCommands: CommandSet = mutableSetOf()
 
-    constructor(prefix: String, uniqueName: String, description: String, usage: String, execWithSubcommands: Boolean, vararg aliases: String) : this(CommandProperties(prefix, uniqueName, description, usage, execWithSubcommands, aliases.asList()))
-    constructor(prefix: String, uniqueName: String, description: String, usage: String, execWithSubcommands: Boolean, aliases: List<String>) : this(CommandProperties(prefix, uniqueName, description, usage, execWithSubcommands, aliases))
+    constructor(prefix: String, uniqueName: String, description: String, usage: String, execWithSubcommands: Boolean, isDisabled: Boolean, vararg aliases: String) : this(CommandProperties(prefix, uniqueName, description, usage, execWithSubcommands, isDisabled, aliases.asList()))
+    constructor(prefix: String, uniqueName: String, description: String, usage: String, execWithSubcommands: Boolean, isDisabled: Boolean, aliases: List<String>) : this(CommandProperties(prefix, uniqueName, description, usage, execWithSubcommands, isDisabled, aliases))
 
     fun addSubcommand(subCommand: ICommand<*>) : ICommand<T> {
         for (alias in subCommand.props.aliases) {

@@ -10,5 +10,6 @@ object CommandDefaults {
     const val NO_USAGE = "No usage information available."
     const val PREFIX = "/"
     const val EXEC_WITH_SUBCOMMANDS = false
+    const val IS_DISABLED = false
 
 }

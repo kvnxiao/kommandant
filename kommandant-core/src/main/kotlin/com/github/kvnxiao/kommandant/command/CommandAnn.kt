@@ -12,5 +12,6 @@ annotation class CommandAnn(
         val description: String = CommandDefaults.NO_DESCRIPTION,
         val usage: String = CommandDefaults.NO_USAGE,
         val parentName: String = CommandDefaults.PARENT,
-        val execWithSubcommands: Boolean = CommandDefaults.EXEC_WITH_SUBCOMMANDS
+        val execWithSubcommands: Boolean = CommandDefaults.EXEC_WITH_SUBCOMMANDS,
+        val isDisabled: Boolean = CommandDefaults.IS_DISABLED
 )

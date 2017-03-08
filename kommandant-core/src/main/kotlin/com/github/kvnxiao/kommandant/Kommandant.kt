@@ -3,6 +3,7 @@ package com.github.kvnxiao.kommandant
 import com.github.kvnxiao.kommandant.command.CommandContext
 import com.github.kvnxiao.kommandant.command.CommandResult
 import com.github.kvnxiao.kommandant.command.ICommand
+import com.github.kvnxiao.kommandant.command.Success
 import com.github.kvnxiao.kommandant.impl.CommandBank
 import com.github.kvnxiao.kommandant.impl.CommandExecutor
 import com.github.kvnxiao.kommandant.impl.CommandParser
@@ -24,7 +25,7 @@ open class Kommandant(protected val cmdBank: ICommandBank = CommandBank(),
         val LOGGER: Logger = LoggerFactory.getLogger(Kommandant::class.java)
     }
 
-    fun <T> process(input: String, vararg opt: Any?): CommandResult<T> {
+    open fun <T> process(input: String, vararg opt: Any?): CommandResult<T> {
         val context = CommandContext(input)
         if (context.hasAlias()) {
             val command: ICommand<*>? = this.getCommand(context.alias)
@@ -33,8 +34,10 @@ open class Kommandant(protected val cmdBank: ICommandBank = CommandBank(),
         return CommandResult(false)
     }
 
-    protected fun <T> processCommand(command: ICommand<*>, context: CommandContext, vararg opt: Any?): CommandResult<T> {
-        return CommandResult(true, cmdExecutor.execute(command, context, opt))
+    open protected fun <T> processCommand(command: ICommand<*>, context: CommandContext, vararg opt: Any?): CommandResult<T> {
+        val success = Success()
+        val result: T? = cmdExecutor.execute(command, context, success, opt)
+        return CommandResult(success.success, result)
     }
 
     /* * *
@@ -42,6 +45,8 @@ open class Kommandant(protected val cmdBank: ICommandBank = CommandBank(),
     *   Wrapper functions for the command bank, parser, and executor
     *
     * * */
+
+    fun clearAll() = cmdBank.clearAll()
 
     fun addCommand(command: ICommand<*>): Boolean = cmdBank.addCommand(command)
 
@@ -55,7 +60,9 @@ open class Kommandant(protected val cmdBank: ICommandBank = CommandBank(),
 
     fun getCommandsForPrefix(prefix: String): ImmutableCommandMap = cmdBank.getCommandsForPrefix(prefix)
 
-    fun getCommands(): ImmutableCommandMap = cmdBank.getCommands()
+    fun getAllCommands(): ImmutableCommandMap = cmdBank.getCommands()
+
+    fun getCommandsUnique(): List<ICommand<*>> = cmdBank.getCommandsUnique()
 
     fun addAnnotatedCommands(clazz: Class<*>) {
         try {

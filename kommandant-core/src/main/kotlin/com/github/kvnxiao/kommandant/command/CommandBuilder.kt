@@ -15,7 +15,9 @@ open class CommandBuilder<T>(private val uniqueName: String) {
     private var description: String = CommandDefaults.NO_DESCRIPTION
     private var usage: String = CommandDefaults.NO_USAGE
     private var prefix: String = CommandDefaults.PREFIX
-    private var execWithSubcommands: Boolean = false
+    private var execWithSubcommands: Boolean = CommandDefaults.EXEC_WITH_SUBCOMMANDS
+    private var isDisabled: Boolean = CommandDefaults.IS_DISABLED
+
     constructor(prefix: String, uniqueName: String) : this(uniqueName) {
         this.prefix = prefix
     }
@@ -50,9 +52,14 @@ open class CommandBuilder<T>(private val uniqueName: String) {
         return this
     }
 
+    fun setDisabled(disabled: Boolean): CommandBuilder<T> {
+        this.isDisabled = disabled
+        return this
+    }
+
     fun build(executor: ICommandExecutable<T>): ICommand<T> {
         if (aliases === null) aliases = Collections.singletonList(uniqueName)
-        return object : ICommand<T>(prefix, uniqueName, description, usage, execWithSubcommands, aliases!!) {
+        return object : ICommand<T>(prefix, uniqueName, description, usage, execWithSubcommands, isDisabled, aliases!!) {
             @Throws(InvocationTargetException::class, IllegalAccessException::class)
             override fun execute(context: CommandContext, vararg opt: Any): T {
                 return executor.execute(context, opt)

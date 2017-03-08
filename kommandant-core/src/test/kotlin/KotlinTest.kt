@@ -1,9 +1,8 @@
 import com.github.kvnxiao.kommandant.Kommandant
 import com.github.kvnxiao.kommandant.command.CommandBuilder
 import com.github.kvnxiao.kommandant.command.CommandBuilder.Companion.execute
+import org.junit.After
 import org.junit.Assert.*
-import org.junit.Before
-import org.junit.BeforeClass
 import org.junit.Test
 import testcommands.KotlinCommand
 
@@ -15,13 +14,12 @@ import testcommands.KotlinCommand
 class KotlinTest {
 
     companion object {
+        private val kommandant: Kommandant = Kommandant()
+    }
 
-        private var kommandant: Kommandant = Kommandant()
-
-        @Before
-        fun setup() {
-            kommandant = Kommandant()
-        }
+    @After
+    fun after() {
+        kommandant.clearAll()
     }
 
     @Test

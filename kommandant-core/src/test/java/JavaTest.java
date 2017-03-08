@@ -1,7 +1,7 @@
 import com.github.kvnxiao.kommandant.Kommandant;
 import com.github.kvnxiao.kommandant.command.*;
 import org.jetbrains.annotations.NotNull;
-import org.junit.Before;
+import org.junit.After;
 import org.junit.Test;
 import testcommands.KotlinCommand;
 import testcommands.MainAndSubCommands;
@@ -16,17 +16,17 @@ import static org.junit.Assert.*;
  */
 public class JavaTest {
 
-    private Kommandant kommandant = new Kommandant();
+    private static final Kommandant kommandant = new Kommandant();
 
-    @Before
-    public void freshSetup() {
-        kommandant = new Kommandant();
+    @After
+    public void after() {
+        kommandant.clearAll();
     }
 
     @Test
     public void testAddCommand() {
         // Add command through constructor
-        kommandant.addCommand(new ICommand<String>(CommandDefaults.PREFIX, "testAddCommand1", CommandDefaults.NO_DESCRIPTION, CommandDefaults.NO_USAGE, CommandDefaults.EXEC_WITH_SUBCOMMANDS, "testAddCommand1", "t1") {
+        kommandant.addCommand(new ICommand<String>(CommandDefaults.PREFIX, "testAddCommand1", CommandDefaults.NO_DESCRIPTION, CommandDefaults.NO_USAGE, CommandDefaults.EXEC_WITH_SUBCOMMANDS, CommandDefaults.IS_DISABLED, "testAddCommand1", "t1") {
             @Override
             public String execute(@NotNull CommandContext context, @NotNull Object... opt) throws InvocationTargetException, IllegalAccessException {
                 return "testAddCommand1";

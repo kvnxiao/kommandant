@@ -4,6 +4,7 @@ import com.github.kvnxiao.kommandant.ICommandExecutor
 import com.github.kvnxiao.kommandant.Kommandant.Companion.LOGGER
 import com.github.kvnxiao.kommandant.command.CommandContext
 import com.github.kvnxiao.kommandant.command.ICommand
+import com.github.kvnxiao.kommandant.command.Success
 import java.lang.reflect.InvocationTargetException
 
 /**
@@ -11,29 +12,33 @@ import java.lang.reflect.InvocationTargetException
  */
 open class CommandExecutor : ICommandExecutor {
 
-    override fun <T> execute(command: ICommand<*>, context: CommandContext, vararg opt: Any?): T? {
-        try {
-            if (context.hasArgs() && command.hasSubcommands()) {
-                val subContext: CommandContext = CommandContext(context.args)
-                val subCommand: ICommand<*>? = command.subCommandMap[subContext.alias]
-                if (subContext.hasAlias() && subCommand !== null) {
-                    // Execute main command, then subcommand
-                    if (command.props.execWithSubcommands) {
-                        LOGGER.debug("Executing command ${command.props.uniqueName} with args: [${if (context.hasArgs()) context.args else " "}]")
-                        executeCommand<T>(command, context, opt)
-                    } else {
-                        LOGGER.debug("Executing command ${command.props.uniqueName} with args: [${if (context.hasArgs()) context.args else " "}], skipping result because execWithSubcommands is set to false")
+    override fun <T> execute(command: ICommand<*>, context: CommandContext, success: Success, vararg opt: Any?): T? {
+        if (!command.props.isDisabled) {
+            try {
+                if (context.hasArgs() && command.hasSubcommands()) {
+                    val subContext: CommandContext = CommandContext(context.args)
+                    val subCommand: ICommand<*>? = command.subCommandMap[subContext.alias]
+                    if (subContext.hasAlias() && subCommand !== null) {
+                        // Execute main command, then subcommand
+                        if (command.props.execWithSubcommands) {
+                            LOGGER.debug("Executing command ${command.props.uniqueName} with args: [${if (context.hasArgs()) context.args else " "}]")
+                            executeCommand<T>(command, context, opt)
+                        } else {
+                            LOGGER.debug("Executing command ${command.props.uniqueName} with args: [${if (context.hasArgs()) context.args else " "}], skipping result because execWithSubcommands is set to false")
+                        }
+                        return execute(subCommand, subContext, success, opt)
                     }
-                    return execute(subCommand, subContext, opt)
                 }
+                LOGGER.debug("Executing command ${command.props.uniqueName} with args: [${if (context.hasArgs()) context.args else " "}]")
+                return executeCommand(command, context, opt)
+            } catch (e: InvocationTargetException) {
+                LOGGER.error("${e.localizedMessage}: Failed to invoke method bound to command '${command.props.uniqueName}'!")
+            } catch (e: IllegalAccessException) {
+                LOGGER.error("${e.localizedMessage}: Failed to access method definition for command '${command.props.uniqueName}'!")
             }
-            LOGGER.debug("Executing command ${command.props.uniqueName} with args: [${if (context.hasArgs()) context.args else " "}]")
-            return executeCommand(command, context, opt)
-        } catch (e: InvocationTargetException) {
-            LOGGER.error("${e.localizedMessage}: Failed to invoke method bound to command '${command.props.uniqueName}'!")
-        } catch (e: IllegalAccessException) {
-            LOGGER.error("${e.localizedMessage}: Failed to access method definition for command '${command.props.uniqueName}'!")
         }
+        LOGGER.debug("Executing command '${command.props.uniqueName}' ignored because the command is disabled.")
+        success.success = false
         return null
     }
 

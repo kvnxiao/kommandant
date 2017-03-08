@@ -11,6 +11,7 @@ data class CommandProperties(
         var description: String = CommandDefaults.NO_DESCRIPTION,
         var usage: String = CommandDefaults.NO_USAGE,
         var execWithSubcommands: Boolean = CommandDefaults.EXEC_WITH_SUBCOMMANDS,
+        var isDisabled: Boolean = CommandDefaults.IS_DISABLED,
         var aliases: List<String> = listOf(uniqueName)) {
 
     override fun toString(): String {

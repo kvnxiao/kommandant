@@ -118,6 +118,17 @@ open class CommandBank : ICommandBank {
 
     override fun getCommands(): ImmutableCommandMap = commandMap.toMap()
 
+    override fun getCommandsUnique(): List<ICommand<*>> = commandUniques.values.toList()
+
+    override fun clearAll() {
+        LOGGER.debug("Clearing all commands from the bank.")
+        commandUniques.values.forEach(ICommand<*>::deleteSubcommands)
+        prefixSet.clear()
+        prefixMap.clear()
+        commandMap.clear()
+        commandUniques.clear()
+    }
+
     fun isAliasClash(prefix: String, aliases: List<String>): Boolean = aliases.any { commandMap.containsKey(prefix + it) }
 
 }

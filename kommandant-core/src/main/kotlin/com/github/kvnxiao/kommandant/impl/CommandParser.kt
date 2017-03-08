@@ -68,7 +68,7 @@ open class CommandParser : ICommandParser {
     }
 
     override fun createCommand(instance: Any, method: Method, annotation: CommandAnn): ICommand<Any?> {
-        return object : ICommand<Any?>(annotation.prefix, annotation.uniqueName, annotation.description, annotation.usage, annotation.execWithSubcommands, *annotation.aliases) {
+        return object : ICommand<Any?>(annotation.prefix, annotation.uniqueName, annotation.description, annotation.usage, annotation.execWithSubcommands, annotation.isDisabled, *annotation.aliases) {
             @Throws(InvocationTargetException::class, IllegalAccessException::class)
             override fun execute(context: CommandContext, vararg opt: Any): Any? {
                 return method.invoke(instance, context, opt)
