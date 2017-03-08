@@ -3,8 +3,8 @@ package com.github.kvnxiao.kommandant.impl
 import com.github.kvnxiao.kommandant.ICommandExecutor
 import com.github.kvnxiao.kommandant.Kommandant.Companion.LOGGER
 import com.github.kvnxiao.kommandant.command.CommandContext
+import com.github.kvnxiao.kommandant.command.CommandResult
 import com.github.kvnxiao.kommandant.command.ICommand
-import com.github.kvnxiao.kommandant.command.Success
 import java.lang.reflect.InvocationTargetException
 
 /**
@@ -12,7 +12,7 @@ import java.lang.reflect.InvocationTargetException
  */
 open class CommandExecutor : ICommandExecutor {
 
-    override fun <T> execute(command: ICommand<*>, context: CommandContext, success: Success, vararg opt: Any?): T? {
+    override fun <T> execute(command: ICommand<*>, context: CommandContext, vararg opt: Any?): CommandResult<T> {
         if (!command.props.isDisabled) {
             try {
                 if (context.hasArgs() && command.hasSubcommands()) {
@@ -26,11 +26,11 @@ open class CommandExecutor : ICommandExecutor {
                         } else {
                             LOGGER.debug("Executing command ${command.props.uniqueName} with args: [${if (context.hasArgs()) context.args else " "}], skipping result because execWithSubcommands is set to false")
                         }
-                        return execute(subCommand, subContext, success, opt)
+                        return execute(subCommand, subContext, opt)
                     }
                 }
                 LOGGER.debug("Executing command ${command.props.uniqueName} with args: [${if (context.hasArgs()) context.args else " "}]")
-                return executeCommand(command, context, opt)
+                return CommandResult(true, executeCommand(command, context, opt))
             } catch (e: InvocationTargetException) {
                 LOGGER.error("${e.localizedMessage}: Failed to invoke method bound to command '${command.props.uniqueName}'!")
             } catch (e: IllegalAccessException) {
@@ -38,8 +38,7 @@ open class CommandExecutor : ICommandExecutor {
             }
         }
         LOGGER.debug("Executing command '${command.props.uniqueName}' ignored because the command is disabled.")
-        success.success = false
-        return null
+        return CommandResult(false)
     }
 
     // Because the command in the parameter can have a method return of any type '<*>',

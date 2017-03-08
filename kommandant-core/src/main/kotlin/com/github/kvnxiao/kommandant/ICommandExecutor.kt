@@ -1,8 +1,8 @@
 package com.github.kvnxiao.kommandant
 
 import com.github.kvnxiao.kommandant.command.CommandContext
+import com.github.kvnxiao.kommandant.command.CommandResult
 import com.github.kvnxiao.kommandant.command.ICommand
-import com.github.kvnxiao.kommandant.command.Success
 
 /**
  * Created on:   2017-03-05
@@ -11,6 +11,6 @@ import com.github.kvnxiao.kommandant.command.Success
  */
 interface ICommandExecutor {
 
-    fun <T> execute(command: ICommand<*>, context: CommandContext, success: Success, vararg opt: Any?): T?
+    fun <T> execute(command: ICommand<*>, context: CommandContext, vararg opt: Any?): CommandResult<T>
 
 }

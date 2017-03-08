@@ -3,7 +3,6 @@ package com.github.kvnxiao.kommandant
 import com.github.kvnxiao.kommandant.command.CommandContext
 import com.github.kvnxiao.kommandant.command.CommandResult
 import com.github.kvnxiao.kommandant.command.ICommand
-import com.github.kvnxiao.kommandant.command.Success
 import com.github.kvnxiao.kommandant.impl.CommandBank
 import com.github.kvnxiao.kommandant.impl.CommandExecutor
 import com.github.kvnxiao.kommandant.impl.CommandParser
@@ -34,11 +33,7 @@ open class Kommandant(protected val cmdBank: ICommandBank = CommandBank(),
         return CommandResult(false)
     }
 
-    open protected fun <T> processCommand(command: ICommand<*>, context: CommandContext, vararg opt: Any?): CommandResult<T> {
-        val success = Success()
-        val result: T? = cmdExecutor.execute(command, context, success, opt)
-        return CommandResult(success.success, result)
-    }
+    open protected fun <T> processCommand(command: ICommand<*>, context: CommandContext, vararg opt: Any?): CommandResult<T> = cmdExecutor.execute(command, context, opt)
 
     /* * *
     *
