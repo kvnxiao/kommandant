@@ -53,7 +53,7 @@ open class Kommandant(protected val cmdBank: ICommandBank = CommandBank(),
 
     fun getPrefixes(): Set<String> = cmdBank.getPrefixes()
 
-    fun getCommandsForPrefix(prefix: String): ImmutableCommandMap? = cmdBank.getCommandsForPrefix(prefix)
+    fun getCommandsForPrefix(prefix: String): ImmutableCommandMap = cmdBank.getCommandsForPrefix(prefix)
 
     fun getCommands(): ImmutableCommandMap = cmdBank.getCommands()
 

@@ -17,6 +17,6 @@ interface ICommandBank {
     fun changePrefix(command: ICommand<*>, newPrefix: String): Boolean
     fun getPrefixes(): Set<String>
     fun getCommands(): ImmutableCommandMap
-    fun getCommandsForPrefix(prefix: String): ImmutableCommandMap?
+    fun getCommandsForPrefix(prefix: String): ImmutableCommandMap
 
 }

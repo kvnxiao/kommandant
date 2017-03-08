@@ -22,6 +22,11 @@ open class CommandBank : ICommandBank {
     @JvmField
     protected val commandUniques: CommandMap = mutableMapOf()
 
+    companion object {
+        @JvmStatic
+        private val emptyMap: ImmutableCommandMap = kotlin.collections.emptyMap()
+    }
+
     override fun addCommand(command: ICommand<*>): Boolean {
         // Cannot add command if there is already an existing alias
         if (isAliasClash(command.props.prefix, command.props.aliases)) {
@@ -109,7 +114,7 @@ open class CommandBank : ICommandBank {
 
     override fun getPrefixes(): Set<String> = prefixSet.toSet()
 
-    override fun getCommandsForPrefix(prefix: String): ImmutableCommandMap? = prefixMap[prefix]?.toMap()
+    override fun getCommandsForPrefix(prefix: String): ImmutableCommandMap = prefixMap[prefix]?.toMap() ?: emptyMap
 
     override fun getCommands(): ImmutableCommandMap = commandMap.toMap()
 
