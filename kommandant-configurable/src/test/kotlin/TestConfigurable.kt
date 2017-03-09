@@ -15,7 +15,7 @@ import testcommands.EnabledDisabledCommands
 class TestConfigurable {
 
     companion object {
-        private val kommandant: KommandantConfigurable = KommandantConfigurable()
+        private val kommandant: KommandantConfigurable = KommandantConfigurable(true)
     }
 
     @Before

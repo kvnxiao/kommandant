@@ -1,8 +1,15 @@
 package com.github.kvnxiao.kommandant.configurable
 
+import com.fasterxml.jackson.core.JsonParser
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.SerializationFeature
+import com.fasterxml.jackson.module.afterburner.AfterburnerModule
+import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.github.kvnxiao.kommandant.Kommandant.Companion.LOGGER
 import com.github.kvnxiao.kommandant.command.CommandProperties
 import com.github.kvnxiao.kommandant.command.ICommand
+import java.io.IOException
 import java.nio.file.Files
 import java.nio.file.NoSuchFileException
 import java.nio.file.Paths
@@ -13,6 +20,15 @@ import java.nio.file.Paths
 open class CommandConfig {
 
     companion object {
+
+        const val CONFIG_FOLDER = "config"
+
+        @JvmField
+        val OBJECT_MAPPER: ObjectMapper = ObjectMapper()
+                .enable(SerializationFeature.INDENT_OUTPUT)
+                .enable(JsonParser.Feature.ALLOW_COMMENTS)
+                .registerModule(AfterburnerModule())
+                .registerModule(KotlinModule())
 
         @JvmStatic
         fun getConfigs(command: ICommand<*>, currentPath: String, configMap: MutableMap<String, ByteArray?> = mutableMapOf()): Map<String, ByteArray?> {
@@ -41,7 +57,7 @@ open class CommandConfig {
 
             if (configByteArr !== null) {
                 // Read the byte array and set new properties for command
-                val loadedProps: CommandProperties = CommandBankConfigurable.OBJECT_MAPPER.readValue(configByteArr)
+                val loadedProps: CommandProperties = OBJECT_MAPPER.readValue(configByteArr)
                 command.props = loadedProps
             }
 
@@ -55,13 +71,17 @@ open class CommandConfig {
         @JvmStatic
         fun writeConfigs(command: ICommand<*>, currentPath: String) {
             val path = Paths.get("$currentPath/${command.props.uniqueName}.json")
-            val configJson = CommandBankConfigurable.OBJECT_MAPPER.writeValueAsBytes(command.props)
+            val configJson = OBJECT_MAPPER.writeValueAsBytes(command.props)
 
             // Create file and directories if they do not exist
-            if (Files.notExists(path)) {
-                Files.createDirectories(path.parent)
-                Files.createFile(path)
-                Files.write(path, configJson)
+            try {
+                if (Files.notExists(path)) {
+                    Files.createDirectories(path.parent)
+                    Files.createFile(path)
+                    Files.write(path, configJson)
+                }
+            } catch (e: IOException) {
+                LOGGER.error("An IO error occurred in writing configuration files for $path")
             }
 
             if (command.hasSubcommands()) {

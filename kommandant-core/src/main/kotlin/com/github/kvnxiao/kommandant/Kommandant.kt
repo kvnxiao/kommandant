@@ -41,25 +41,25 @@ open class Kommandant(protected val cmdBank: ICommandBank = CommandBank(),
     *
     * * */
 
-    fun clearAll() = cmdBank.clearAll()
+    open fun clearAll() = cmdBank.clearAll()
 
-    fun addCommand(command: ICommand<*>): Boolean = cmdBank.addCommand(command)
+    open fun addCommand(command: ICommand<*>): Boolean = cmdBank.addCommand(command)
 
-    fun getCommand(prefixedAlias: String): ICommand<*>? = cmdBank.getCommand(prefixedAlias)
+    open fun getCommand(prefixedAlias: String): ICommand<*>? = cmdBank.getCommand(prefixedAlias)
 
-    fun deleteCommand(command: ICommand<*>?): Boolean = if (command !== null) cmdBank.deleteCommand(command) else false
+    open fun deleteCommand(command: ICommand<*>?): Boolean = if (command !== null) cmdBank.deleteCommand(command) else false
 
-    fun changePrefix(command: ICommand<*>?, newPrefix: String): Boolean = if (command !== null) cmdBank.changePrefix(command, newPrefix) else false
+    open fun changePrefix(command: ICommand<*>?, newPrefix: String): Boolean = if (command !== null) cmdBank.changePrefix(command, newPrefix) else false
 
-    fun getPrefixes(): Set<String> = cmdBank.getPrefixes()
+    open fun getPrefixes(): Set<String> = cmdBank.getPrefixes()
 
-    fun getCommandsForPrefix(prefix: String): ImmutableCommandMap = cmdBank.getCommandsForPrefix(prefix)
+    open fun getCommandsForPrefix(prefix: String): ImmutableCommandMap = cmdBank.getCommandsForPrefix(prefix)
 
-    fun getAllCommands(): ImmutableCommandMap = cmdBank.getCommands()
+    open fun getAllCommands(): ImmutableCommandMap = cmdBank.getCommands()
 
-    fun getCommandsUnique(): List<ICommand<*>> = cmdBank.getCommandsUnique()
+    open fun getCommandsUnique(): List<ICommand<*>> = cmdBank.getCommandsUnique()
 
-    fun addAnnotatedCommands(clazz: Class<*>) {
+    open fun addAnnotatedCommands(clazz: Class<*>) {
         try {
             cmdParser.parseAnnotations(clazz, this.cmdBank)
         } catch (e: InvocationTargetException) {
@@ -69,6 +69,6 @@ open class Kommandant(protected val cmdBank: ICommandBank = CommandBank(),
         }
     }
 
-    fun addAnnotatedCommands(ktClazz: KClass<*>) = this.addAnnotatedCommands(ktClazz.java)
+    open fun addAnnotatedCommands(ktClazz: KClass<*>) = this.addAnnotatedCommands(ktClazz.java)
 
 }
