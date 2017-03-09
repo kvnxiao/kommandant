@@ -2,7 +2,7 @@
 
 ![](https://jitpack.io/v/kvnxiao/kommandant.svg)
 
-Fast, modular, and flexible. Kommandant is a multipurpose command framework for the JVM, written in Kotlin and ready for easy integration into any project.
+Fast, modular, and flexible. Kommandant is a multipurpose command framework for the JVM, ready for easy integration into any project.
 
 # Overview
 
@@ -14,9 +14,9 @@ For more detailed instructions on how to use it, go here for [Kotlin]() usage, o
 
 Grab it using your favourite dependency management tools! Replace `@VERSION` with the latest release tag or use a commit hash.
 
-**PICK ONE OF:**
+### **PICK ONE OF:**
 
-`kommandant-configurable` *(relies on the core dendency)* is an extension module that can easily enable/disable commands at will, as well as load or save command properties to a .json file.
+`kommandant-configurable` *(relies on and includes the core dendency)* is an extension module that can easily enable/disable commands at will, as well as load or save command properties to a .json file.
 
 `kommandant-core` comes with bare essentials to manange your commands.
 
@@ -74,3 +74,9 @@ For `kommandant-configurable`
 	    <version>@VERSION@</version>
 	</dependency>
 ```
+
+# Development
+
+Kommandant is written in Kotlin and provides full Java interoperability. It is recommended to use IntelliJ IDEA if you wish to edit the source code.
+
+Have suggestions? See problems? Feel free to submit an issue or pull request.
