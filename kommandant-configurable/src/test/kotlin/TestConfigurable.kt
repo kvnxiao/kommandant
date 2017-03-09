@@ -22,22 +22,23 @@ class TestConfigurable {
     fun setup() {
         kommandant.addCommand(object : ICommand<String>("/", "main", CommandDefaults.NO_DESCRIPTION, CommandDefaults.NO_USAGE, CommandDefaults.EXEC_WITH_SUBCOMMANDS, CommandDefaults.IS_DISABLED, "asdf", "test") {
             override fun execute(context: CommandContext, vararg opt: Any): String {
-                println("asdf")
+                println("asdf 1")
                 return "a"
             }
         }.addSubcommand(object : ICommand<String>("/", "subcommand", CommandDefaults.NO_DESCRIPTION, CommandDefaults.NO_USAGE, CommandDefaults.EXEC_WITH_SUBCOMMANDS, CommandDefaults.IS_DISABLED, "asdf", "test") {
             override fun execute(context: CommandContext, vararg opt: Any): String {
-                println("asdf v2")
+                println("asdf 2")
                 return "a"
             }
-        }).addSubcommand(object : ICommand<String>("/", "subcommand2", CommandDefaults.NO_DESCRIPTION, CommandDefaults.NO_USAGE, CommandDefaults.EXEC_WITH_SUBCOMMANDS, CommandDefaults.IS_DISABLED, "asdf2", "test2") {
+            // This next subcommand should fail to link
+        }).addSubcommand(object : ICommand<String>("/", "subcommand2", CommandDefaults.NO_DESCRIPTION, CommandDefaults.NO_USAGE, CommandDefaults.EXEC_WITH_SUBCOMMANDS, CommandDefaults.IS_DISABLED, "asdf", "test2") {
             override fun execute(context: CommandContext, vararg opt: Any): String {
-                println("asdf v2")
+                println("asdf 3")
                 return "a"
             }
         }).addSubcommand(object : ICommand<String>("/", "subcommand3", CommandDefaults.NO_DESCRIPTION, CommandDefaults.NO_USAGE, CommandDefaults.EXEC_WITH_SUBCOMMANDS, CommandDefaults.IS_DISABLED, "asdf3", "test3") {
             override fun execute(context: CommandContext, vararg opt: Any): String {
-                println("asdf v2")
+                println("asdf 4")
                 return "a"
             }
         }))
@@ -51,7 +52,10 @@ class TestConfigurable {
 
     @Test
     fun test() {
-        kommandant.process<Any>("/asdf asd")
+        kommandant.process<Any>("/asdf asdf")
+        kommandant.process<Any>("/asdf test")
+        kommandant.process<Any>("/asdf test2")
+        kommandant.process<Any>("/asdf asdf3")
     }
 
     @Test
