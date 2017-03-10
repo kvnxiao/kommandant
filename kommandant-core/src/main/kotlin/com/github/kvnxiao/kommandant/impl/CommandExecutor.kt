@@ -22,15 +22,15 @@ open class CommandExecutor : ICommandExecutor {
                         // Execute main command, then subcommand
                         if (command.props.execWithSubcommands) {
                             LOGGER.debug("Executing command ${command.props.uniqueName} with args: [${if (context.hasArgs()) context.args else " "}]")
-                            executeCommand<T>(command, context, opt)
+                            executeCommand<T>(command, context, *opt)
                         } else {
                             LOGGER.debug("Executing command ${command.props.uniqueName} with args: [${if (context.hasArgs()) context.args else " "}], skipping result because execWithSubcommands is set to false")
                         }
-                        return execute(subCommand, subContext, opt)
+                        return execute(subCommand, subContext, *opt)
                     }
                 }
                 LOGGER.debug("Executing command ${command.props.uniqueName} with args: [${if (context.hasArgs()) context.args else " "}]")
-                return CommandResult(true, executeCommand(command, context, opt))
+                return CommandResult(true, executeCommand(command, context, *opt))
             } catch (e: InvocationTargetException) {
                 LOGGER.error("${e.localizedMessage}: Failed to invoke method bound to command '${command.props.uniqueName}'!")
             } catch (e: IllegalAccessException) {
@@ -48,7 +48,7 @@ open class CommandExecutor : ICommandExecutor {
     @Suppress("UNCHECKED_CAST")
     @Throws(InvocationTargetException::class, IllegalAccessException::class)
     protected fun <T> executeCommand(command: ICommand<*>, context: CommandContext, vararg opt: Any?): T {
-        return command.execute(context, opt) as T
+        return command.execute(context, *opt) as T
     }
 
 }

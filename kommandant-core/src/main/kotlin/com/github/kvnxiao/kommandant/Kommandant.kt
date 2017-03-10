@@ -28,12 +28,12 @@ open class Kommandant(protected val cmdBank: ICommandBank = CommandBank(),
         val context = CommandContext(input)
         if (context.hasAlias()) {
             val command: ICommand<*>? = this.getCommand(context.alias)
-            if (command !== null) return processCommand(command, context, opt)
+            if (command !== null) return processCommand(command, context, *opt)
         }
         return CommandResult(false)
     }
 
-    open protected fun <T> processCommand(command: ICommand<*>, context: CommandContext, vararg opt: Any?): CommandResult<T> = cmdExecutor.execute(command, context, opt)
+    open protected fun <T> processCommand(command: ICommand<*>, context: CommandContext, vararg opt: Any?): CommandResult<T> = cmdExecutor.execute(command, context, *opt)
 
     /* * *
     *

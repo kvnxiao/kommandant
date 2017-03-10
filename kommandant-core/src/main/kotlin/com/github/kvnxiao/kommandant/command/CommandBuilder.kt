@@ -61,17 +61,17 @@ open class CommandBuilder<T>(private val uniqueName: String) {
         if (aliases === null) aliases = Collections.singletonList(uniqueName)
         return object : ICommand<T>(prefix, uniqueName, description, usage, execWithSubcommands, isDisabled, aliases!!) {
             @Throws(InvocationTargetException::class, IllegalAccessException::class)
-            override fun execute(context: CommandContext, vararg opt: Any): T {
-                return executor.execute(context, opt)
+            override fun execute(context: CommandContext, vararg opt: Any?): T {
+                return executor.execute(context, *opt)
             }
         }
     }
 
     companion object {
         @JvmStatic
-        fun <T> execute(handler: (CommandContext, Array<out Any>) -> T): ICommandExecutable<T> {
+        fun <T> execute(handler: (CommandContext, Array<out Any?>) -> T): ICommandExecutable<T> {
             return object : ICommandExecutable<T> {
-                override fun execute(context: CommandContext, vararg opt: Any): T = handler(context, opt)
+                override fun execute(context: CommandContext, vararg opt: Any?): T = handler(context, opt)
             }
         }
     }

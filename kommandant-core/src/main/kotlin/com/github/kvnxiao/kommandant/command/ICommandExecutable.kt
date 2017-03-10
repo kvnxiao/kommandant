@@ -9,6 +9,6 @@ import java.lang.reflect.InvocationTargetException
 interface ICommandExecutable<out T> {
 
     @Throws(InvocationTargetException::class, IllegalAccessException::class)
-    fun execute(context: CommandContext, vararg opt: Any): T
+    fun execute(context: CommandContext, vararg opt: Any?): T
 
 }
