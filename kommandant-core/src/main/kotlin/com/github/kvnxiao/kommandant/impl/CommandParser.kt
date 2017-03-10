@@ -71,7 +71,7 @@ open class CommandParser : ICommandParser {
         return object : ICommand<Any?>(annotation.prefix, annotation.uniqueName, annotation.description, annotation.usage, annotation.execWithSubcommands, annotation.isDisabled, *annotation.aliases) {
             @Throws(InvocationTargetException::class, IllegalAccessException::class)
             override fun execute(context: CommandContext, vararg opt: Any?): Any? {
-                return method.invoke(instance, context, *opt)
+                return method.invoke(instance, context, opt)
             }
         }
     }

@@ -13,7 +13,7 @@ class EnabledDisabledCommands {
             aliases = arrayOf("enabled"),
             isDisabled = false
     )
-    fun enabled(context: CommandContext, vararg opt: Any): String {
+    fun enabled(context: CommandContext, vararg opt: Any?): String {
         return "This command is enabled"
     }
 
@@ -22,7 +22,7 @@ class EnabledDisabledCommands {
             aliases = arrayOf("disabled"),
             isDisabled = true
     )
-    fun disabled(context: CommandContext, vararg opt: Any): String {
+    fun disabled(context: CommandContext, vararg opt: Any?): String {
         return "This command is disabled"
     }
 
@@ -31,7 +31,7 @@ class EnabledDisabledCommands {
             aliases = arrayOf("parent"),
             isDisabled = false
     )
-    fun parentEnabled(context: CommandContext, vararg opt: Any): String {
+    fun parentEnabled(context: CommandContext, vararg opt: Any?): String {
         return "This main command is enabled"
     }
 
@@ -41,7 +41,7 @@ class EnabledDisabledCommands {
             isDisabled = true,
             parentName = "parentenabled"
     )
-    fun childDisabled(context: CommandContext, vararg opt: Any): String {
+    fun childDisabled(context: CommandContext, vararg opt: Any?): String {
         return "This sub command is disabled"
     }
 

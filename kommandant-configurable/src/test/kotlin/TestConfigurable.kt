@@ -21,23 +21,23 @@ class TestConfigurable {
     @Before
     fun setup() {
         kommandant.addCommand(object : ICommand<String>("/", "main", CommandDefaults.NO_DESCRIPTION, CommandDefaults.NO_USAGE, CommandDefaults.EXEC_WITH_SUBCOMMANDS, CommandDefaults.IS_DISABLED, "asdf", "test") {
-            override fun execute(context: CommandContext, vararg opt: Any): String {
+            override fun execute(context: CommandContext, vararg opt: Any?): String {
                 println("asdf 1")
                 return "a"
             }
         }.addSubcommand(object : ICommand<String>("/", "subcommand", CommandDefaults.NO_DESCRIPTION, CommandDefaults.NO_USAGE, CommandDefaults.EXEC_WITH_SUBCOMMANDS, CommandDefaults.IS_DISABLED, "asdf", "test") {
-            override fun execute(context: CommandContext, vararg opt: Any): String {
+            override fun execute(context: CommandContext, vararg opt: Any?): String {
                 println("asdf 2")
                 return "a"
             }
             // This next subcommand should fail to link
         }).addSubcommand(object : ICommand<String>("/", "subcommand2", CommandDefaults.NO_DESCRIPTION, CommandDefaults.NO_USAGE, CommandDefaults.EXEC_WITH_SUBCOMMANDS, CommandDefaults.IS_DISABLED, "asdf", "test2") {
-            override fun execute(context: CommandContext, vararg opt: Any): String {
+            override fun execute(context: CommandContext, vararg opt: Any?): String {
                 println("asdf 3")
                 return "a"
             }
         }).addSubcommand(object : ICommand<String>("/", "subcommand3", CommandDefaults.NO_DESCRIPTION, CommandDefaults.NO_USAGE, CommandDefaults.EXEC_WITH_SUBCOMMANDS, CommandDefaults.IS_DISABLED, "asdf3", "test3") {
-            override fun execute(context: CommandContext, vararg opt: Any): String {
+            override fun execute(context: CommandContext, vararg opt: Any?): String {
                 println("asdf 4")
                 return "a"
             }
