@@ -47,7 +47,7 @@ open class CommandExecutor : ICommandExecutor {
     // The command should have a specific return type of type T.
     @Suppress("UNCHECKED_CAST")
     @Throws(InvocationTargetException::class, IllegalAccessException::class)
-    protected fun <T> executeCommand(command: ICommand<*>, context: CommandContext, vararg opt: Any?): T {
+    open protected fun <T> executeCommand(command: ICommand<*>, context: CommandContext, vararg opt: Any?): T {
         return command.execute(context, *opt) as T
     }
 
