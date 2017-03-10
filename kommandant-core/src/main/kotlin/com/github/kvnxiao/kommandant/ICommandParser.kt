@@ -13,7 +13,7 @@ import java.lang.reflect.Method
 interface ICommandParser {
 
     @Throws(InvocationTargetException::class, IllegalAccessException::class)
-    fun parseAnnotations(clazz: Class<*>, cmdBank: ICommandBank)
+    fun parseAnnotations(instance: Any, cmdBank: ICommandBank)
 
     fun createCommand(instance: Any, method: Method, annotation: CommandAnn): ICommand<Any?>
 

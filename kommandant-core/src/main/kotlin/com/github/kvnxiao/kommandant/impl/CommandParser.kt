@@ -22,9 +22,9 @@ import java.util.*
 open class CommandParser : ICommandParser {
 
     @Throws(InvocationTargetException::class, IllegalAccessException::class)
-    override fun parseAnnotations(clazz: Class<*>, cmdBank: ICommandBank) {
+    override fun parseAnnotations(instance: Any, cmdBank: ICommandBank) {
         // Instantiate new instance of class to reference method invocations
-        val instance = clazz.newInstance()
+        val clazz = instance::class.java
 
         // Use hashmaps to link sub commands to parent commands
         val subCommands: CommandStringMap = mutableMapOf()

@@ -59,16 +59,20 @@ open class Kommandant(protected val cmdBank: ICommandBank = CommandBank(),
 
     open fun getCommandsUnique(): List<ICommand<*>> = cmdBank.getCommandsUnique()
 
-    open fun addAnnotatedCommands(clazz: Class<*>) {
+
+
+    open fun addAnnotatedCommands(instance: Any) {
         try {
-            cmdParser.parseAnnotations(clazz, this.cmdBank)
+            cmdParser.parseAnnotations(instance, this.cmdBank)
         } catch (e: InvocationTargetException) {
-            LOGGER.error("'${e.localizedMessage}': Could not instantiate an object instance of class '${clazz.name}'!")
+            LOGGER.error("'${e.localizedMessage}': Could not instantiate an object instance of class '${instance::class.java.name}'!")
         } catch (e: IllegalAccessException) {
-            LOGGER.error("'${e.localizedMessage}': Failed to access method definition in class '${clazz.name}'!")
+            LOGGER.error("'${e.localizedMessage}': Failed to access method definition in class '${instance::class.java.name}'!")
         }
     }
 
-    open fun addAnnotatedCommands(ktClazz: KClass<*>) = this.addAnnotatedCommands(ktClazz.java)
+    open fun addAnnotatedCommands(clazz: Class<*>) = this.addAnnotatedCommands(clazz.newInstance())
+
+    open fun addAnnotatedCommands(ktClazz: KClass<*>) = this.addAnnotatedCommands(ktClazz.java.newInstance())
 
 }
