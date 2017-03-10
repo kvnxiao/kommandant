@@ -1,6 +1,8 @@
 <h1>Kommandant &nbsp;<sup><sup><sub><i>[origin: German] (noun): commander</i></sub></sup></sup></h1>
 
-[![CircleCI](https://circleci.com/gh/kvnxiao/kommandant/tree/master.svg?style=svg)](https://circleci.com/gh/kvnxiao/kommandant/tree/master) ![Jitpack](https://jitpack.io/v/kvnxiao/kommandant.svg)
+[![CircleCI](https://circleci.com/gh/kvnxiao/kommandant/tree/master.svg?style=shield)](https://circleci.com/gh/kvnxiao/kommandant/tree/master)
+[![Release](https://jitpack.io/v/kvnxiao/kommandant.svg)](https://jitpack.io/#kvnxiao/kommandant)
+[![Apache License](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
 Fast, modular, and flexible. Kommandant is a multipurpose command framework for the JVM, ready for easy integration into any project.
 
