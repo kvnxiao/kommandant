@@ -11,7 +11,7 @@ import com.github.kvnxiao.kommandant.command.CommandContext
 class KotlinCommand {
 
     @CommandAnn(uniqueName = "kotlin", aliases = arrayOf("kotlin"))
-    fun simpleCommand(context: CommandContext, vararg opt: Any): String {
+    fun simpleCommand(context: CommandContext, vararg opt: Any?): String {
         return "this is a kotlin based command!"
     }
 
