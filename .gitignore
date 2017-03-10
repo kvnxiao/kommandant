@@ -57,6 +57,7 @@ fabric.properties
 
 .log
 modules/
-kommandant/
+/kommandant
+/kommandant-configurable/kommandant
 kommandant.json
 config
