@@ -14,13 +14,13 @@ For more detailed instructions on how to use it, go here for [Kotlin]() usage, o
 
 You can grab Kommandant using your favourite dependency management tools! Just replace `@VERSION` with the latest release tag or use a commit hash.
 
-### **PICK ONE OF:**
+**PICK ONE OF:**
 
 `kommandant-configurable` *(relies on the core dendency)* is an extension module that can easily enable/disable commands at will, as well as load or save command properties to a `.json` file.
 
 `kommandant-core` comes with bare essentials to manange your commands.
 
-### **Additional Modules**
+**Additional Modules**
 
 `kommandant-async` is an extension module with an asynchronous command processing method addon that relies on Kotlin [coroutines](https://github.com/Kotlin/kotlin-coroutines/blob/master/kotlin-coroutines-informal.md). Please keep in mind that as of Kotlin 1.10, coroutines are still _experimental_ and subject to change.
 
@@ -53,6 +53,7 @@ dependencies {
 
 ### Maven
 
+pom.xml
 ```xml
 	<repositories>
 		<repository>
