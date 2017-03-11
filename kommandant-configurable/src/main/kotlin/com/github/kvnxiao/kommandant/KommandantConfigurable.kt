@@ -14,11 +14,11 @@ open class KommandantConfigurable(var enableConfigReadWrite: Boolean = false,
                                   cmdExecutor: ICommandExecutor = CommandExecutor(),
                                   cmdParser: ICommandParser = CommandParser()) : Kommandant(cmdBank, cmdExecutor, cmdParser) {
 
-    fun enableCommand(command: ICommand<*>?) {
+    open fun enableCommand(command: ICommand<*>?) {
         if (command !== null) command.props.isDisabled = false
     }
 
-    fun disableCommand(command: ICommand<*>?) {
+    open fun disableCommand(command: ICommand<*>?) {
         if (command !== null) command.props.isDisabled = true
     }
 
@@ -48,7 +48,5 @@ open class KommandantConfigurable(var enableConfigReadWrite: Boolean = false,
     }
 
     open fun saveConfig(command: ICommand<*>) = CommandConfig.writeConfigs(command, CommandConfig.CONFIG_FOLDER)
-
-
 
 }
