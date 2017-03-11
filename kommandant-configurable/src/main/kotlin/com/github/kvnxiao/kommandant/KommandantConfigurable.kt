@@ -2,11 +2,17 @@ package com.github.kvnxiao.kommandant
 
 import com.github.kvnxiao.kommandant.command.ICommand
 import com.github.kvnxiao.kommandant.configurable.CommandConfig
+import com.github.kvnxiao.kommandant.impl.CommandBank
+import com.github.kvnxiao.kommandant.impl.CommandExecutor
+import com.github.kvnxiao.kommandant.impl.CommandParser
 
 /**
  * Created by kxiao on 3/8/17.
  */
-open class KommandantConfigurable(var enableConfigReadWrite: Boolean = false) : Kommandant() {
+open class KommandantConfigurable(var enableConfigReadWrite: Boolean = false,
+                                  cmdBank: ICommandBank = CommandBank(),
+                                  cmdExecutor: ICommandExecutor = CommandExecutor(),
+                                  cmdParser: ICommandParser = CommandParser()) : Kommandant(cmdBank, cmdExecutor, cmdParser) {
 
     fun enableCommand(command: ICommand<*>?) {
         if (command !== null) command.props.isDisabled = false
