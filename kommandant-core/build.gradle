@@ -7,12 +7,29 @@ apply plugin: 'me.champeau.gradle.jmh'
 dokka {
     moduleName = 'kommandant-core'
     outputFormat = 'html'
-    outputDirectory = "$buildDir/javadoc"
+    outputDirectory = "$buildDir/kdoc"
     processConfigurations = ['compile']
+    linkMapping {
+        dir = "src/main/kotlin"
+        url = "https://github.com/kvnxiao/kommandant/tree/master/kommandant-core/src/main/kotlin"
+        suffix = "#L"
+    }
     sourceDirs = files('src/main/kotlin', 'src/main/java')
 }
 
 dependencies {
     jmh "org.openjdk.jmh:jmh-core:1.17.5"
     jmh "ch.qos.logback:logback-classic:$logback_version"
+}
+
+task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
+    moduleName = 'kommandant-core'
+    outputFormat = 'javadoc'
+    outputDirectory = "$buildDir/javadoc"
+}
+
+task docs {
+    group = 'documentation'
+    dependsOn 'dokka'
+    dependsOn 'dokkaJavadoc'
 }

@@ -8,10 +8,20 @@ import com.github.kvnxiao.kommandant.command.ICommand
 import java.lang.reflect.InvocationTargetException
 
 /**
- * Created by kvnxiao on 3/3/17.
+ * The default implementation of [ICommandExecutor]. Executes a specified command by running the
+ * [ICommandExecutable][com.github.kvnxiao.kommandant.command.ICommandExecutable] method.
  */
 open class CommandExecutor : ICommandExecutor {
 
+    /**
+     * Executes the command with the provided command [context][CommandContext] and any optional data.
+     *
+     * @param[command] The command to execute.
+     * @param[context] The context of the command, containing the calling alias and any args it may have.
+     * @param[opt] A nullable vararg of [Any], which can be useful in specific implementations when a command requires
+     * more than just context for execution.
+     * @return[CommandResult] The result after command execution.
+     */
     override fun <T> execute(command: ICommand<*>, context: CommandContext, vararg opt: Any?): CommandResult<T> {
         if (!command.props.isDisabled) {
             if (checkOtherSettings(command, context, *opt)) {
@@ -44,16 +54,37 @@ open class CommandExecutor : ICommandExecutor {
         return CommandResult(false)
     }
 
-    // Because the command in the parameter can have a method return of any type '<*>',
-    // We require an unchecked cast to convert from wildcard <*> to specific type T.
-    // We operate under assumption that the user knows what they are doing and that
-    // The command should have a specific return type of type T.
+    /**
+     * Runs the command's execution method defined by its [ICommandExecutable][com.github.kvnxiao.kommandant.command.ICommandExecutable].
+     *
+     * Because the command in the parameter can have a method return of any generic type, we require an unchecked cast
+     * to convert from a wildcard to specific type T. We operate under assumption that the user knows what they are
+     * doing and that the command should have a specific return type of type T.
+     *
+     * @param[command] The command to execute.
+     * @param[context] The context of the command, containing the calling alias and any args it may have.
+     * @param[opt] A nullable vararg of [Any], which can be useful in specific implementations when a command requires
+     * more than just context for execution.
+     * @throws[InvocationTargetException] When the method invocation failed.
+     * @throws[IllegalAccessException] When the method could not be accessed through reflection.
+     * @return[T] Returns the result of the execution.
+     */
     @Suppress("UNCHECKED_CAST")
     @Throws(InvocationTargetException::class, IllegalAccessException::class)
     open protected fun <T> executeCommand(command: ICommand<*>, context: CommandContext, vararg opt: Any?): T {
         return command.execute(context, *opt) as T
     }
 
+    /**
+     * An extra method that can be used in other implementations to check whether it is valid to execute the command.
+     * Akin to a "permission" check.
+     *
+     * @param[command] The command to execute.
+     * @param[context] The context of the command, containing the calling alias and any args it may have.
+     * @param[opt] A nullable vararg of [Any], which can be useful in specific implementations when a command requires
+     * more than just context for execution.
+     * @return[Boolean] Defaults to true in the core library. This method can be overrided in other project implementations.
+     */
     open protected fun checkOtherSettings(command: ICommand<*>, context: CommandContext, vararg opt: Any?): Boolean = true
 
 }

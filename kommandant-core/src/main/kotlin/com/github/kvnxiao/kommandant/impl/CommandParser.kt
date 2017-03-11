@@ -1,6 +1,5 @@
 package com.github.kvnxiao.kommandant.impl
 
-import com.github.kvnxiao.kommandant.ICommandBank
 import com.github.kvnxiao.kommandant.ICommandParser
 import com.github.kvnxiao.kommandant.Kommandant.Companion.LOGGER
 import com.github.kvnxiao.kommandant.command.CommandAnn
@@ -15,9 +14,7 @@ import java.lang.reflect.Method
 import java.util.*
 
 /**
- * Created on:   2017-03-05
- * Author:       Kevin Xiao (github.com/alphahelix00)
- *
+ * The default implementation of [ICommandParser].
  */
 open class CommandParser : ICommandParser {
 

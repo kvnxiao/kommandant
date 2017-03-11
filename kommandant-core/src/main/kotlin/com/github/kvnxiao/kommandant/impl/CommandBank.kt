@@ -9,24 +9,48 @@ import com.github.kvnxiao.kommandant.utility.PrefixMap
 import java.util.*
 
 /**
- * Created by kvnxiao on 3/3/17.
+ * The default implementation of [ICommandBank]. Capable of adding, removing, finding, and deleting [commands][ICommand].
  */
 open class CommandBank : ICommandBank {
 
+    /**
+     * The set of all prefixes registered in the command bank, for all commands.
+     */
     @JvmField
     protected val prefixSet: MutableSet<String> = sortedSetOf(Collections.reverseOrder())
+    /**
+     * The mutable map which maps prefixes to the respective [CommandMap].
+     */
     @JvmField
     protected val prefixMap: PrefixMap = mutableMapOf()
+    /**
+     * The mutable map which maps "prefix + aliases" strings to the respective command, for all commands.
+     */
     @JvmField
     protected val commandMap: CommandMap = TreeMap()
+    /**
+     * The mutable map which maps unique name identifier strings to the respective command, for all commands.
+     */
     @JvmField
     protected val commandUniques: CommandMap = mutableMapOf()
 
     companion object {
+        /**
+         * An immutable, empty map.
+         *
+         * @see[getCommandsForPrefix]
+         */
         @JvmStatic
         private val emptyMap: ImmutableCommandMap = kotlin.collections.emptyMap()
     }
 
+    /**
+     * Adds a [command] to the registry. Failure to add commands occur if an alias clashes with another command's alias
+     * for the provided prefix, or if the command's identifier / name is not unique.
+     *
+     * @param[command] The command to add.
+     * @return[Boolean] Whether the command was added successfully to the registry.
+     */
     override fun addCommand(command: ICommand<*>): Boolean {
         // Cannot add command if there is already an existing alias
         if (isAliasClash(command.props.prefix, command.props.aliases)) {
@@ -57,6 +81,13 @@ open class CommandBank : ICommandBank {
         return true
     }
 
+    /**
+     * Removes the command from the registry, but does not destroy subcommand references for garbage collection.
+     *
+     * @param[command] The command to remove.
+     * @return[Boolean] Whether the removal was successful.
+     * @see[deleteCommand]
+     */
     override fun removeCommand(command: ICommand<*>): Boolean {
         // Cannot delete command if it doesn't exist in the bank
         if (!isAliasClash(command.props.prefix, command.props.aliases) && !commandUniques.contains(command.props.uniqueName)) return false
@@ -75,9 +106,17 @@ open class CommandBank : ICommandBank {
 
         // Remove command from unique name set
         commandUniques.remove(command.props.uniqueName)
+        LOGGER.debug("Removed command '${command.props.uniqueName}' with prefix '${command.props.prefix}'")
         return true
     }
 
+    /**
+     * Deletes the command from the registry by removing it and unlinking all subcommand references.
+     *
+     * @param[command] The command to delete.
+     * @return[Boolean] Whether the deletion was successful.
+     * @see[removeCommand]
+     */
     override fun deleteCommand(command: ICommand<*>): Boolean {
         // Remove command info from bank
         if (removeCommand(command)) {
@@ -85,16 +124,32 @@ open class CommandBank : ICommandBank {
             // Unlink all subcommand references
             command.deleteSubcommands()
 
-            LOGGER.debug("Deleted command '${command.props.uniqueName}' with prefix '${command.props.prefix}'")
+            LOGGER.debug("Deleted and removed subcommand references for the command '${command.props.uniqueName}' with prefix '${command.props.prefix}'")
             return true
         }
         return false
     }
 
+    /**
+     * Gets a command that exists in the [commandMap] by providing a single string that represents the command's
+     * "prefix + alias" used in command processing / execution.
+     *
+     * @return[ICommand] The (nullable) command with the provided prefix and alias combination.
+     */
     override fun getCommand(singleString: String): ICommand<*>? = commandMap[singleString]
 
-    fun getCommand(prefix: String, alias: String): ICommand<*>? = this.getCommand(prefix + alias)
+    /**
+     * Gets a command that exists in the [commandMap] by providing the prefix and alias of the command.
+     *
+     * @return[ICommand] The (nullable) command with the provided prefix and alias combination.
+     */
+    open fun getCommand(prefix: String, alias: String): ICommand<*>? = this.getCommand(prefix + alias)
 
+    /**
+     * Changes the prefix of a command in the registry.
+     *
+     * @return[Boolean] Whether the prefix change was successful.
+     */
     override fun changePrefix(command: ICommand<*>, newPrefix: String): Boolean {
         // Cannot change prefix if command doesn't exist in bank
         if (!isAliasClash(command.props.prefix, command.props.aliases) && !commandUniques.contains(command.props.uniqueName)) return false
@@ -108,18 +163,46 @@ open class CommandBank : ICommandBank {
         command.props.prefix = newPrefix
         if (addCommand(command)) {
             LOGGER.debug("Renamed prefix for command '${command.props.uniqueName}' from '$oldPrefix' to '${command.props.prefix}'")
+        } else {
+            // Re-add command to the bank with old prefix
+            command.props.prefix = oldPrefix
+            addCommand(command)
         }
         return false
     }
 
+    /**
+     * Gets an immutable [prefixSet].
+     *
+     * @return[Set] The set of all prefixes.
+     */
     override fun getPrefixes(): Set<String> = prefixSet.toSet()
 
+    /**
+     * Gets an immutable command map of aliases to commands for the provided prefix. The command map may be empty
+     * if the alias does not exist in the [prefixSet].
+     *
+     * @return[ImmutableCommandMap] The immutable command map of aliases to commands. Can be empty if prefix is invalid.
+     */
     override fun getCommandsForPrefix(prefix: String): ImmutableCommandMap = prefixMap[prefix]?.toMap() ?: emptyMap
 
+    /**
+     * Gets an immutable command map of all "prefix + aliases" to commands.
+     *
+     * @return[ImmutableCommandMap] The immutable command map of all "prefix + aliases" to commands.
+     */
     override fun getCommands(): ImmutableCommandMap = commandMap.toMap()
 
+    /**
+     * Gets an immutable list of all registered commands in the registry.
+     *
+     * @return[List] The immutable list of all registered commands.
+     */
     override fun getCommandsUnique(): List<ICommand<*>> = commandUniques.values.toList()
 
+    /**
+     * Deletes all commands from the registry and clears the registry's maps and sets.
+     */
     override fun clearAll() {
         LOGGER.debug("Clearing all commands from the bank.")
         commandUniques.values.forEach(ICommand<*>::deleteSubcommands)
@@ -129,6 +212,13 @@ open class CommandBank : ICommandBank {
         commandUniques.clear()
     }
 
-    fun isAliasClash(prefix: String, aliases: List<String>): Boolean = aliases.any { commandMap.containsKey(prefix + it) }
+    /**
+     * Checks whether the provided prefix and aliases clash with the prefix and aliases of existing commands in the registry.
+     *
+     * @param[prefix] The prefix to check.
+     * @param[aliases] The list of aliases for the specified prefix.
+     * @return[Boolean] Whether the provided prefix and aliases clash with any of the existing commands in the registry.
+     */
+    open fun isAliasClash(prefix: String, aliases: List<String>): Boolean = aliases.any { commandMap.containsKey(prefix + it) }
 
 }

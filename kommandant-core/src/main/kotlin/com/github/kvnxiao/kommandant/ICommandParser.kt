@@ -6,9 +6,7 @@ import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
 
 /**
- * Created on:   2017-03-05
- * Author:       Kevin Xiao (github.com/alphahelix00)
- *
+ * An interface that defines the methods a command parser needs.
  */
 interface ICommandParser {
 

@@ -3,10 +3,10 @@ package com.github.kvnxiao.kommandant.command;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * This class contains the context of the command, i.e. it parses a string and splits it in two based on the first
+ * A data class for containing the context of the command. It parses a string and splits it in two based on the first
  * available space. The first string represents the alias, and the second string represents the arguments leftover.
  * <p>
- * NOTE: This class was written in Java. But why you might ask? As of Kotlin 1.10, there are still some performance
+ * NOTE: This class was written in Java. And why, you might ask? As of Kotlin 1.10, there is still some performance
  * overhead in splitting strings by a literal. As such, string splitting in Java is currently still more performant
  * than in Kotlin.
  */
@@ -48,7 +48,7 @@ public class CommandContext {
     /**
      * Gets the alias for this CommandContext. Can be null.
      *
-     * @return The (possibly null) alias
+     * @return The (nullable) alias.
      */
     @Nullable
     public String getAlias() {
@@ -58,7 +58,7 @@ public class CommandContext {
     /**
      * Gets the args for this CommandContext. Can be null.
      *
-     * @return The (possibly null) args
+     * @return The (nullable) args.
      */
     @Nullable
     public String getArgs() {
@@ -66,9 +66,9 @@ public class CommandContext {
     }
 
     /**
-     * A CommandContext has an alias if the alias string is not null and not empty
+     * A CommandContext has an alias if the alias string is not null and not empty.
      *
-     * @return whether an alias exists
+     * @return Whether an alias exists.
      */
     public boolean hasAlias() {
         return alias != null && !alias.isEmpty();
@@ -78,7 +78,7 @@ public class CommandContext {
      * A CommandContext has args if the args string is not null. The args can be null if the input string that was
      * split had no space character in it.
      *
-     * @return whether args exist
+     * @return Whether args exist.
      */
     public boolean hasArgs() {
         return args != null;

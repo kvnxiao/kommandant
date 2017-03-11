@@ -5,9 +5,7 @@ import com.github.kvnxiao.kommandant.command.CommandResult
 import com.github.kvnxiao.kommandant.command.ICommand
 
 /**
- * Created on:   2017-03-05
- * Author:       Kevin Xiao (github.com/alphahelix00)
- *
+ * An interface that defines the methods a command executor needs.
  */
 interface ICommandExecutor {
 
