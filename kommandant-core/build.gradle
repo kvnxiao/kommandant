@@ -4,6 +4,14 @@ plugins {
 
 apply plugin: 'me.champeau.gradle.jmh'
 
+dokka {
+    moduleName = 'kommandant-core'
+    outputFormat = 'html'
+    outputDirectory = "$buildDir/javadoc"
+    processConfigurations = ['compile']
+    sourceDirs = files('src/main/kotlin', 'src/main/java')
+}
+
 dependencies {
     jmh "org.openjdk.jmh:jmh-core:1.17.5"
     jmh "ch.qos.logback:logback-classic:$logback_version"
