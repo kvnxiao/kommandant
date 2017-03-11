@@ -22,7 +22,7 @@ import java.util.*
 open class CommandParser : ICommandParser {
 
     @Throws(InvocationTargetException::class, IllegalAccessException::class)
-    override fun parseAnnotations(instance: Any, cmdBank: ICommandBank) {
+    override fun parseAnnotations(instance: Any): List<ICommand<*>> {
         // Instantiate new instance of class to reference method invocations
         val clazz = instance::class.java
 
@@ -56,15 +56,11 @@ open class CommandParser : ICommandParser {
             LOGGER.debug("Registered command '${subCommand.props.uniqueName}' as a subcommand of parent '$parentName'")
         }
 
-        // Add all main commands to the command bank
-        while (mainCommands.isNotEmpty()) {
-            cmdBank.addCommand(mainCommands.pop())
-        }
-
         // Clear utility containers as we are done adding all commands
         subCommands.clear()
         commands.clear()
-        mainCommands.clear()
+
+        return mainCommands
     }
 
     override fun createCommand(instance: Any, method: Method, annotation: CommandAnn): ICommand<Any?> {

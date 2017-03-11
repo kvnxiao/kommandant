@@ -50,4 +50,5 @@ open class KommandantConfigurable(var enableConfigReadWrite: Boolean = false,
     open fun saveConfig(command: ICommand<*>) = CommandConfig.writeConfigs(command, CommandConfig.CONFIG_FOLDER)
 
 
+
 }

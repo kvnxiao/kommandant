@@ -59,11 +59,15 @@ open class Kommandant(protected val cmdBank: ICommandBank = CommandBank(),
 
     open fun getCommandsUnique(): List<ICommand<*>> = cmdBank.getCommandsUnique()
 
-
+    @Throws(InvocationTargetException::class, IllegalAccessException::class)
+    open fun parseAnnotations(instance: Any): List<ICommand<*>> = cmdParser.parseAnnotations(instance)
 
     open fun addAnnotatedCommands(instance: Any) {
         try {
-            cmdParser.parseAnnotations(instance, this.cmdBank)
+            // Add each command resulting from parsed annotations to the bank
+            this.parseAnnotations(instance).forEach {
+                this.addCommand(it)
+            }
         } catch (e: InvocationTargetException) {
             LOGGER.error("'${e.localizedMessage}': Could not instantiate an object instance of class '${instance::class.java.name}'!")
         } catch (e: IllegalAccessException) {
