@@ -13,7 +13,7 @@ import java.lang.reflect.InvocationTargetException
 open class CommandExecutor : ICommandExecutor {
 
     override fun <T> execute(command: ICommand<*>, context: CommandContext, vararg opt: Any?): CommandResult<T> {
-        if (!command.props.isDisabled && checkOtherSettings(command, context, opt)) {
+        if (!command.props.isDisabled && checkOtherSettings(command, context, *opt)) {
             try {
                 if (context.hasArgs() && command.hasSubcommands()) {
                     val subContext: CommandContext = CommandContext(context.args)
