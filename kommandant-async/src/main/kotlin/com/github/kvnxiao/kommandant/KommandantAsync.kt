@@ -10,10 +10,6 @@ import kotlinx.coroutines.experimental.async
  */
 open class KommandantAsync : Kommandant() {
 
-    open fun <T> processAsync(input: String, vararg opt: Any?): Deferred<CommandResult<T>> {
-        return async(CommonPool) {
-            process<T>(input, *opt)
-        }
-    }
+    open fun <T> processAsync(input: String, vararg opt: Any?): Deferred<CommandResult<T>> = async(CommonPool) { process<T>(input, *opt) }
 
 }
