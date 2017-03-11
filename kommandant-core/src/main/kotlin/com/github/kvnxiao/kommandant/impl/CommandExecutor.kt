@@ -38,8 +38,9 @@ open class CommandExecutor : ICommandExecutor {
                     LOGGER.error("${e.localizedMessage}: Failed to access method definition for command '${command.props.uniqueName}'!")
                 }
             }
+        } else {
+            LOGGER.debug("Executing command '${command.props.uniqueName}' ignored because the command is disabled.")
         }
-        LOGGER.debug("Executing command '${command.props.uniqueName}' ignored because the command is disabled.")
         return CommandResult(false)
     }
 
