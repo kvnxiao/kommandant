@@ -27,7 +27,7 @@ open class Kommandant(protected val cmdBank: ICommandBank = CommandBank(),
     open fun <T> process(input: String, vararg opt: Any?): CommandResult<T> {
         val context = CommandContext(input)
         if (context.hasAlias()) {
-            val command: ICommand<*>? = this.getCommand(context.alias)
+            val command: ICommand<*>? = this.getCommand(context.alias!!)
             if (command !== null) return processCommand(command, context, *opt)
         }
         return CommandResult(false)
