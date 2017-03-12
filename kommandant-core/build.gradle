@@ -19,6 +19,11 @@ dokka {
         url = "https://github.com/kvnxiao/kommandant/tree/master/kommandant-core/src/main/kotlin"
         suffix = "#L"
     }
+    linkMapping {
+        dir = "src/main/java"
+        url = "https://github.com/kvnxiao/kommandant/tree/master/kommandant-core/src/main/java"
+        suffix = "#L"
+    }
     sourceDirs = files('src/main/kotlin', 'src/main/java')
 }
 
