@@ -14,11 +14,17 @@ import java.lang.reflect.Method
 import java.util.*
 
 /**
- * The default implementation of [ICommandParser].
+ * The default implementation of [ICommandParser]. Parses a class containing the [CommandAnn] annotation to create
+ * commands from these annotations.
  */
 open class CommandParser : ICommandParser {
 
-    @Throws(InvocationTargetException::class, IllegalAccessException::class)
+    /**
+     * Parse [CommandAnn] annotations in a class and returns a list of commands created from those annotations.
+     *
+     * @param[instance] The instance object for which its class is to be parsed.
+     * @return[List] The list of commands created after parsing.
+     */
     override fun parseAnnotations(instance: Any): List<ICommand<*>> {
         // Instantiate new instance of class to reference method invocations
         val clazz = instance::class.java
@@ -47,7 +53,7 @@ open class CommandParser : ICommandParser {
             }
         }
 
-        // Link sub commmands to parent
+        // Link sub commands to parent
         for ((subCommand, parentName) in subCommands) {
             commands[parentName]?.addSubcommand(subCommand)
             LOGGER.debug("Registered command '${subCommand.props.uniqueName}' as a subcommand of parent '$parentName'")
@@ -57,9 +63,18 @@ open class CommandParser : ICommandParser {
         subCommands.clear()
         commands.clear()
 
-        return mainCommands
+        return mainCommands.toList()
     }
 
+    /**
+     * Creates a command by parsing a single [CommandAnn] annotation, with its execution method set as the method
+     * targeted by the annotation.
+     *
+     * @param[instance] The instance object for which its class is to be parsed.
+     * @param[method] The method to invoke for command execution.
+     * @param[annotation] The annotation to parse.
+     * @return[ICommand] A newly created command with properties taken from the annotation.
+     */
     override fun createCommand(instance: Any, method: Method, annotation: CommandAnn): ICommand<Any?> {
         return object : ICommand<Any?>(annotation.prefix, annotation.uniqueName, annotation.description, annotation.usage, annotation.execWithSubcommands, annotation.isDisabled, *annotation.aliases) {
             @Throws(InvocationTargetException::class, IllegalAccessException::class)

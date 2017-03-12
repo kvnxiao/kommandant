@@ -9,6 +9,15 @@ import com.github.kvnxiao.kommandant.command.ICommand
  */
 interface ICommandExecutor {
 
+    /**
+     * Executes the command with the provided command [context][CommandContext] and any optional data.
+     *
+     * @param[command] The command to execute.
+     * @param[context] The context of the command, containing the calling alias and any args it may have.
+     * @param[opt] A nullable vararg of [Any], which can be useful in specific implementations when a command requires
+     * more than just context for execution.
+     * @return[CommandResult] The result after command execution.
+     */
     fun <T> execute(command: ICommand<*>, context: CommandContext, vararg opt: Any?): CommandResult<T>
 
 }
