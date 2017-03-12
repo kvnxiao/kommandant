@@ -59,7 +59,6 @@ subprojects {
         outputFormat = 'html'
         outputDirectory = "$buildDir/kdoc"
         processConfigurations = ['compile']
-        includes = [ 'Module.md' ]
         linkMapping {
             dir = "src/main/kotlin"
             url = "https://github.com/kvnxiao/kommandant/tree/master/${project.name}/src/main/kotlin"
@@ -96,6 +95,16 @@ subprojects {
         dependsOn 'dokka'
         dependsOn 'dokkaJavadoc'
     }
+
+    task copyCss(type: Copy) {
+        from("${rootProject.projectDir}/docs/style.css")
+        into("${project.buildDir}/kdoc/")
+        doLast {
+            println("Copied custom KDoc stylesheet into build directory for '${project.name}'")
+        }
+    }
+
+    generateDocs.finalizedBy copyCss
 
 }
 
