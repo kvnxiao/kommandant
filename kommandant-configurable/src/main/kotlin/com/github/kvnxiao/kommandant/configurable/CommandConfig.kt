@@ -15,13 +15,19 @@ import java.nio.file.NoSuchFileException
 import java.nio.file.Paths
 
 /**
- * Created by kxiao on 3/7/17.
+ * An object class containing default constants and methods for getting, loading, and saving command configs.
  */
 object CommandConfig {
 
+    /**
+     * The default folder location where all command configuration files will be found. Defaults to "kommandant"
+     */
     @JvmField
     var CONFIG_FOLDER = "kommandant"
 
+    /**
+     * Default Jackson object mapper instance for serializing and deserializing JSON
+     */
     @JvmField
     val OBJECT_MAPPER: ObjectMapper = ObjectMapper()
             .enable(SerializationFeature.INDENT_OUTPUT)
@@ -29,6 +35,9 @@ object CommandConfig {
             .registerModule(AfterburnerModule())
             .registerModule(KotlinModule())
 
+    /**
+     * Default method to get configuration files for a command and all of its subcommands.
+     */
     @JvmStatic
     fun getConfigs(command: ICommand<*>, currentPath: String, configMap: MutableMap<String, ByteArray?> = mutableMapOf()): Map<String, ByteArray?> {
         val path = Paths.get("$currentPath/${command.props.uniqueName}.json")
@@ -49,6 +58,9 @@ object CommandConfig {
         return configMap.toMap()
     }
 
+    /**
+     * Default method to load configuration files for a command and all of its subcommands.
+     */
     @JvmStatic
     fun loadConfigs(command: ICommand<*>, currentPath: String, configMap: Map<String, ByteArray?>) {
         val path = "$currentPath/${command.props.uniqueName}"
@@ -67,6 +79,9 @@ object CommandConfig {
         }
     }
 
+    /**
+     * Default method to write configuration file sfor a command and all of its subcommands.
+     */
     @JvmStatic
     fun writeConfigs(command: ICommand<*>, currentPath: String) {
         val path = Paths.get("$currentPath/${command.props.uniqueName}.json")
