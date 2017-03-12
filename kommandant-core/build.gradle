@@ -4,6 +4,11 @@ plugins {
 
 apply plugin: 'me.champeau.gradle.jmh'
 
+dependencies {
+    jmh "org.openjdk.jmh:jmh-core:1.17.5"
+    jmh "ch.qos.logback:logback-classic:$logback_version"
+}
+
 dokka {
     moduleName = 'kommandant-core'
     outputFormat = 'html'
@@ -15,11 +20,6 @@ dokka {
         suffix = "#L"
     }
     sourceDirs = files('src/main/kotlin', 'src/main/java')
-}
-
-dependencies {
-    jmh "org.openjdk.jmh:jmh-core:1.17.5"
-    jmh "ch.qos.logback:logback-classic:$logback_version"
 }
 
 task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
