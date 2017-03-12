@@ -5,17 +5,19 @@ import java.util.*
 
 /**
  * A builder class that helps define a command without needing to specify all the properties for the [ICommand] constructor.
+ *
+ * @constructor Primary constructor to define the [uniqueName] of the command to build.
+ * @property[uniqueName] The unique name of the command to build.
  */
-open class CommandBuilder<T>
-/**
- * Primary constructor to define the [uniqueName] of the command to build.
- */
-(
-        /**
-         * The unique name of the command to build.
-         */
-        private val uniqueName: String
-) {
+open class CommandBuilder<T>(private val uniqueName: String) {
+
+    /**
+     * Secondary constructor to define the [prefix] along with the [uniqueName] of the command to build.
+     */
+    constructor(prefix: String, uniqueName: String) : this(uniqueName) {
+        this.prefix = prefix
+    }
+
     /**
      * The aliases of the command to build, represented as a (nullable) list of strings. If the list is null, the builder
      * will default to using the command's [uniqueName] as the command's alias.
@@ -26,30 +28,27 @@ open class CommandBuilder<T>
      * The description of the command to build. Defaults to [CommandDefaults.NO_DESCRIPTION].
      */
     private var description: String = CommandDefaults.NO_DESCRIPTION
+
     /**
      * The usage of the command to build. Defaults to [CommandDefaults.NO_USAGE].
      */
     private var usage: String = CommandDefaults.NO_USAGE
+
     /**
      * The prefix of the command to build. Defaults to [CommandDefaults.PREFIX].
      */
     private var prefix: String = CommandDefaults.PREFIX
+
     /**
      * Whether the command should execute alongside its subcommand or be skipped when subcommands are processed.
      * Defaults to [CommandDefaults.EXEC_WITH_SUBCOMMANDS].
      */
     private var execWithSubcommands: Boolean = CommandDefaults.EXEC_WITH_SUBCOMMANDS
+
     /**
      * Whether the command is disabled. Defaults to [CommandDefaults.IS_DISABLED].
      */
     private var isDisabled: Boolean = CommandDefaults.IS_DISABLED
-
-    /**
-     * Secondary constructor to define the [prefix] along with the [uniqueName] of the command to build.
-     */
-    constructor(prefix: String, uniqueName: String) : this(uniqueName) {
-        this.prefix = prefix
-    }
 
     /**
      * Sets the prefix of the command to build.

@@ -8,40 +8,38 @@ import java.util.*
 /**
  * An abstract class which represents a command. All commands implement [ICommandExecutable] as their main
  * executing method or function.
+ *
+ * @property[props] The command properties.
+ * @constructor Primary constructor requiring a [CommandProperties] instance.
  */
-abstract class ICommand<T>(
-        /**
-         * The command properties.
-         */
-        var props: CommandProperties
-) : ICommandExecutable<T> {
+abstract class ICommand<T>(var props: CommandProperties) : ICommandExecutable<T> {
 
     /**
      * A sorted map of [String] to [ICommand] which maps all subcommand aliases to the respective commands.
      */
     val subCommandMap: CommandMap = TreeMap()
     /**
-     * A set containing all subcommands registered to this command
+     * A set containing all subcommands registered to this command.
      */
     val subCommands: CommandSet = mutableSetOf()
 
     /**
-     * Secondary constructor which takes in values for [CommandProperties] directly
+     * Secondary constructor which takes in values for [CommandProperties] directly.
      */
     constructor(prefix: String, uniqueName: String, description: String, usage: String, execWithSubcommands: Boolean, isDisabled: Boolean, vararg aliases: String) : this(CommandProperties(prefix, uniqueName, description, usage, execWithSubcommands, isDisabled, aliases.asList()))
 
     /**
-     * Secondary constructor which takes in values for [CommandProperties] directly
+     * Secondary constructor which takes in values for [CommandProperties] directly.
      */
     constructor(prefix: String, uniqueName: String, description: String, usage: String, execWithSubcommands: Boolean, isDisabled: Boolean, aliases: List<String>) : this(CommandProperties(prefix, uniqueName, description, usage, execWithSubcommands, isDisabled, aliases))
 
     /**
-     * Adds a provided command as a subcommand to this command
+     * Adds a provided command as a subcommand to this command.
      *
      * @param[subCommand] The subcommand to add.
      * @return[ICommand] The current command (NOT the subcommand!).
      */
-    fun addSubcommand(subCommand: ICommand<*>): ICommand<T> {
+    open fun addSubcommand(subCommand: ICommand<*>): ICommand<T> {
         for (alias in subCommand.props.aliases) {
             if (subCommandMap.containsKey(alias)) {
                 LOGGER.error("Failed to link sub-command '${subCommand.props.uniqueName}' to '${this.props.uniqueName}'; the alias '$alias' is already taken!")
@@ -59,12 +57,12 @@ abstract class ICommand<T>(
      *
      * @return[Boolean] Whether the subcommand set is empty or not.
      */
-    fun hasSubcommands(): Boolean = subCommands.isNotEmpty()
+    open fun hasSubcommands(): Boolean = subCommands.isNotEmpty()
 
     /**
      * Removes all subcommands associated to this command. This clears the [subCommandMap] map and [subCommands] set.
      */
-    fun deleteSubcommands() {
+    open fun deleteSubcommands() {
         if (this.hasSubcommands()) {
             subCommandMap.clear()
             subCommands.forEach(ICommand<*>::deleteSubcommands)
@@ -73,7 +71,7 @@ abstract class ICommand<T>(
     }
 
     /**
-     * Overriden toString method returns the [CommandProperties.uniqueName].
+     * Overrided toString method returns the [CommandProperties.uniqueName].
      *
      * @see[CommandProperties]
      */

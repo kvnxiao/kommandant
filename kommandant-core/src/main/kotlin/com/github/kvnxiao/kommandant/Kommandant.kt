@@ -14,20 +14,13 @@ import kotlin.reflect.KClass
 
 /**
  * The default aggregation of a command registry, parser, and executor, which manages and executes commands.
+ *
+ * @property[cmdBank] The command registry, an implementation of [ICommandBank].
+ * @property[cmdExecutor] The command executor, an implementation of [ICommandExecutor].
+ * @property[cmdParser] The command parser, an impementation of [ICommandParser].
+ * @constructor Default primary constructor which uses default implementations of the registry, parser, and executor.
  */
-open class Kommandant(
-        /**
-         * The command registry, an implementation of [ICommandBank].
-         */
-        protected val cmdBank: ICommandBank = CommandBank(),
-        /**
-         * The command executor, an implementation of [ICommandExecutor].
-         */
-        protected val cmdExecutor: ICommandExecutor = CommandExecutor(),
-        /**
-         * The command parser, an impementation of [ICommandParser]
-         */
-        protected val cmdParser: ICommandParser = CommandParser()) {
+open class Kommandant(protected val cmdBank: ICommandBank = CommandBank(), protected val cmdExecutor: ICommandExecutor = CommandExecutor(), protected val cmdParser: ICommandParser = CommandParser()) {
 
     companion object {
         /**
