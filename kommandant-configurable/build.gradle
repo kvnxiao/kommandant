@@ -10,34 +10,3 @@ dependencies {
     compile "com.fasterxml.jackson.core:jackson-annotations:$jackson_version"
     compile "com.fasterxml.jackson.module:jackson-module-kotlin:$jackson_version"
 }
-
-dokka {
-    moduleName = project.name
-    outputFormat = 'html'
-    outputDirectory = "$buildDir/kdoc"
-    processConfigurations = ['compile']
-    linkMapping {
-        dir = "src/main/kotlin"
-        url = "https://github.com/kvnxiao/kommandant/tree/master/kommandant-configurable/src/main/kotlin"
-        suffix = "#L"
-    }
-    sourceDirs = files('src/main/kotlin', 'src/main/java')
-}
-
-task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
-    moduleName = project.name
-    outputFormat = 'javadoc'
-    outputDirectory = "$buildDir/javadoc"
-    linkMapping {
-        dir = "src/main/kotlin"
-        url = "https://github.com/kvnxiao/kommandant/tree/master/kommandant-configurable/src/main/kotlin"
-        suffix = "#L"
-    }
-    sourceDirs = files('src/main/kotlin', 'src/main/java')
-}
-
-task docs {
-    group = 'documentation'
-    dependsOn 'dokka'
-    dependsOn 'dokkaJavadoc'
-}

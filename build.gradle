@@ -54,5 +54,48 @@ subprojects {
         testCompile "junit:junit:$junit_version"
     }
 
+    dokka {
+        moduleName = project.name
+        outputFormat = 'html'
+        outputDirectory = "$buildDir/kdoc"
+        processConfigurations = ['compile']
+        includes = [ 'Module.md' ]
+        linkMapping {
+            dir = "src/main/kotlin"
+            url = "https://github.com/kvnxiao/kommandant/tree/master/${project.name}/src/main/kotlin"
+            suffix = "#L"
+        }
+        linkMapping {
+            dir = "src/main/java"
+            url = "https://github.com/kvnxiao/kommandant/tree/master/${project.name}/src/main/java"
+            suffix = "#L"
+        }
+        sourceDirs = files('src/main/kotlin', 'src/main/java')
+    }
+
+    task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
+        moduleName = project.name
+        outputFormat = 'javadoc'
+        outputDirectory = "$buildDir/javadoc"
+        processConfigurations = ['compile']
+        linkMapping {
+            dir = "src/main/kotlin"
+            url = "https://github.com/kvnxiao/kommandant/tree/master/${project.name}/src/main/kotlin"
+            suffix = "#L"
+        }
+        linkMapping {
+            dir = "src/main/java"
+            url = "https://github.com/kvnxiao/kommandant/tree/master/${project.name}/src/main/java"
+            suffix = "#L"
+        }
+        sourceDirs = files('src/main/kotlin', 'src/main/java')
+    }
+
+    task generateDocs {
+        group = 'documentation'
+        dependsOn 'dokka'
+        dependsOn 'dokkaJavadoc'
+    }
+
 }
 
