@@ -36,12 +36,12 @@ open class CommandBank : ICommandBank {
 
     companion object {
         /**
-         * An immutable, empty map.
+         * An immutable, empty command map.
          *
          * @see[getCommandsForPrefix]
          */
-        @JvmStatic
-        private val emptyMap: ImmutableCommandMap = kotlin.collections.emptyMap()
+        @JvmField
+        val emptyCommandMap: ImmutableCommandMap = kotlin.collections.emptyMap()
     }
 
     /**
@@ -184,7 +184,7 @@ open class CommandBank : ICommandBank {
      *
      * @return[ImmutableCommandMap] The immutable command map of aliases to commands. Can be empty if prefix is invalid.
      */
-    override fun getCommandsForPrefix(prefix: String): ImmutableCommandMap = prefixMap[prefix]?.toMap() ?: emptyMap
+    override fun getCommandsForPrefix(prefix: String): ImmutableCommandMap = prefixMap[prefix]?.toMap() ?: emptyCommandMap
 
     /**
      * Gets an immutable command map of all "prefix + aliases" to commands.

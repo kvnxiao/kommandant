@@ -19,7 +19,7 @@ annotation class CommandAnn(
          */
         val uniqueName: String,
         /**
-         * Defines the aliases for the command, represented in an array of strings. This field is always required.
+         * Defines the aliases for the command represented in an array of strings. This field is always required.
          */
         val aliases: Array<String>,
         /**
@@ -31,9 +31,8 @@ annotation class CommandAnn(
          */
         val usage: String = CommandDefaults.NO_USAGE,
         /**
-         * Defines the parent command's unique name, implying that this command will be a subcommand of that parent.
-         * Used to link subcommands to their parent commands. Defaults to [CommandDefaults.PARENT], an empty string
-         * representing no parent command.
+         * Defines the unique name of the parent command which implies that this command will be a subcommand of that parent.
+         * This is used to link subcommands to their parent commands. Defaults to [CommandDefaults.PARENT] as an empty string representing no parent command.
          */
         val parentName: String = CommandDefaults.PARENT,
         /**
