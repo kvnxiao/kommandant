@@ -10,7 +10,7 @@ dependencies {
 }
 
 dokka {
-    moduleName = 'kommandant-core'
+    moduleName = project.name
     outputFormat = 'html'
     outputDirectory = "$buildDir/kdoc"
     processConfigurations = ['compile']
@@ -23,9 +23,16 @@ dokka {
 }
 
 task dokkaJavadoc(type: org.jetbrains.dokka.gradle.DokkaTask) {
-    moduleName = 'kommandant-core'
+    moduleName = project.name
     outputFormat = 'javadoc'
     outputDirectory = "$buildDir/javadoc"
+    processConfigurations = ['compile']
+    linkMapping {
+        dir = "src/main/kotlin"
+        url = "https://github.com/kvnxiao/kommandant/tree/master/kommandant-core/src/main/kotlin"
+        suffix = "#L"
+    }
+    sourceDirs = files('src/main/kotlin', 'src/main/java')
 }
 
 task docs {
