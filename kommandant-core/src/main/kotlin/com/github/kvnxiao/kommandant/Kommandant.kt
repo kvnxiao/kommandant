@@ -18,7 +18,7 @@ import kotlin.reflect.KClass
  * @property[cmdBank] The command registry, an implementation of [ICommandBank].
  * @property[cmdExecutor] The command executor, an implementation of [ICommandExecutor].
  * @property[cmdParser] The command parser, an impementation of [ICommandParser].
- * @constructor Default primary constructor which uses default implementations of the registry, parser, and executor.
+ * @constructor Default constructor which uses default implementations of the registry, parser, and executor.
  */
 open class Kommandant(protected val cmdBank: ICommandBank = CommandBank(), protected val cmdExecutor: ICommandExecutor = CommandExecutor(), protected val cmdParser: ICommandParser = CommandParser()) {
 

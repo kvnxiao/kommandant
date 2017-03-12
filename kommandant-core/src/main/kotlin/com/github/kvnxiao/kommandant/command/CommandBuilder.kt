@@ -6,13 +6,13 @@ import java.util.*
 /**
  * A builder class that helps define a command without needing to specify all the properties for the [ICommand] constructor.
  *
- * @constructor Primary constructor to define the [uniqueName] of the command to build.
+ * @constructor Constructor which defines the [uniqueName] of the command to build.
  * @property[uniqueName] The unique name of the command to build.
  */
 open class CommandBuilder<T>(private val uniqueName: String) {
 
     /**
-     * Secondary constructor to define the [prefix] along with the [uniqueName] of the command to build.
+     * Constructor which defines the [prefix] and [uniqueName] of the command to build.
      */
     constructor(prefix: String, uniqueName: String) : this(uniqueName) {
         this.prefix = prefix
