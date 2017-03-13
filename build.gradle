@@ -124,7 +124,7 @@ subprojects {
 
     task outputDocWebsite(type: Copy) {
         from("${project.buildDir}/docs/")
-        into("${rootProject.projectDir}/docs/output/${project.name}")
+        into("${rootProject.projectDir}/docs/${project.name}")
     }
 
     generateArtifacts.finalizedBy outputDocWebsite
