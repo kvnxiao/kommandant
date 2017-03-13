@@ -134,5 +134,13 @@ subprojects {
         archives javadocJar
     }
 
+    task copyJars(type: Copy) {
+        from jar.destinationDir
+        into("${rootProject.buildDir}/jars/")
+    }
+
+    jar.finalizedBy copyJars
+
+
 }
 
