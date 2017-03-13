@@ -1,0 +1,66 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>CommandContext - kommandant-core</title>
+<link rel="stylesheet" href="..\..\..\style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">kommandant-core</a>&nbsp;/&nbsp;<a href="../index.html">com.github.kvnxiao.kommandant.command</a>&nbsp;/&nbsp;<a href=".">CommandContext</a><br/>
+<br/>
+<h1>CommandContext</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">CommandContext</span></code> <a href="https://github.com/kvnxiao/kommandant/tree/master/kommandant-core/src/main/java/com/github/kvnxiao/kommandant/command/CommandContext.java#L13">(source)</a>
+<p>A data class for containing the context of the command. It parses a string and splits it in two based on the first available space. The first string represents the alias, and the second string represents the arguments leftover. 
+<p> NOTE: This class was written in Java. And why, you might ask? As of Kotlin 1.10, there is still some performance overhead in splitting strings by a literal. As such, string splitting in Java is currently still more performant than in Kotlin.</p>
+</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="-init-.html">&lt;init&gt;</a></td>
+<td>
+<code><span class="identifier">CommandContext</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandContext$<init>(kotlin.String)/message">message</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">?</span><span class="symbol">)</span></code>
+<p>Constructor which takes in a string to split in two. Splits based on the first available space character. If a space does not exist, the args string will be null. If the input string is null, both resultant args and aliases will be null.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="get-alias.html">getAlias</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getAlias</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">String</span><span class="symbol">?</span></code>
+<p>Gets the alias for this CommandContext. Can be null.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="get-args.html">getArgs</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getArgs</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">String</span><span class="symbol">?</span></code>
+<p>Gets the args for this CommandContext. Can be null.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="has-alias.html">hasAlias</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">hasAlias</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>A CommandContext has an alias if the alias string is not null and not empty.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="has-args.html">hasArgs</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">hasArgs</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>A CommandContext has args if the args string is not null. The args can be null if the input string that was split had no space character in it.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

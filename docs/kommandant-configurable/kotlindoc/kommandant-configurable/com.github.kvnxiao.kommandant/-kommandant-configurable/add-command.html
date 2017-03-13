@@ -1,0 +1,27 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>KommandantConfigurable.addCommand - kommandant-configurable</title>
+<link rel="stylesheet" href="..\..\..\style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">kommandant-configurable</a>&nbsp;/&nbsp;<a href="../index.html">com.github.kvnxiao.kommandant</a>&nbsp;/&nbsp;<a href="index.html">KommandantConfigurable</a>&nbsp;/&nbsp;<a href=".">addCommand</a><br/>
+<br/>
+<h1>addCommand</h1>
+<a name="com.github.kvnxiao.kommandant.KommandantConfigurable$addCommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)))"></a>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">addCommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.KommandantConfigurable$addCommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)))/command">command</span><span class="symbol">:</span>&nbsp;<span class="identifier">ICommand</span><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code> <a href="https://github.com/kvnxiao/kommandant/tree/master/kommandant-configurable/src/main/kotlin/com/github/kvnxiao/kommandant/KommandantConfigurable.kt#L52">(source)</a>
+<p>Overrided addCommand method which adds a command to the registry and additionally checks for <a href="enable-config-read-write.html">enableConfigReadWrite</a>
+value in attempt to load command properties from JSON if true. If the JSON does not exist, it will be created with
+the command's default properties.</p>
+<h3>Parameters</h3>
+
+<p><a name="command"></a>
+<code>command</code> - The command to add to the registry.
+<p><strong>Return</strong><br/>
+<a href="#">Boolean</a> Whether adding the command was successful or not.</p>
+<p><strong>See Also</strong><br/>
+<p><a href="load-config.html">loadConfig</a></p>
+<p><a href="save-config.html">saveConfig</a></p>
+</p>
+</BODY>
+</HTML>

@@ -1,0 +1,51 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>CommandParser - kommandant-core</title>
+<link rel="stylesheet" href="..\..\..\style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">kommandant-core</a>&nbsp;/&nbsp;<a href="../index.html">com.github.kvnxiao.kommandant.impl</a>&nbsp;/&nbsp;<a href=".">CommandParser</a><br/>
+<br/>
+<h1>CommandParser</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">CommandParser</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant/-i-command-parser/index.html"><span class="identifier">ICommandParser</span></a></code> <a href="https://github.com/kvnxiao/kommandant/tree/master/kommandant-core/src/main/kotlin/com/github/kvnxiao/kommandant/impl/CommandParser.kt#L20">(source)</a>
+<p>The default implementation of <a href="../../com.github.kvnxiao.kommandant/-i-command-parser/index.html">ICommandParser</a>. Parses a class containing the <a href="../../com.github.kvnxiao.kommandant.command/-command-ann/index.html">CommandAnn</a> annotation to create
+commands from these annotations.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="-init-.html">&lt;init&gt;</a></td>
+<td>
+<code><span class="identifier">CommandParser</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>The default implementation of <a href="../../com.github.kvnxiao.kommandant/-i-command-parser/index.html">ICommandParser</a>. Parses a class containing the <a href="../../com.github.kvnxiao.kommandant.command/-command-ann/index.html">CommandAnn</a> annotation to create
+commands from these annotations.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="create-command.html">createCommand</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">createCommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandParser$createCommand(kotlin.Any, java.lang.reflect.Method, com.github.kvnxiao.kommandant.command.CommandAnn)/instance">instance</span><span class="symbol">:</span>&nbsp;<span class="identifier">Any</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandParser$createCommand(kotlin.Any, java.lang.reflect.Method, com.github.kvnxiao.kommandant.command.CommandAnn)/method">method</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/reflect/Method.html"><span class="identifier">Method</span></a><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandParser$createCommand(kotlin.Any, java.lang.reflect.Method, com.github.kvnxiao.kommandant.command.CommandAnn)/annotation">annotation</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-command-ann/index.html"><span class="identifier">CommandAnn</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">Any</span><span class="symbol">?</span><span class="symbol">&gt;</span></code>
+<p>Creates a command by parsing a single <a href="../../com.github.kvnxiao.kommandant.command/-command-ann/index.html">CommandAnn</a> annotation, with its execution method set as the method
+targeted by the annotation.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="parse-annotations.html">parseAnnotations</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">parseAnnotations</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandParser$parseAnnotations(kotlin.Any)/instance">instance</span><span class="symbol">:</span>&nbsp;<span class="identifier">Any</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">List</span><span class="symbol">&lt;</span><a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code>
+<p>Parse <a href="../../com.github.kvnxiao.kommandant.command/-command-ann/index.html">CommandAnn</a> annotations in a class and returns a list of commands created from those annotations.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

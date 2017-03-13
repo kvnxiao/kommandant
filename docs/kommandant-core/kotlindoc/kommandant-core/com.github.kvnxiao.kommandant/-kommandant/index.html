@@ -1,0 +1,183 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Kommandant - kommandant-core</title>
+<link rel="stylesheet" href="..\..\..\style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">kommandant-core</a>&nbsp;/&nbsp;<a href="../index.html">com.github.kvnxiao.kommandant</a>&nbsp;/&nbsp;<a href=".">Kommandant</a><br/>
+<br/>
+<h1>Kommandant</h1>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">Kommandant</span></code> <a href="https://github.com/kvnxiao/kommandant/tree/master/kommandant-core/src/main/kotlin/com/github/kvnxiao/kommandant/Kommandant.kt#L23">(source)</a>
+<p>The default aggregation of a command registry, parser, and executor, which manages and executes commands.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="-init-.html">&lt;init&gt;</a></td>
+<td>
+<code><span class="identifier">Kommandant</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$<init>(com.github.kvnxiao.kommandant.ICommandBank, com.github.kvnxiao.kommandant.ICommandExecutor, com.github.kvnxiao.kommandant.ICommandParser)/cmdBank">cmdBank</span><span class="symbol">:</span>&nbsp;<a href="../-i-command-bank/index.html"><span class="identifier">ICommandBank</span></a>&nbsp;<span class="symbol">=</span>&nbsp;CommandBank()<span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$<init>(com.github.kvnxiao.kommandant.ICommandBank, com.github.kvnxiao.kommandant.ICommandExecutor, com.github.kvnxiao.kommandant.ICommandParser)/cmdExecutor">cmdExecutor</span><span class="symbol">:</span>&nbsp;<a href="../-i-command-executor/index.html"><span class="identifier">ICommandExecutor</span></a>&nbsp;<span class="symbol">=</span>&nbsp;CommandExecutor()<span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$<init>(com.github.kvnxiao.kommandant.ICommandBank, com.github.kvnxiao.kommandant.ICommandExecutor, com.github.kvnxiao.kommandant.ICommandParser)/cmdParser">cmdParser</span><span class="symbol">:</span>&nbsp;<a href="../-i-command-parser/index.html"><span class="identifier">ICommandParser</span></a>&nbsp;<span class="symbol">=</span>&nbsp;CommandParser()<span class="symbol">)</span></code>
+<p>Default constructor which uses default implementations of the registry, parser, and executor.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="cmd-bank.html">cmdBank</a></td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">cmdBank</span><span class="symbol">: </span><a href="../-i-command-bank/index.html"><span class="identifier">ICommandBank</span></a></code>
+<p>The command registry, an implementation of <a href="../-i-command-bank/index.html">ICommandBank</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="cmd-executor.html">cmdExecutor</a></td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">cmdExecutor</span><span class="symbol">: </span><a href="../-i-command-executor/index.html"><span class="identifier">ICommandExecutor</span></a></code>
+<p>The command executor, an implementation of <a href="../-i-command-executor/index.html">ICommandExecutor</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="cmd-parser.html">cmdParser</a></td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">cmdParser</span><span class="symbol">: </span><a href="../-i-command-parser/index.html"><span class="identifier">ICommandParser</span></a></code>
+<p>The command parser, an impementation of <a href="../-i-command-parser/index.html">ICommandParser</a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="add-annotated-commands.html">addAnnotatedCommands</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">addAnnotatedCommands</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$addAnnotatedCommands(kotlin.Any)/instance">instance</span><span class="symbol">:</span>&nbsp;<span class="identifier">Any</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Parses a provided object instance for annotated commands in its class and adds them all to the command registry.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">addAnnotatedCommands</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$addAnnotatedCommands(java.lang.Class((kotlin.Any)))/clazz">clazz</span><span class="symbol">:</span>&nbsp;<a href="http://docs.oracle.com/javase/6/docs/api/java/lang/Class.html"><span class="identifier">Class</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Parses a provided (Java) class for annotated commands and adds them all to the command registry.</p>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">addAnnotatedCommands</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$addAnnotatedCommands(kotlin.reflect.KClass((kotlin.Any)))/ktClazz">ktClazz</span><span class="symbol">:</span>&nbsp;<span class="identifier">KClass</span><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Parses a provided (Kotlin) class for annotated commands and adds them all to the command registry.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="add-command.html">addCommand</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">addCommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$addCommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)))/command">command</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>Adds a <a href="add-command.html#com.github.kvnxiao.kommandant.Kommandant$addCommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)))/command">command</a> to the registry. Failure to add commands occur if an alias clashes with another command's alias
+for the provided prefix, or if the command's identifier / name is not unique.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="change-prefix.html">changePrefix</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">changePrefix</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$changePrefix(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)), kotlin.String)/command">command</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$changePrefix(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)), kotlin.String)/newPrefix">newPrefix</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>Changes a prefix of a command in the registry.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="clear-all.html">clearAll</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">clearAll</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Deletes all commands from the registry and clears the registry's internal store.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="delete-command.html">deleteCommand</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">deleteCommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$deleteCommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)))/command">command</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>Deletes a command from the registry by removing it and unlinking all subcommand references.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="get-all-commands.html">getAllCommands</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getAllCommands</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.github.kvnxiao.kommandant.utility/-immutable-command-map.html"><span class="identifier">ImmutableCommandMap</span></a></code>
+<p>Gets all the 'prefix + aliases' to 'command' map from the registry.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="get-command.html">getCommand</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getCommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$getCommand(kotlin.String)/prefixedAlias">prefixedAlias</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">?</span></code>
+<p>Gets a command by providing a single string representing the combination of the command's prefix and alias.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="get-commands-for-prefix.html">getCommandsForPrefix</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getCommandsForPrefix</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$getCommandsForPrefix(kotlin.String)/prefix">prefix</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.github.kvnxiao.kommandant.utility/-immutable-command-map.html"><span class="identifier">ImmutableCommandMap</span></a></code>
+<p>Gets all the 'aliases' to 'command' map currently registered under the specified prefix.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="get-commands-unique.html">getCommandsUnique</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getCommandsUnique</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">List</span><span class="symbol">&lt;</span><a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code>
+<p>Gets an immutable list of all registered commands in the registry.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="get-prefixes.html">getPrefixes</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getPrefixes</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Set</span><span class="symbol">&lt;</span><span class="identifier">String</span><span class="symbol">&gt;</span></code>
+<p>Gets all the prefixes currently registered.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="parse-annotations.html">parseAnnotations</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">parseAnnotations</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$parseAnnotations(kotlin.Any)/instance">instance</span><span class="symbol">:</span>&nbsp;<span class="identifier">Any</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">List</span><span class="symbol">&lt;</span><a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code>
+<p>Parse <a href="../../com.github.kvnxiao.kommandant.command/-command-ann/index.html">CommandAnn</a> annotations for a list of commands created from those annotations.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="process.html">process</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">process</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$process(kotlin.String, kotlin.Array((kotlin.Any)))/input">input</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="keyword">vararg</span> <span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$process(kotlin.String, kotlin.Array((kotlin.Any)))/opt">opt</span><span class="symbol">:</span>&nbsp;<span class="identifier">Any</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.github.kvnxiao.kommandant.command/-command-result/index.html"><span class="identifier">CommandResult</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code>
+<p>Processes a string input with any additional variables for command execution.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="process-command.html">processCommand</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">processCommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$processCommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)), com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/command">command</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$processCommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)), com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/context">context</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-command-context/index.html"><span class="identifier">CommandContext</span></a><span class="symbol">, </span><span class="keyword">vararg</span> <span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$processCommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)), com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/opt">opt</span><span class="symbol">:</span>&nbsp;<span class="identifier">Any</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.github.kvnxiao.kommandant.command/-command-result/index.html"><span class="identifier">CommandResult</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code>
+<p>Processes a provided command with a given command context and any additional variables for command execution.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="-l-o-g-g-e-r.html">LOGGER</a></td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">LOGGER</span><span class="symbol">: </span><span class="identifier">Logger</span></code>
+<p>Universal logger for logging Kommandant events. For example, registering a command, executing a command, etc.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

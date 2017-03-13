@@ -1,0 +1,112 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ICommandBank - kommandant-core</title>
+<link rel="stylesheet" href="..\..\..\style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">kommandant-core</a>&nbsp;/&nbsp;<a href="../index.html">com.github.kvnxiao.kommandant</a>&nbsp;/&nbsp;<a href=".">ICommandBank</a><br/>
+<br/>
+<h1>ICommandBank</h1>
+<code><span class="keyword">interface </span><span class="identifier">ICommandBank</span></code> <a href="https://github.com/kvnxiao/kommandant/tree/master/kommandant-core/src/main/kotlin/com/github/kvnxiao/kommandant/ICommandBank.kt#L9">(source)</a>
+<p>An interface that defines the methods a command registry needs.</p>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="add-command.html">addCommand</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">addCommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.ICommandBank$addCommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)))/command">command</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>Adds a command to the registry.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="change-prefix.html">changePrefix</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">changePrefix</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.ICommandBank$changePrefix(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)), kotlin.String)/command">command</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.ICommandBank$changePrefix(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)), kotlin.String)/newPrefix">newPrefix</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>Change an existing command's prefix.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="clear-all.html">clearAll</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">clearAll</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Deletes all commands from the registry.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="delete-command.html">deleteCommand</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">deleteCommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.ICommandBank$deleteCommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)))/command">command</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>Deletes a command from the registry and destroys all subcommand references.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="get-command.html">getCommand</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getCommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.ICommandBank$getCommand(kotlin.String)/singleString">singleString</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">?</span></code>
+<p>Gets a command from the bank by providing a single string (usually the "prefix + alias" together)</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="get-commands.html">getCommands</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getCommands</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.github.kvnxiao.kommandant.utility/-immutable-command-map.html"><span class="identifier">ImmutableCommandMap</span></a></code>
+<p>Gets an immutable map of all single-string identifiers to commands (usually all "prefix + alias" strings to commands)</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="get-commands-for-prefix.html">getCommandsForPrefix</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getCommandsForPrefix</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.ICommandBank$getCommandsForPrefix(kotlin.String)/prefix">prefix</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.github.kvnxiao.kommandant.utility/-immutable-command-map.html"><span class="identifier">ImmutableCommandMap</span></a></code>
+<p>Gets an immutable map of alias to commands for the given prefix.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="get-commands-unique.html">getCommandsUnique</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getCommandsUnique</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">List</span><span class="symbol">&lt;</span><a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code>
+<p>Gets an immutable list of all commands</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="get-prefixes.html">getPrefixes</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getPrefixes</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Set</span><span class="symbol">&lt;</span><span class="identifier">String</span><span class="symbol">&gt;</span></code>
+<p>Gets an immutable set of all prefixes registered in the bank.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="remove-command.html">removeCommand</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">removeCommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.ICommandBank$removeCommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)))/command">command</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>Removes a command from the registry, but does not destroy it.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inheritors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="../../com.github.kvnxiao.kommandant.impl/-command-bank/index.html">CommandBank</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">CommandBank</span>&nbsp;<span class="symbol">:</span>&nbsp;<span class="identifier">ICommandBank</span></code>
+<p>The default implementation of ICommandBank. Capable of adding, removing, finding, and deleting <a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html">commands</a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

@@ -1,0 +1,24 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>KommandantAsync.processAsync - kommandant-async</title>
+<link rel="stylesheet" href="..\..\..\style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">kommandant-async</a>&nbsp;/&nbsp;<a href="../index.html">com.github.kvnxiao.kommandant</a>&nbsp;/&nbsp;<a href="index.html">KommandantAsync</a>&nbsp;/&nbsp;<a href=".">processAsync</a><br/>
+<br/>
+<h1>processAsync</h1>
+<a name="com.github.kvnxiao.kommandant.KommandantAsync$processAsync(kotlin.String, kotlin.Array((kotlin.Any)))"></a>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">processAsync</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.KommandantAsync$processAsync(kotlin.String, kotlin.Array((kotlin.Any)))/input">input</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="keyword">vararg</span> <span class="identifier" id="com.github.kvnxiao.kommandant.KommandantAsync$processAsync(kotlin.String, kotlin.Array((kotlin.Any)))/opt">opt</span><span class="symbol">:</span>&nbsp;<span class="identifier">Any</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Deferred</span><span class="symbol">&lt;</span><span class="identifier">CommandResult</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span><span class="symbol">&gt;</span></code> <a href="https://github.com/kvnxiao/kommandant/tree/master/kommandant-async/src/main/kotlin/com/github/kvnxiao/kommandant/KommandantAsync.kt#L29">(source)</a>
+<p>Processes a string input with any additional variables for command execution asynchronously.
+This wraps the original process function with a coroutine which returns a deferred command result.</p>
+<h3>Parameters</h3>
+
+<p><a name="input"></a>
+<code>input</code> - The string input to parse into valid context and command.
+<p><a name="opt"></a>
+<code>opt</code> - A nullable vararg of optional, extra input variables.
+<p><strong>Return</strong><br/>
+<a href="#">Deferred</a> The deferred result after attempting execution of the command asynchronously.</p>
+</BODY>
+</HTML>

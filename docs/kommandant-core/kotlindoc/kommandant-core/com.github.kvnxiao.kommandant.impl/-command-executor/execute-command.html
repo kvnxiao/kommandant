@@ -1,0 +1,35 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>CommandExecutor.executeCommand - kommandant-core</title>
+<link rel="stylesheet" href="..\..\..\style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">kommandant-core</a>&nbsp;/&nbsp;<a href="../index.html">com.github.kvnxiao.kommandant.impl</a>&nbsp;/&nbsp;<a href="index.html">CommandExecutor</a>&nbsp;/&nbsp;<a href=".">executeCommand</a><br/>
+<br/>
+<h1>executeCommand</h1>
+<a name="com.github.kvnxiao.kommandant.impl.CommandExecutor$executeCommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)), com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))"></a>
+<code><span class="keyword">protected</span> <span class="keyword">open</span> <span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">executeCommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandExecutor$executeCommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)), com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/command">command</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandExecutor$executeCommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)), com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/context">context</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-command-context/index.html"><span class="identifier">CommandContext</span></a><span class="symbol">, </span><span class="keyword">vararg</span> <span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandExecutor$executeCommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)), com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/opt">opt</span><span class="symbol">:</span>&nbsp;<span class="identifier">Any</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code> <a href="https://github.com/kvnxiao/kommandant/tree/master/kommandant-core/src/main/kotlin/com/github/kvnxiao/kommandant/impl/CommandExecutor.kt#L74">(source)</a>
+<p>Runs the command's execution method defined by its <a href="../../com.github.kvnxiao.kommandant.command/-i-command-executable/index.html">ICommandExecutable</a>.</p>
+<p>Because the command in the parameter can have a method return of any generic type, we require an unchecked cast
+to convert from a wildcard to specific type T. We operate under assumption that the user knows what they are
+doing and that the command should have a specific return type of type T.</p>
+<h3>Parameters</h3>
+
+<p><a name="command"></a>
+<code>command</code> - The command to execute.
+<p><a name="context"></a>
+<code>context</code> - The context of the command, containing the calling alias and any args it may have.
+<p><a name="opt"></a>
+<code>opt</code> - A nullable vararg of <a href="#">Any</a>, which can be useful in specific implementations when a command requires
+more than just context for execution.
+<h3>Exceptions</h3>
+
+<p><a name="InvocationTargetException"></a>
+<code>InvocationTargetException</code> - When the method invocation failed.
+<p><a name="IllegalAccessException"></a>
+<code>IllegalAccessException</code> - When the method could not be accessed through reflection.
+<p><strong>Return</strong><br/>
+<a href="#">T</a> Returns the result of the execution.</p>
+</BODY>
+</HTML>

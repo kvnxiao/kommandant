@@ -1,0 +1,126 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>ICommand - kommandant-core</title>
+<link rel="stylesheet" href="..\..\..\style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">kommandant-core</a>&nbsp;/&nbsp;<a href="../index.html">com.github.kvnxiao.kommandant.command</a>&nbsp;/&nbsp;<a href=".">ICommand</a><br/>
+<br/>
+<h1>ICommand</h1>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">ICommand</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../-i-command-executable/index.html"><span class="identifier">ICommandExecutable</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code> <a href="https://github.com/kvnxiao/kommandant/tree/master/kommandant-core/src/main/kotlin/com/github/kvnxiao/kommandant/command/ICommand.kt#L15">(source)</a>
+<p>An abstract class which represents a command. All commands implement <a href="../-i-command-executable/index.html">ICommandExecutable</a> as their main
+executing method or function.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="-init-.html">&lt;init&gt;</a></td>
+<td>
+<code><span class="identifier">ICommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.command.ICommand$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.Array((kotlin.String)))/prefix">prefix</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.ICommand$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.Array((kotlin.String)))/uniqueName">uniqueName</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.ICommand$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.Array((kotlin.String)))/description">description</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.ICommand$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.Array((kotlin.String)))/usage">usage</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.ICommand$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.Array((kotlin.String)))/execWithSubcommands">execWithSubcommands</span><span class="symbol">:</span>&nbsp;<span class="identifier">Boolean</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.ICommand$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.Array((kotlin.String)))/isDisabled">isDisabled</span><span class="symbol">:</span>&nbsp;<span class="identifier">Boolean</span><span class="symbol">, </span><span class="keyword">vararg</span> <span class="identifier" id="com.github.kvnxiao.kommandant.command.ICommand$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.Array((kotlin.String)))/aliases">aliases</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span></code><br/>
+<code><span class="identifier">ICommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.command.ICommand$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.collections.List((kotlin.String)))/prefix">prefix</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.ICommand$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.collections.List((kotlin.String)))/uniqueName">uniqueName</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.ICommand$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.collections.List((kotlin.String)))/description">description</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.ICommand$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.collections.List((kotlin.String)))/usage">usage</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.ICommand$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.collections.List((kotlin.String)))/execWithSubcommands">execWithSubcommands</span><span class="symbol">:</span>&nbsp;<span class="identifier">Boolean</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.ICommand$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.collections.List((kotlin.String)))/isDisabled">isDisabled</span><span class="symbol">:</span>&nbsp;<span class="identifier">Boolean</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.ICommand$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.collections.List((kotlin.String)))/aliases">aliases</span><span class="symbol">:</span>&nbsp;<span class="identifier">List</span><span class="symbol">&lt;</span><span class="identifier">String</span><span class="symbol">&gt;</span><span class="symbol">)</span></code>
+<p>Constructor which takes in values for <a href="../-command-properties/index.html">CommandProperties</a> directly.</p>
+<code><span class="identifier">ICommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.command.ICommand$<init>(com.github.kvnxiao.kommandant.command.CommandProperties)/props">props</span><span class="symbol">:</span>&nbsp;<a href="../-command-properties/index.html"><span class="identifier">CommandProperties</span></a><span class="symbol">)</span></code>
+<p>Constructor requiring a <a href="../-command-properties/index.html">CommandProperties</a> instance.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="props.html">props</a></td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">props</span><span class="symbol">: </span><a href="../-command-properties/index.html"><span class="identifier">CommandProperties</span></a></code>
+<p>The command properties.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="sub-command-map.html">subCommandMap</a></td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">subCommandMap</span><span class="symbol">: </span><a href="../../com.github.kvnxiao.kommandant.utility/-command-map.html"><span class="identifier">CommandMap</span></a></code>
+<p>A sorted map of <a href="#">String</a> to ICommand which maps all subcommand aliases to the respective commands.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="sub-commands.html">subCommands</a></td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">subCommands</span><span class="symbol">: </span><a href="../../com.github.kvnxiao.kommandant.utility/-command-set.html"><span class="identifier">CommandSet</span></a></code>
+<p>A set containing all subcommands registered to this command.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="add-subcommand.html">addSubcommand</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">addSubcommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.command.ICommand$addSubcommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)))/subCommand">subCommand</span><span class="symbol">:</span>&nbsp;<span class="identifier">ICommand</span><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">ICommand</span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code>
+<p>Adds a provided command as a subcommand to this command.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="delete-subcommands.html">deleteSubcommands</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">deleteSubcommands</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Removes all subcommands associated to this command. This clears the <a href="sub-command-map.html">subCommandMap</a> map and <a href="sub-commands.html">subCommands</a> set.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="equals.html">equals</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">equals</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.command.ICommand$equals(kotlin.Any)/other">other</span><span class="symbol">:</span>&nbsp;<span class="identifier">Any</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>Equals comparator takes into account the <a href="props.html">props</a> and <a href="sub-commands.html">subCommands</a> set.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="has-subcommands.html">hasSubcommands</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">hasSubcommands</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>Checks whether this command has subcommands.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="hash-code.html">hashCode</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">hashCode</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Int</span></code>
+<p>Hashcode takes into account the <a href="props.html">props</a> and <a href="sub-commands.html">subCommands</a> set.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="to-string.html">toString</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">toString</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">String</span></code>
+<p>Overrided toString method returns the <a href="../-command-properties/unique-name.html">CommandProperties.uniqueName</a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Inherited Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<a href="../-i-command-executable/execute.html">execute</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">execute</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.command.ICommandExecutable$execute(com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/context">context</span><span class="symbol">:</span>&nbsp;<a href="../-command-context/index.html"><span class="identifier">CommandContext</span></a><span class="symbol">, </span><span class="keyword">vararg</span> <span class="identifier" id="com.github.kvnxiao.kommandant.command.ICommandExecutable$execute(com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/opt">opt</span><span class="symbol">:</span>&nbsp;<span class="identifier">Any</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
+<p>The executing method implemented by commands.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
