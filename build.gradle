@@ -57,7 +57,7 @@ subprojects {
     dokka {
         moduleName = project.name
         outputFormat = 'html'
-        outputDirectory = "$buildDir/kdoc"
+        outputDirectory = "$buildDir/docs/kotlindoc"
         processConfigurations = ['compile']
         linkMapping {
             dir = "src/main/kotlin"
@@ -98,7 +98,7 @@ subprojects {
 
     task copyCss(type: Copy) {
         from("${rootProject.projectDir}/docs/style.css")
-        into("${project.buildDir}/kdoc/")
+        into("${project.buildDir}/docs/kotlindoc/")
         doLast {
             println("Copied custom KDoc stylesheet into build directory for '${project.name}'")
         }
@@ -121,6 +121,13 @@ subprojects {
         dependsOn 'sourcesJar'
         dependsOn 'javadocJar'
     }
+
+    task outputDocWebsite(type: Copy) {
+        from("${project.buildDir}/docs/")
+        into("${rootProject.projectDir}/docs/output/${project.name}")
+    }
+
+    generateArtifacts.finalizedBy outputDocWebsite
 
     artifacts {
         archives sourcesJar
