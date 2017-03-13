@@ -6,13 +6,15 @@
 
 Fast, modular, and flexible. Kommandant is a multipurpose command framework for the JVM, ready for easy integration into any project.
 
+[Documentation](https://kvnxiao.github.io/kommandant/)
+
 ## Overview
 
 Kommandant is a command framework fit for any project, whether it may be for a command-line app or for a complex chat system.
 
-For more detailed instructions on how to use it, [go here](https://kvnxiao.github.io/kommandant/) for **Kotlin** and **Java** documentation, or go to the [wiki](https://github.com/kvnxiao/kommandant/wiki) for more information and examples.
+For more detailed instructions on how to use it, visit the [documentation page](https://kvnxiao.github.io/kommandant/) for **Kotlin** and **Java** documentation, or go to the [wiki](https://github.com/kvnxiao/kommandant/wiki) for more information and examples.
 
-You can grab Kommandant using your favourite dependency management tools! Just replace `@VERSION` with the latest release tag or use a commit hash.
+You can grab Kommandant using your favourite dependency management tools! Just replace `@VERSION@` with the latest release tag or use a commit hash.
 
 **PICK ONE OF:**
 
