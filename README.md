@@ -8,6 +8,8 @@ Fast, modular, and flexible. Kommandant is a multipurpose command framework for 
 
 [Documentation](https://kvnxiao.github.io/kommandant/)
 
+[GitHub Wiki - How this works and how to use](https://github.com/kvnxiao/kommandant/wiki)
+
 ## Overview
 
 Kommandant is a command framework fit for any project, whether it may be for a command-line app or for a complex chat system.
