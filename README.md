@@ -18,7 +18,7 @@ You can grab Kommandant using your favourite dependency management tools! Just r
 
 **PICK ONE OF:**
 
-`kommandant-configurable` *(relies on the core dendency)* is an extension module that can easily enable/disable commands at will, as well as load or save command properties to a `.json` file.
+`kommandant-configurable` *(relies on the core dependency)* is an extension module that can easily enable/disable commands at will, as well as load or save command properties to a `.json` file.
 
 `kommandant-core` comes with bare essentials to manange your commands.
 
