@@ -31,7 +31,8 @@ You can grab Kommandant using your favourite dependency management tools! Just r
 
 ### Gradle
 
-build.gradle
+`build.gradle`
+
 ```gradle
 allprojects {
   repositories {
@@ -64,7 +65,8 @@ dependencies {
 
 ### Maven
 
-pom.xml
+`pom.xml`
+
 ```xml
 	<repositories>
 		<repository>
