@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.1.0'
+    ext.kotlin_version = '1.1.1'
     ext.slf4j_version = '1.7.24'
     ext.logback_version = '1.2.1'
     ext.junit_version = '4.12'
@@ -23,7 +23,7 @@ plugins {
 
 allprojects {
     group 'com.github.kvnxiao'
-    version '1.0'
+    version '1.0.1'
 
     task wrapper(type: Wrapper) {
         gradleVersion = '3.4'
@@ -140,7 +140,6 @@ subprojects {
     }
 
     jar.finalizedBy copyJars
-
 
 }
 
