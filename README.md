@@ -55,6 +55,13 @@ dependencies {
 }
 ```
 
+For `kommandant-async`
+```gradle
+dependencies {
+    compile 'com.github.kvnxiao.kommandant:kommandant-async:@VERSION@'
+}
+```
+
 ### Maven
 
 pom.xml
@@ -81,6 +88,15 @@ For `kommandant-configurable`
 	<dependency>
 	    <groupId>com.github.kvnxiao.kommandant</groupId>
 	    <artifactId>kommandant-configurable</artifactId>
+	    <version>@VERSION@</version>
+	</dependency>
+```
+
+For `kommandant-async`
+```xml
+	<dependency>
+	    <groupId>com.github.kvnxiao.kommandant</groupId>
+	    <artifactId>kommandant-async</artifactId>
 	    <version>@VERSION@</version>
 	</dependency>
 ```
