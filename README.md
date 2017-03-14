@@ -8,6 +8,8 @@ Fast, modular, and flexible. Kommandant is a multipurpose command framework for 
 
 [Documentation](https://kvnxiao.github.io/kommandant/)
 
+[GitHub Wiki - How this works and how to use](https://github.com/kvnxiao/kommandant/wiki)
+
 ## Overview
 
 Kommandant is a command framework fit for any project, whether it may be for a command-line app or for a complex chat system.
@@ -29,7 +31,8 @@ You can grab Kommandant using your favourite dependency management tools! Just r
 
 ### Gradle
 
-build.gradle
+`build.gradle`
+
 ```gradle
 allprojects {
   repositories {
@@ -53,9 +56,17 @@ dependencies {
 }
 ```
 
+For `kommandant-async`
+```gradle
+dependencies {
+    compile 'com.github.kvnxiao.kommandant:kommandant-async:@VERSION@'
+}
+```
+
 ### Maven
 
-pom.xml
+`pom.xml`
+
 ```xml
 	<repositories>
 		<repository>
@@ -79,6 +90,15 @@ For `kommandant-configurable`
 	<dependency>
 	    <groupId>com.github.kvnxiao.kommandant</groupId>
 	    <artifactId>kommandant-configurable</artifactId>
+	    <version>@VERSION@</version>
+	</dependency>
+```
+
+For `kommandant-async`
+```xml
+	<dependency>
+	    <groupId>com.github.kvnxiao.kommandant</groupId>
+	    <artifactId>kommandant-async</artifactId>
 	    <version>@VERSION@</version>
 	</dependency>
 ```
