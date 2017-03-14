@@ -140,7 +140,7 @@ open class CommandBuilder<T>(private val uniqueName: String) {
          * Kotlin lambda helper to easily define the [executable][ICommandExecutable] command method. It is recommended
          * to not use this in Java as a lambda can be directly used in [build].
          *
-         * @return[ICommandExecutable] The executable method for the commmand.
+         * @return[ICommandExecutable] The executable method for the command.
          */
         @JvmStatic
         fun <T> execute(handler: (CommandContext, Array<out Any?>) -> T): ICommandExecutable<T> {
