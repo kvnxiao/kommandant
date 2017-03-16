@@ -51,6 +51,17 @@ public class CommandContext {
     }
 
     /**
+     * Secondary constructor which sets the alias and args of the context based on the provided input parameters.
+     *
+     * @param alias The alias for the command context.
+     * @param args The arguments for the command context.
+     */
+    public CommandContext(final String alias, final String args) {
+        this.alias = alias;
+        this.args = args;
+    }
+
+    /**
      * Gets the alias for this CommandContext. Can be null.
      *
      * @return The (nullable) alias.
