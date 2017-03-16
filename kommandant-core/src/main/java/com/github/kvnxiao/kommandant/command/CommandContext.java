@@ -23,6 +23,11 @@ public class CommandContext {
     private final String args;
 
     /**
+     * The command associated with this context.
+     */
+    private ICommand command = null;
+
+    /**
      * The string literal to split the incoming input string by, defined as a single space character " ".
      */
     private static final String SPLIT_REGEX = " ";
@@ -82,6 +87,25 @@ public class CommandContext {
      */
     public boolean hasArgs() {
         return args != null;
+    }
+
+    /**
+     * Gets the command this context is associated with.
+     *
+     * @return The associated command for this context.
+     */
+    @Nullable
+    public ICommand getCommand() {
+        return this.command;
+    }
+
+    /**
+     * Sets the command this context is associated with.
+     *
+     * @param command The command to associate with this context.
+     */
+    public void setCommand(ICommand command) {
+        this.command = command;
     }
 
 }

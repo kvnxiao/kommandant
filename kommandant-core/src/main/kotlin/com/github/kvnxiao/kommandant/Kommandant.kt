@@ -42,7 +42,10 @@ open class Kommandant(protected val cmdBank: ICommandBank = CommandBank(), prote
         val context = CommandContext(input)
         if (context.hasAlias()) {
             val command: ICommand<*>? = this.getCommand(context.alias!!)
-            if (command !== null) return processCommand(command, context, *opt)
+            if (command !== null) {
+                context.command = command
+                return processCommand(command, context, *opt)
+            }
         }
         return CommandResult(false)
     }
