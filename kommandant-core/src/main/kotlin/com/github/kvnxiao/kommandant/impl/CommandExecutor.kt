@@ -31,16 +31,17 @@ open class CommandExecutor : ICommandExecutor {
                         val subCommand: ICommand<*>? = command.subCommandMap[subContext.alias]
                         if (subContext.hasAlias() && subCommand !== null) {
                             // Execute main command, then subcommand
+                            subContext.command = subCommand             // Associate subcommand to subcontext
                             if (command.props.execWithSubcommands) {
-                                LOGGER.debug("Executing command ${command.props.uniqueName} with args: [${if (context.hasArgs()) context.args else " "}]")
+                                onCommandExecute(context, *opt)
                                 executeCommand<T>(command, context, *opt)
                             } else {
-                                LOGGER.debug("Executing command ${command.props.uniqueName} with args: [${if (context.hasArgs()) context.args else " "}], skipping result because execWithSubcommands is set to false")
+                                onCommandExecuteDisabled(context, *opt)
                             }
                             return execute(subCommand, subContext, *opt)
                         }
                     }
-                    LOGGER.debug("Executing command ${command.props.uniqueName} with args: [${if (context.hasArgs()) context.args else " "}]")
+                    onCommandExecute(context, *opt)
                     return CommandResult(true, executeCommand(command, context, *opt))
                 } catch (e: InvocationTargetException) {
                     LOGGER.error("${e.localizedMessage}: Failed to invoke method bound to command '${command.props.uniqueName}'!")
@@ -49,7 +50,7 @@ open class CommandExecutor : ICommandExecutor {
                 }
             }
         } else {
-            LOGGER.debug("Executing command '${command.props.uniqueName}' ignored because the command is disabled.")
+            onCommandExecuteDisabled(context, *opt)
         }
         return CommandResult(false)
     }
@@ -87,4 +88,34 @@ open class CommandExecutor : ICommandExecutor {
      */
     open protected fun checkOtherSettings(command: ICommand<*>, context: CommandContext, vararg opt: Any?): Boolean = true
 
+    /**
+     * Method executed when a command is successfully executed. By default, this simply logs the command being executed.
+     *
+     * @param[context] The context of the command, containing the calling alias and any args it may have.
+     * @param[opt] A nullable vararg of [Any] (any object)
+     */
+    override fun onCommandExecute(context: CommandContext, vararg opt: Any?) {
+        LOGGER.debug("Executing command ${context.command!!.props.uniqueName} with args: [${if (context.hasArgs()) context.args else " "}]")
+    }
+
+    /**
+     * Method executed when an attempt to execute a disabled command was made. By default, this simply logs the attempt.
+     *
+     * @param[context] The context of the command, containing the calling alias and any args it may have.
+     * @param[opt] A nullable vararg of [Any] (any object)
+     */
+    override fun onCommandExecuteDisabled(context: CommandContext, vararg opt: Any?) {
+        LOGGER.debug("Executing command '${context.command!!.props.uniqueName}' ignored because the command is disabled.")
+    }
+
+    /**
+     * Method executed when a parent command to execute was skipped directly to the subcommand.
+     * By default, this simply logs the parent command that was skipped.
+     *
+     * @param[context] The context of the command, containing the calling alias and any args it may have.
+     * @param[opt] A nullable vararg of [Any] (any object)
+     */
+    override fun onCommandExecuteSkipped(context: CommandContext, vararg opt: Any?) {
+        LOGGER.debug("Executing command ${context.command!!.props.uniqueName} with args: [${if (context.hasArgs()) context.args else " "}] SKIPPED because execWithSubcommands is set to false")
+    }
 }

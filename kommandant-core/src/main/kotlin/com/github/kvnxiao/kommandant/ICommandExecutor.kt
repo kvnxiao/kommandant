@@ -20,4 +20,27 @@ interface ICommandExecutor {
      */
     fun <T> execute(command: ICommand<*>, context: CommandContext, vararg opt: Any?): CommandResult<T>
 
+    /**
+     * Method executed when a command is successfully executed.
+     *
+     * @param[context] The context of the command, containing the calling alias and any args it may have.
+     * @param[opt] A nullable vararg of [Any] (any object)
+     */
+    fun onCommandExecute(context: CommandContext, vararg opt: Any?)
+
+    /**
+     * Method executed when an attempt to execute a disabled command was made.
+     *
+     * @param[context] The context of the command, containing the calling alias and any args it may have.
+     * @param[opt] A nullable vararg of [Any] (any object)
+     */
+    fun onCommandExecuteDisabled(context: CommandContext, vararg opt: Any?)
+
+    /**
+     * Method executed when a parent command to execute was skipped directly to the subcommand.
+     *
+     * @param[context] The context of the command, containing the calling alias and any args it may have.
+     * @param[opt] A nullable vararg of [Any] (any object)
+     */
+    fun onCommandExecuteSkipped(context: CommandContext, vararg opt: Any?)
 }
