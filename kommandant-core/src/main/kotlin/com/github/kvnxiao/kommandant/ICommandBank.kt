@@ -37,6 +37,13 @@ interface ICommandBank {
     fun getCommand(singleString: String): ICommand<*>?
 
     /**
+     * Adds a prefix to the bank to keep track of all prefixes used by commands.
+     *
+     * @return[Boolean] Whether the prefix was added successfully. Returns false if it already exists.
+     */
+    fun addPrefix(prefix: String): Boolean
+
+    /**
      * Change an existing command's prefix.
      *
      * @return[Boolean] Whether the prefix change was successful.

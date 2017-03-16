@@ -139,11 +139,13 @@ open class CommandBank : ICommandBank {
     override fun getCommand(singleString: String): ICommand<*>? = commandMap[singleString]
 
     /**
-     * Gets a command that exists in the [commandMap] by providing the prefix and alias of the command.
+     * Adds a prefix to the bank to keep track of all prefixes used by commands.
      *
-     * @return[ICommand] The (nullable) command with the provided prefix and alias combination.
+     * @return[Boolean] Whether the prefix was added successfully. Returns false if it already exists.
      */
-    open fun getCommand(prefix: String, alias: String): ICommand<*>? = this.getCommand(prefix + alias)
+    override fun addPrefix(prefix: String): Boolean {
+        return prefixSet.add(prefix)
+    }
 
     /**
      * Changes the prefix of a command in the registry.
