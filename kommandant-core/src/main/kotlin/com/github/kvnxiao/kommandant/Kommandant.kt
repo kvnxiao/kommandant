@@ -7,6 +7,7 @@ import com.github.kvnxiao.kommandant.impl.CommandBank
 import com.github.kvnxiao.kommandant.impl.CommandExecutor
 import com.github.kvnxiao.kommandant.impl.CommandParser
 import com.github.kvnxiao.kommandant.utility.ImmutableCommandMap
+import com.github.kvnxiao.kommandant.utility.SplitString
 import com.github.kvnxiao.kommandant.utility.StringSplitter
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -40,9 +41,7 @@ open class Kommandant(protected val cmdBank: ICommandBank = CommandBank(), prote
      * was no command to execute.
      */
     open fun <T> process(input: String, vararg opt: Any?): CommandResult<T> {
-        val splitInput = splitString(input)
-        val alias = if (splitInput.isNotEmpty()) splitInput[0] else null
-        val args = if (splitInput.size == 2) splitInput[1] else null
+        val (alias, args) = SplitString(input)
 
         if (alias !== null) {
             val command: ICommand<*>? = this.getCommand(alias)
@@ -54,7 +53,7 @@ open class Kommandant(protected val cmdBank: ICommandBank = CommandBank(), prote
         return CommandResult(false)
     }
 
-    open fun splitString(input: String): Array<String> = StringSplitter.split(input, CommandContext.SPACE_LITERAL, 2)
+    open fun splitString(input: String): Array<String> = StringSplitter.split(input, StringSplitter.SPACE_LITERAL, 2)
 
     /**
      * Processes a provided command with a given command context and any additional variables for command execution.

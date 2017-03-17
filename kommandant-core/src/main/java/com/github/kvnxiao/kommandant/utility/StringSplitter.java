@@ -14,4 +14,8 @@ public class StringSplitter {
         return str.split(regex);
     }
 
+    public static final String SPACE_LITERAL = " ";
+
+    public static final char SPACE_CHAR = ' ';
+
 }

@@ -12,13 +12,6 @@ data class CommandContext(val alias: String,
                           val args: String?,
                           val command: ICommand<*>) {
 
-    companion object {
-        /**
-         * The string literal to split the incoming input string by, defined as a single space character " ".
-         */
-        const val SPACE_LITERAL = " "
-    }
-
     /**
      * Whether the command context contains arguments for the command.
      *

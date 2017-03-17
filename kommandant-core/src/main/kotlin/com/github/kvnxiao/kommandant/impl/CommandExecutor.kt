@@ -5,6 +5,7 @@ import com.github.kvnxiao.kommandant.Kommandant.Companion.LOGGER
 import com.github.kvnxiao.kommandant.command.CommandContext
 import com.github.kvnxiao.kommandant.command.CommandResult
 import com.github.kvnxiao.kommandant.command.ICommand
+import com.github.kvnxiao.kommandant.utility.SplitString
 import com.github.kvnxiao.kommandant.utility.StringSplitter
 import java.lang.reflect.InvocationTargetException
 
@@ -28,9 +29,7 @@ open class CommandExecutor : ICommandExecutor {
             if (checkOtherSettings(command, context, *opt)) {
                 try {
                     if (context.hasArgs() && command.hasSubcommands()) {
-                        val splitInput = StringSplitter.split(context.args, CommandContext.SPACE_LITERAL, 2)
-                        val alias = if (splitInput.isNotEmpty()) splitInput[0] else null
-                        val args = if (splitInput.size == 2) splitInput[1] else null
+                        val (alias, args) = SplitString(context.args!!)
 
                         if (alias !== null) {
                             val subCommand: ICommand<*>? = command.subCommandMap[alias]
