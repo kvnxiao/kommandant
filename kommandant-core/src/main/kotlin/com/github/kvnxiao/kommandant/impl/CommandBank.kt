@@ -19,6 +19,11 @@ open class CommandBank : ICommandBank {
     @JvmField
     protected val prefixSet: MutableSet<String> = sortedSetOf(Collections.reverseOrder())
     /**
+     * The set of all custom prefixes registered in the command bank.
+     */
+    @JvmField
+    protected val customPrefixSet: MutableSet<String> = sortedSetOf(Collections.reverseOrder())
+    /**
      * The mutable map which maps prefixes to the respective [CommandMap].
      */
     @JvmField
@@ -62,7 +67,9 @@ open class CommandBank : ICommandBank {
         }
 
         // Add prefix to bank
-        addPrefix(command.props.prefix)
+        if (!addPrefix(command.props.prefix)) {
+            LOGGER.warn("Could not register '$command' with prefix '${command.props.prefix}' as the prefix could not be added to the registry.")
+        }
 
         // Create prefixMap if non-existent
         if (!prefixMap.containsKey(command.props.prefix))
@@ -144,6 +151,7 @@ open class CommandBank : ICommandBank {
      * @return[Boolean] Whether the prefix was added successfully. Returns false if it already exists.
      */
     override fun addPrefix(prefix: String): Boolean {
+        if (prefixSet.contains(prefix)) return true
         return prefixSet.add(prefix)
     }
 
