@@ -64,6 +64,7 @@ open class CommandBank : ICommandBank {
         // Add prefix to bank
         if (!addPrefix(command.props.prefix)) {
             LOGGER.warn("Could not register '$command' with prefix '${command.props.prefix}' as the prefix could not be added to the registry.")
+            return false
         }
 
         // Create prefixMap if non-existent
