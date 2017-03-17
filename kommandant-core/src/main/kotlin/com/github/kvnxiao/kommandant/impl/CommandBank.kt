@@ -142,6 +142,14 @@ open class CommandBank : ICommandBank {
     override fun getCommand(singleString: String): ICommand<*>? = commandMap[singleString]
 
     /**
+     * Checks whether a command exists in the [commandMap] by providing a single string that represents the command's
+     * "prefix + alias" used in command processing / execution.
+     *
+     * @return[ICommand] Whether the command exists in the internal command map.
+     */
+    override fun hasCommand(singleString: String): Boolean = commandMap.contains(singleString)
+
+    /**
      * Adds a prefix to the bank to keep track of all prefixes used by commands.
      *
      * @return[Boolean] Whether the prefix was added successfully. Returns false if it already exists.

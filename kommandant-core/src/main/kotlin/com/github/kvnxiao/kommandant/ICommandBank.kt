@@ -30,11 +30,16 @@ interface ICommandBank {
     fun deleteCommand(command: ICommand<*>): Boolean
 
     /**
-     * Gets a command from the bank by providing a single string (usually the "prefix + alias" together)
+     * Gets a command from the bank by providing a single string (usually the "prefix + alias" together).
      *
      * @return[ICommand] The (nullable) command.
      */
     fun getCommand(singleString: String): ICommand<*>?
+
+    /**
+     * Returns whether a command queried using this single string exists in the registry.
+     */
+    fun hasCommand(singleString: String): Boolean
 
     /**
      * Adds a prefix to the bank to keep track of all prefixes used by commands.
