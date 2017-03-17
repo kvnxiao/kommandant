@@ -62,7 +62,7 @@ open class CommandBank : ICommandBank {
         }
 
         // Add prefix to bank
-        prefixSet.add(command.props.prefix)
+        addPrefix(command.props.prefix)
 
         // Create prefixMap if non-existent
         if (!prefixMap.containsKey(command.props.prefix))
