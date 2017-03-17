@@ -1,6 +1,9 @@
 import com.github.kvnxiao.kommandant.Kommandant
-import com.github.kvnxiao.kommandant.command.*
+import com.github.kvnxiao.kommandant.command.CommandBuilder
 import com.github.kvnxiao.kommandant.command.CommandBuilder.Companion.execute
+import com.github.kvnxiao.kommandant.command.CommandContext
+import com.github.kvnxiao.kommandant.command.CommandDefaults
+import com.github.kvnxiao.kommandant.command.ICommand
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Test
@@ -70,9 +73,21 @@ class KotlinTest {
             }
         })
         kommandant.addAnnotatedCommands(VarargCommand::class)
-        kommandant.process<Unit>("/builder", "this", "is", "a", "builder")
-        kommandant.process<Unit>("/constructor", "this", "is", "a", "constructor")
-        kommandant.process<Unit>("/annotation", "this", "is", "an", "annotation")
+        assertTrue(kommandant.process<Unit>("/builder", "this", "is", "a", "builder").success)
+        assertTrue(kommandant.process<Unit>("/constructor", "this", "is", "a", "constructor").success)
+        assertTrue(kommandant.process<Unit>("/annotation", "this", "is", "an", "annotation").success)
+    }
+
+    @Test
+    fun testSubcommands() {
+        kommandant.addCommand(CommandBuilder<Unit>("main").withAliases("main").build(execute {context, opt ->
+            opt.forEach(::println)
+        }).addSubcommand(CommandBuilder<Unit>("sub").withAliases("sub").build(execute {context, opt ->
+            println("This is a subcommand.")
+        })))
+
+        assertTrue(kommandant.process<Unit>("/main sub").success)
+        assertTrue(kommandant.process<Unit>("/main", 1, 2, 3).success)
     }
 
 }

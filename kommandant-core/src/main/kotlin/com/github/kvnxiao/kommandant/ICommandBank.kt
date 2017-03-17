@@ -38,6 +38,8 @@ interface ICommandBank {
 
     /**
      * Returns whether a command queried using this single string exists in the registry.
+     *
+     * @return[Boolean] Whether the command exists in the registry.
      */
     fun hasCommand(singleString: String): Boolean
 

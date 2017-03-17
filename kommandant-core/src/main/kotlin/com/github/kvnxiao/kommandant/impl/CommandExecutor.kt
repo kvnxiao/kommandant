@@ -5,6 +5,7 @@ import com.github.kvnxiao.kommandant.Kommandant.Companion.LOGGER
 import com.github.kvnxiao.kommandant.command.CommandContext
 import com.github.kvnxiao.kommandant.command.CommandResult
 import com.github.kvnxiao.kommandant.command.ICommand
+import com.github.kvnxiao.kommandant.utility.StringSplitter
 import java.lang.reflect.InvocationTargetException
 
 /**
@@ -27,18 +28,24 @@ open class CommandExecutor : ICommandExecutor {
             if (checkOtherSettings(command, context, *opt)) {
                 try {
                     if (context.hasArgs() && command.hasSubcommands()) {
-                        val subContext: CommandContext = CommandContext(context.args)
-                        val subCommand: ICommand<*>? = command.subCommandMap[subContext.alias]
-                        if (subContext.hasAlias() && subCommand !== null) {
-                            // Execute main command, then subcommand
-                            subContext.command = subCommand             // Associate subcommand to subcontext
-                            if (command.props.execWithSubcommands) {
-                                onCommandExecute(context, *opt)
-                                executeCommand<T>(command, context, *opt)
-                            } else {
-                                onCommandExecuteDisabled(context, *opt)
+                        val splitInput = StringSplitter.split(context.args, CommandContext.SPACE_LITERAL, 2)
+                        val alias = if (splitInput.isNotEmpty()) splitInput[0] else null
+                        val args = if (splitInput.size == 2) splitInput[1] else null
+
+                        if (alias !== null) {
+                            val subCommand: ICommand<*>? = command.subCommandMap[alias]
+                            if (subCommand !== null) {
+                                val subContext = CommandContext(alias, args, subCommand)
+
+                                // Execute main command, then subcommand
+                                if (command.props.execWithSubcommands) {
+                                    onCommandExecute(context, *opt)
+                                    executeCommand<T>(command, context, *opt)
+                                } else {
+                                    onCommandExecuteSkipped(context, *opt)
+                                }
+                                return execute(subCommand, subContext, *opt)
                             }
-                            return execute(subCommand, subContext, *opt)
                         }
                     }
                     onCommandExecute(context, *opt)
@@ -95,7 +102,7 @@ open class CommandExecutor : ICommandExecutor {
      * @param[opt] A nullable vararg of [Any] (any object)
      */
     override fun onCommandExecute(context: CommandContext, vararg opt: Any?) {
-        LOGGER.debug("Executing command ${context.command!!.props.uniqueName} with args: [${if (context.hasArgs()) context.args else " "}]")
+        LOGGER.debug("Executing command '${context.command.props.uniqueName}' with args: [${if (context.hasArgs()) context.args else " "}]")
     }
 
     /**
@@ -105,7 +112,7 @@ open class CommandExecutor : ICommandExecutor {
      * @param[opt] A nullable vararg of [Any] (any object)
      */
     override fun onCommandExecuteDisabled(context: CommandContext, vararg opt: Any?) {
-        LOGGER.debug("Executing command '${context.command!!.props.uniqueName}' ignored because the command is disabled.")
+        LOGGER.debug("Executing command '${context.command.props.uniqueName}' ignored because the command is disabled.")
     }
 
     /**
@@ -116,6 +123,6 @@ open class CommandExecutor : ICommandExecutor {
      * @param[opt] A nullable vararg of [Any] (any object)
      */
     override fun onCommandExecuteSkipped(context: CommandContext, vararg opt: Any?) {
-        LOGGER.debug("Executing command ${context.command!!.props.uniqueName} with args: [${if (context.hasArgs()) context.args else " "}] SKIPPED because execWithSubcommands is set to false")
+        LOGGER.debug("Executing command '${context.command.props.uniqueName}' with args: [${if (context.hasArgs()) context.args else " "}] SKIPPED because execWithSubcommands is set to false")
     }
 }

@@ -7,6 +7,7 @@ import com.github.kvnxiao.kommandant.impl.CommandBank
 import com.github.kvnxiao.kommandant.impl.CommandExecutor
 import com.github.kvnxiao.kommandant.impl.CommandParser
 import com.github.kvnxiao.kommandant.utility.ImmutableCommandMap
+import com.github.kvnxiao.kommandant.utility.StringSplitter
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.lang.reflect.InvocationTargetException
@@ -39,16 +40,21 @@ open class Kommandant(protected val cmdBank: ICommandBank = CommandBank(), prote
      * was no command to execute.
      */
     open fun <T> process(input: String, vararg opt: Any?): CommandResult<T> {
-        val context = CommandContext(input)
-        if (context.hasAlias()) {
-            val command: ICommand<*>? = this.getCommand(context.alias!!)
+        val splitInput = splitString(input)
+        val alias = if (splitInput.isNotEmpty()) splitInput[0] else null
+        val args = if (splitInput.size == 2) splitInput[1] else null
+
+        if (alias !== null) {
+            val command: ICommand<*>? = this.getCommand(alias)
             if (command !== null) {
-                context.command = command
+                val context = CommandContext(alias, args, command)
                 return processCommand(command, context, *opt)
             }
         }
         return CommandResult(false)
     }
+
+    open fun splitString(input: String): Array<String> = StringSplitter.split(input, CommandContext.SPACE_LITERAL, 2)
 
     /**
      * Processes a provided command with a given command context and any additional variables for command execution.
