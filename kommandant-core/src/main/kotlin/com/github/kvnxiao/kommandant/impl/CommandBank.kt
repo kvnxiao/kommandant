@@ -19,11 +19,6 @@ open class CommandBank : ICommandBank {
     @JvmField
     protected val prefixSet: MutableSet<String> = sortedSetOf(Collections.reverseOrder())
     /**
-     * The set of all custom prefixes registered in the command bank.
-     */
-    @JvmField
-    protected val customPrefixSet: MutableSet<String> = sortedSetOf(Collections.reverseOrder())
-    /**
      * The mutable map which maps prefixes to the respective [CommandMap].
      */
     @JvmField
