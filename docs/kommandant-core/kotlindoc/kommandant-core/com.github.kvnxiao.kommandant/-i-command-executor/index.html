@@ -21,6 +21,30 @@
 <p>Executes the command with the provided command <a href="../../com.github.kvnxiao.kommandant.command/-command-context/index.html">context</a> and any optional data.</p>
 </td>
 </tr>
+<tr>
+<td>
+<a href="on-command-execute.html">onCommandExecute</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">onCommandExecute</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.ICommandExecutor$onCommandExecute(com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/context">context</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-command-context/index.html"><span class="identifier">CommandContext</span></a><span class="symbol">, </span><span class="keyword">vararg</span> <span class="identifier" id="com.github.kvnxiao.kommandant.ICommandExecutor$onCommandExecute(com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/opt">opt</span><span class="symbol">:</span>&nbsp;<span class="identifier">Any</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Method executed when a command is successfully executed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="on-command-execute-disabled.html">onCommandExecuteDisabled</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">onCommandExecuteDisabled</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.ICommandExecutor$onCommandExecuteDisabled(com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/context">context</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-command-context/index.html"><span class="identifier">CommandContext</span></a><span class="symbol">, </span><span class="keyword">vararg</span> <span class="identifier" id="com.github.kvnxiao.kommandant.ICommandExecutor$onCommandExecuteDisabled(com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/opt">opt</span><span class="symbol">:</span>&nbsp;<span class="identifier">Any</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Method executed when an attempt to execute a disabled command was made.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="on-command-execute-skipped.html">onCommandExecuteSkipped</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">onCommandExecuteSkipped</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.ICommandExecutor$onCommandExecuteSkipped(com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/context">context</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-command-context/index.html"><span class="identifier">CommandContext</span></a><span class="symbol">, </span><span class="keyword">vararg</span> <span class="identifier" id="com.github.kvnxiao.kommandant.ICommandExecutor$onCommandExecuteSkipped(com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/opt">opt</span><span class="symbol">:</span>&nbsp;<span class="identifier">Any</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Method executed when a parent command to execute was skipped directly to the subcommand.</p>
+</td>
+</tr>
 </tbody>
 </table>
 <h3>Inheritors</h3>

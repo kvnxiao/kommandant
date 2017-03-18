@@ -8,7 +8,7 @@
 <a href="../../index.html">kommandant-core</a>&nbsp;/&nbsp;<a href="../index.html">com.github.kvnxiao.kommandant.impl</a>&nbsp;/&nbsp;<a href=".">CommandExecutor</a><br/>
 <br/>
 <h1>CommandExecutor</h1>
-<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">CommandExecutor</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant/-i-command-executor/index.html"><span class="identifier">ICommandExecutor</span></a></code> <a href="https://github.com/kvnxiao/kommandant/tree/master/kommandant-core/src/main/kotlin/com/github/kvnxiao/kommandant/impl/CommandExecutor.kt#L14">(source)</a>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">CommandExecutor</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant/-i-command-executor/index.html"><span class="identifier">ICommandExecutor</span></a></code> <a href="https://github.com/kvnxiao/kommandant/tree/master/kommandant-core/src/main/kotlin/com/github/kvnxiao/kommandant/impl/CommandExecutor.kt#L16">(source)</a>
 <p>The default implementation of <a href="../../com.github.kvnxiao.kommandant/-i-command-executor/index.html">ICommandExecutor</a>. Executes a specified command by running the
 <a href="../../com.github.kvnxiao.kommandant.command/-i-command-executable/index.html">ICommandExecutable</a> method.</p>
 <h3>Constructors</h3>
@@ -51,6 +51,31 @@ Akin to a "permission" check.</p>
 <td>
 <code><span class="keyword">open</span> <span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">executeCommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandExecutor$executeCommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)), com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/command">command</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandExecutor$executeCommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)), com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/context">context</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-command-context/index.html"><span class="identifier">CommandContext</span></a><span class="symbol">, </span><span class="keyword">vararg</span> <span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandExecutor$executeCommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)), com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/opt">opt</span><span class="symbol">:</span>&nbsp;<span class="identifier">Any</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">T</span></code>
 <p>Runs the command's execution method defined by its <a href="../../com.github.kvnxiao.kommandant.command/-i-command-executable/index.html">ICommandExecutable</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="on-command-execute.html">onCommandExecute</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onCommandExecute</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandExecutor$onCommandExecute(com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/context">context</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-command-context/index.html"><span class="identifier">CommandContext</span></a><span class="symbol">, </span><span class="keyword">vararg</span> <span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandExecutor$onCommandExecute(com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/opt">opt</span><span class="symbol">:</span>&nbsp;<span class="identifier">Any</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Method executed when a command is successfully executed. By default, this simply logs the command being executed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="on-command-execute-disabled.html">onCommandExecuteDisabled</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onCommandExecuteDisabled</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandExecutor$onCommandExecuteDisabled(com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/context">context</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-command-context/index.html"><span class="identifier">CommandContext</span></a><span class="symbol">, </span><span class="keyword">vararg</span> <span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandExecutor$onCommandExecuteDisabled(com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/opt">opt</span><span class="symbol">:</span>&nbsp;<span class="identifier">Any</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Method executed when an attempt to execute a disabled command was made. By default, this simply logs the attempt.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="on-command-execute-skipped.html">onCommandExecuteSkipped</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onCommandExecuteSkipped</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandExecutor$onCommandExecuteSkipped(com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/context">context</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-command-context/index.html"><span class="identifier">CommandContext</span></a><span class="symbol">, </span><span class="keyword">vararg</span> <span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandExecutor$onCommandExecuteSkipped(com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/opt">opt</span><span class="symbol">:</span>&nbsp;<span class="identifier">Any</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code>
+<p>Method executed when a parent command to execute was skipped directly to the subcommand.
+By default, this simply logs the parent command that was skipped.</p>
 </td>
 </tr>
 </tbody>

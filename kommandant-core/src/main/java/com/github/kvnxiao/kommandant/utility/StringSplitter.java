@@ -28,12 +28,12 @@ public class StringSplitter {
     }
 
     /**
-     * Single space character in String form.
+     * Single space character in String form: " ".
      */
     public static final String SPACE_LITERAL = " ";
 
     /**
-     * Single space character.
+     * Single space character: ' '.
      */
     public static final char SPACE_CHAR = ' ';
 

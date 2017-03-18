@@ -23,10 +23,9 @@
 <td>
 <a href="-command-context/index.html">CommandContext</a></td>
 <td>
-<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">CommandContext</span></code>
-<p>A data class for containing the context of the command. It parses a string and splits it in two based on the first available space. The first string represents the alias, and the second string represents the arguments leftover. 
-<p> NOTE: This class was written in Java. And why, you might ask? As of Kotlin 1.10, there is still some performance overhead in splitting strings by a literal. As such, string splitting in Java is currently still more performant than in Kotlin.</p>
-</p>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">CommandContext</span></code>
+<p>A data class for holding the context of the command. It parses a string and splits it in two based on the first
+available space. The first string represents the alias, and the second string represents the arguments leftover.</p>
 </td>
 </tr>
 <tr>

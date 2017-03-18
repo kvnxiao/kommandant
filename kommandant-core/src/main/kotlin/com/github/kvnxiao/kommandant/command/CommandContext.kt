@@ -1,7 +1,7 @@
 package com.github.kvnxiao.kommandant.command
 
 /**
- * A data class for containing the context of the command. It parses a string and splits it in two based on the first
+ * A data class for holding the context of the command. It parses a string and splits it in two based on the first
  * available space. The first string represents the alias, and the second string represents the arguments leftover.
  *
  * @property[alias] The alias or prefixed-alias used to call the command.

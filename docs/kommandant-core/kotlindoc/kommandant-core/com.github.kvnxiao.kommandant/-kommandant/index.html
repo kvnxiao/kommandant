@@ -8,7 +8,7 @@
 <a href="../../index.html">kommandant-core</a>&nbsp;/&nbsp;<a href="../index.html">com.github.kvnxiao.kommandant</a>&nbsp;/&nbsp;<a href=".">Kommandant</a><br/>
 <br/>
 <h1>Kommandant</h1>
-<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">Kommandant</span></code> <a href="https://github.com/kvnxiao/kommandant/tree/master/kommandant-core/src/main/kotlin/com/github/kvnxiao/kommandant/Kommandant.kt#L23">(source)</a>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">Kommandant</span></code> <a href="https://github.com/kvnxiao/kommandant/tree/master/kommandant-core/src/main/kotlin/com/github/kvnxiao/kommandant/Kommandant.kt#L25">(source)</a>
 <p>The default aggregation of a command registry, parser, and executor, which manages and executes commands.</p>
 <h3>Constructors</h3>
 <table>
@@ -163,6 +163,12 @@ for the provided prefix, or if the command's identifier / name is not unique.</p
 <code><span class="keyword">open</span> <span class="keyword">fun </span><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span> <span class="identifier">processCommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$processCommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)), com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/command">command</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$processCommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)), com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/context">context</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-command-context/index.html"><span class="identifier">CommandContext</span></a><span class="symbol">, </span><span class="keyword">vararg</span> <span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$processCommand(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)), com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/opt">opt</span><span class="symbol">:</span>&nbsp;<span class="identifier">Any</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.github.kvnxiao.kommandant.command/-command-result/index.html"><span class="identifier">CommandResult</span></a><span class="symbol">&lt;</span><span class="identifier">T</span><span class="symbol">&gt;</span></code>
 <p>Processes a provided command with a given command context and any additional variables for command execution.</p>
 </td>
+</tr>
+<tr>
+<td>
+<a href="split-string.html">splitString</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">splitString</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.Kommandant$splitString(kotlin.String)/input">input</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Array</span><span class="symbol">&lt;</span><span class="identifier">String</span><span class="symbol">&gt;</span></code></td>
 </tr>
 </tbody>
 </table>

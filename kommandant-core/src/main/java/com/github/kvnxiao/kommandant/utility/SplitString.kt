@@ -33,12 +33,12 @@ open class SplitString(content: String) {
     fun hasSecond(): Boolean = !second.isNullOrEmpty()
 
     /**
-     * Kotlin helper method for destructuring
+     * Kotlin helper method for destructuring support.
      */
     operator fun component1(): String? = this.first
 
     /**
-     * Kotlin helper method for destructuring
+     * Kotlin helper method for destructuring support.
      */
     operator fun component2(): String? = this.second
 

@@ -74,6 +74,14 @@ for the provided prefix, or if the command's identifier / name is not unique.</p
 </tr>
 <tr>
 <td>
+<a href="add-prefix.html">addPrefix</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">addPrefix</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandBank$addPrefix(kotlin.String)/prefix">prefix</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>Adds a prefix to the bank to keep track of all prefixes used by commands.</p>
+</td>
+</tr>
+<tr>
+<td>
 <a href="change-prefix.html">changePrefix</a></td>
 <td>
 <code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">changePrefix</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandBank$changePrefix(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)), kotlin.String)/command">command</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandBank$changePrefix(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)), kotlin.String)/newPrefix">newPrefix</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
@@ -103,8 +111,6 @@ for the provided prefix, or if the command's identifier / name is not unique.</p
 <code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getCommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandBank$getCommand(kotlin.String)/singleString">singleString</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">?</span></code>
 <p>Gets a command that exists in the <a href="command-map.html">commandMap</a> by providing a single string that represents the command's
 "prefix + alias" used in command processing / execution.</p>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getCommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandBank$getCommand(kotlin.String, kotlin.String)/prefix">prefix</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandBank$getCommand(kotlin.String, kotlin.String)/alias">alias</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">?</span></code>
-<p>Gets a command that exists in the <a href="command-map.html">commandMap</a> by providing the prefix and alias of the command.</p>
 </td>
 </tr>
 <tr>
@@ -138,6 +144,15 @@ if the alias does not exist in the <a href="prefix-set.html">prefixSet</a>.</p>
 <td>
 <code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">getPrefixes</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Set</span><span class="symbol">&lt;</span><span class="identifier">String</span><span class="symbol">&gt;</span></code>
 <p>Gets an immutable <a href="prefix-set.html">prefixSet</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="has-command.html">hasCommand</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">hasCommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandBank$hasCommand(kotlin.String)/singleString">singleString</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>Checks whether a command exists in the <a href="command-map.html">commandMap</a> by providing a single string that represents the command's
+"prefix + alias" used in command processing / execution.</p>
 </td>
 </tr>
 <tr>

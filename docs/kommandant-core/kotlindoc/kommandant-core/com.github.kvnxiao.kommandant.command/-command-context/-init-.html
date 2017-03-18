@@ -8,11 +8,8 @@
 <a href="../../index.html">kommandant-core</a>&nbsp;/&nbsp;<a href="../index.html">com.github.kvnxiao.kommandant.command</a>&nbsp;/&nbsp;<a href="index.html">CommandContext</a>&nbsp;/&nbsp;<a href=".">&lt;init&gt;</a><br/>
 <br/>
 <h1>&lt;init&gt;</h1>
-<code><span class="identifier">CommandContext</span><span class="symbol">(</span><span class="identifier">@Nullable</span> <span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandContext$<init>(kotlin.String)/message">message</span><span class="symbol">:</span>&nbsp;<span class="identifier">@Nullable</span> <span class="identifier">String</span><span class="symbol">?</span><span class="symbol">)</span></code>
-<p>Constructor which takes in a string to split in two. Splits based on the first available space character. If a space does not exist, the args string will be null. If the input string is null, both resultant args and aliases will be null.</p>
-<h3>Parameters</h3>
-
-<p><a name="message"></a>
-<code>message</code> - The message string to split into alias and args.
+<code><span class="identifier">CommandContext</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandContext$<init>(kotlin.String, kotlin.String, com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)))/alias">alias</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandContext$<init>(kotlin.String, kotlin.String, com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)))/args">args</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandContext$<init>(kotlin.String, kotlin.String, com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)))/command">command</span><span class="symbol">:</span>&nbsp;<a href="../-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">)</span></code>
+<p>A data class for holding the context of the command. It parses a string and splits it in two based on the first
+available space. The first string represents the alias, and the second string represents the arguments leftover.</p>
 </BODY>
 </HTML>

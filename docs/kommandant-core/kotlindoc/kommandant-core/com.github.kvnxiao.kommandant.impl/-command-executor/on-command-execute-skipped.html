@@ -1,0 +1,23 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>CommandExecutor.onCommandExecuteSkipped - kommandant-core</title>
+<link rel="stylesheet" href="..\..\..\style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">kommandant-core</a>&nbsp;/&nbsp;<a href="../index.html">com.github.kvnxiao.kommandant.impl</a>&nbsp;/&nbsp;<a href="index.html">CommandExecutor</a>&nbsp;/&nbsp;<a href=".">onCommandExecuteSkipped</a><br/>
+<br/>
+<h1>onCommandExecuteSkipped</h1>
+<a name="com.github.kvnxiao.kommandant.impl.CommandExecutor$onCommandExecuteSkipped(com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))"></a>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">onCommandExecuteSkipped</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandExecutor$onCommandExecuteSkipped(com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/context">context</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-command-context/index.html"><span class="identifier">CommandContext</span></a><span class="symbol">, </span><span class="keyword">vararg</span> <span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandExecutor$onCommandExecuteSkipped(com.github.kvnxiao.kommandant.command.CommandContext, kotlin.Array((kotlin.Any)))/opt">opt</span><span class="symbol">:</span>&nbsp;<span class="identifier">Any</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Unit</span></code> <a href="https://github.com/kvnxiao/kommandant/tree/master/kommandant-core/src/main/kotlin/com/github/kvnxiao/kommandant/impl/CommandExecutor.kt#L124">(source)</a>
+<p>Overrides <a href="../../com.github.kvnxiao.kommandant/-i-command-executor/on-command-execute-skipped.html">ICommandExecutor.onCommandExecuteSkipped</a></p>
+<p>Method executed when a parent command to execute was skipped directly to the subcommand.
+By default, this simply logs the parent command that was skipped.</p>
+<h3>Parameters</h3>
+
+<p><a name="context"></a>
+<code>context</code> - The context of the command, containing the calling alias and any args it may have.
+<p><a name="opt"></a>
+<code>opt</code> - A nullable vararg of <a href="#">Any</a> (any object)
+</BODY>
+</HTML>

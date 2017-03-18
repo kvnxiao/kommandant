@@ -23,6 +23,14 @@
 </tr>
 <tr>
 <td>
+<a href="add-prefix.html">addPrefix</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">addPrefix</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.ICommandBank$addPrefix(kotlin.String)/prefix">prefix</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>Adds a prefix to the bank to keep track of all prefixes used by commands.</p>
+</td>
+</tr>
+<tr>
+<td>
 <a href="change-prefix.html">changePrefix</a></td>
 <td>
 <code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">changePrefix</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.ICommandBank$changePrefix(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)), kotlin.String)/command">command</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.ICommandBank$changePrefix(com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)), kotlin.String)/newPrefix">newPrefix</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
@@ -50,7 +58,7 @@
 <a href="get-command.html">getCommand</a></td>
 <td>
 <code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getCommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.ICommandBank$getCommand(kotlin.String)/singleString">singleString</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><a href="../../com.github.kvnxiao.kommandant.command/-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">?</span></code>
-<p>Gets a command from the bank by providing a single string (usually the "prefix + alias" together)</p>
+<p>Gets a command from the bank by providing a single string (usually the "prefix + alias" together).</p>
 </td>
 </tr>
 <tr>
@@ -83,6 +91,14 @@
 <td>
 <code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">getPrefixes</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Set</span><span class="symbol">&lt;</span><span class="identifier">String</span><span class="symbol">&gt;</span></code>
 <p>Gets an immutable set of all prefixes registered in the bank.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="has-command.html">hasCommand</a></td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">fun </span><span class="identifier">hasCommand</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.ICommandBank$hasCommand(kotlin.String)/singleString">singleString</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>Returns whether a command queried using this single string exists in the registry.</p>
 </td>
 </tr>
 <tr>
