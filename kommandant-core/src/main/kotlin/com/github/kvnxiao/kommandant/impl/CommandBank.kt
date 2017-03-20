@@ -2,6 +2,7 @@ package com.github.kvnxiao.kommandant.impl
 
 import com.github.kvnxiao.kommandant.ICommandBank
 import com.github.kvnxiao.kommandant.Kommandant.Companion.LOGGER
+import com.github.kvnxiao.kommandant.command.CommandProperties
 import com.github.kvnxiao.kommandant.command.ICommand
 import com.github.kvnxiao.kommandant.utility.CommandMap
 import com.github.kvnxiao.kommandant.utility.ImmutableCommandMap
@@ -174,12 +175,12 @@ open class CommandBank : ICommandBank {
         removeCommand(command)
 
         // Set new prefix for command and re-add the command to bank
-        command.props.prefix = newPrefix
+        command.props = CommandProperties(newPrefix, command.props.uniqueName, command.props.description, command.props.usage, command.props.execWithSubcommands, command.props.disabled, command.props.aliases)
         if (addCommand(command)) {
             LOGGER.debug("Renamed prefix for command '${command.props.uniqueName}' from '$oldPrefix' to '${command.props.prefix}'")
         } else {
             // Re-add command to the bank with old prefix
-            command.props.prefix = oldPrefix
+            command.props = CommandProperties(oldPrefix, command.props.uniqueName, command.props.description, command.props.usage, command.props.execWithSubcommands, command.props.disabled, command.props.aliases)
             addCommand(command)
         }
         return false

@@ -1,5 +1,6 @@
 package com.github.kvnxiao.kommandant
 
+import com.github.kvnxiao.kommandant.command.CommandProperties
 import com.github.kvnxiao.kommandant.command.ICommand
 import com.github.kvnxiao.kommandant.configurable.CommandConfig
 import com.github.kvnxiao.kommandant.impl.CommandBank
@@ -13,7 +14,7 @@ import com.github.kvnxiao.kommandant.impl.CommandParser
  * @property[enableConfigReadWrite] Whether commands should have their properties loaded from and written to JSON.
  * @property[cmdBank] The command registry, an implementation of [ICommandBank].
  * @property[cmdExecutor] The command executor, an implementation of [ICommandExecutor].
- * @property[cmdParser] The command parser, an impementation of [ICommandParser].
+ * @property[cmdParser] The command parser, an implementation of [ICommandParser].
  * @constructor Default constructor which uses default implementations of the registry, parser, and executor.
  */
 open class KommandantConfigurable(var enableConfigReadWrite: Boolean = false,
@@ -27,7 +28,9 @@ open class KommandantConfigurable(var enableConfigReadWrite: Boolean = false,
      * @param[command] The command to enable.
      */
     open fun enableCommand(command: ICommand<*>?) {
-        if (command !== null) command.props.isDisabled = false
+        if (command !== null) {
+            command.props = CommandProperties(command.props.prefix, command.props.uniqueName, command.props.description, command.props.usage, command.props.execWithSubcommands, false, command.props.aliases)
+        }
     }
 
     /**
@@ -36,7 +39,9 @@ open class KommandantConfigurable(var enableConfigReadWrite: Boolean = false,
      * @param[command] The command to disable.
      */
     open fun disableCommand(command: ICommand<*>?) {
-        if (command !== null) command.props.isDisabled = true
+        if (command !== null) {
+            command.props = CommandProperties(command.props.prefix, command.props.uniqueName, command.props.description, command.props.usage, command.props.execWithSubcommands, true, command.props.aliases)
+        }
     }
 
     /**

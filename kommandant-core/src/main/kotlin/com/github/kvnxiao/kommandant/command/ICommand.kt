@@ -3,7 +3,7 @@ package com.github.kvnxiao.kommandant.command
 import com.github.kvnxiao.kommandant.Kommandant.Companion.LOGGER
 import com.github.kvnxiao.kommandant.utility.CommandMap
 import com.github.kvnxiao.kommandant.utility.CommandSet
-import java.util.*
+import java.util.TreeMap
 
 /**
  * An abstract class which represents a command. All commands implement [ICommandExecutable] as their main

@@ -6,7 +6,6 @@ import com.github.kvnxiao.kommandant.command.CommandContext
 import com.github.kvnxiao.kommandant.command.CommandResult
 import com.github.kvnxiao.kommandant.command.ICommand
 import com.github.kvnxiao.kommandant.utility.SplitString
-import com.github.kvnxiao.kommandant.utility.StringSplitter
 import java.lang.reflect.InvocationTargetException
 
 /**
@@ -25,7 +24,7 @@ open class CommandExecutor : ICommandExecutor {
      * @return[CommandResult] The result after command execution.
      */
     override fun <T> execute(command: ICommand<*>, context: CommandContext, vararg opt: Any?): CommandResult<T> {
-        if (!command.props.isDisabled) {
+        if (!command.props.disabled) {
             if (checkOtherSettings(command, context, *opt)) {
                 try {
                     if (context.hasArgs() && command.hasSubcommands()) {

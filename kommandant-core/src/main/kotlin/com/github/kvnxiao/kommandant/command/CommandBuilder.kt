@@ -1,7 +1,7 @@
 package com.github.kvnxiao.kommandant.command
 
 import java.lang.reflect.InvocationTargetException
-import java.util.*
+import java.util.Collections
 
 /**
  * A builder class that helps define a command without needing to specify all the properties for the [ICommand] constructor.
