@@ -6,12 +6,14 @@ package com.github.kvnxiao.kommandant.command
  *
  * @property[alias] The alias or prefixed-alias used to call the command.
  * @property[args] The (nullable) arguments provided for the command.
- * @property[command] The command being called.
+ * @property[properties] The properties of the command being called.
  */
-data class CommandContext(
+open class CommandContext(
     val alias: String,
     val args: String?,
-    val command: ICommand<*>) {
+    val properties: CommandProperties) {
+
+    constructor(alias: String, args: String?, command: ICommand<*>): this(alias, args, command.props)
 
     /**
      * Whether the command context contains arguments for the command.
@@ -19,5 +21,27 @@ data class CommandContext(
      * @return[Boolean] Whether the args property in the command context is not null.
      */
     fun hasArgs(): Boolean = args !== null
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is CommandContext) return false
+
+        if (alias != other.alias) return false
+        if (args != other.args) return false
+        if (properties != other.properties) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = alias.hashCode()
+        result = 31 * result + (args?.hashCode() ?: 0)
+        result = 31 * result + properties.hashCode()
+        return result
+    }
+
+    override fun toString(): String {
+        return "CommandContext(alias='$alias', args=$args, properties=$properties)"
+    }
 
 }

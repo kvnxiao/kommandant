@@ -100,7 +100,7 @@ open class CommandExecutor : ICommandExecutor {
      * @param[opt] A nullable vararg of [Any] (any object)
      */
     override fun onCommandExecute(context: CommandContext, vararg opt: Any?) {
-        LOGGER.debug("Executing command '${context.command.props.uniqueName}' with args: [${if (context.hasArgs()) context.args else " "}]")
+        LOGGER.debug("Executing command '${context.properties.uniqueName}' with args: [${if (context.hasArgs()) context.args else " "}]")
     }
 
     /**
@@ -110,7 +110,7 @@ open class CommandExecutor : ICommandExecutor {
      * @param[opt] A nullable vararg of [Any] (any object)
      */
     override fun onCommandExecuteDisabled(context: CommandContext, vararg opt: Any?) {
-        LOGGER.debug("Executing command '${context.command.props.uniqueName}' ignored because the command is disabled.")
+        LOGGER.debug("Executing command '${context.properties.uniqueName}' ignored because the command is disabled.")
     }
 
     /**
@@ -121,6 +121,6 @@ open class CommandExecutor : ICommandExecutor {
      * @param[opt] A nullable vararg of [Any] (any object)
      */
     override fun onCommandExecuteSkipped(context: CommandContext, vararg opt: Any?) {
-        LOGGER.debug("Executing command '${context.command.props.uniqueName}' with args: [${if (context.hasArgs()) context.args else " "}] SKIPPED because execWithSubcommands is set to false")
+        LOGGER.debug("Executing command '${context.properties.uniqueName}' with args: [${if (context.hasArgs()) context.args else " "}] SKIPPED because execWithSubcommands is set to false")
     }
 }
