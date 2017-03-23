@@ -1,3 +1,20 @@
+/*
+ * Copyright 2017 Ze Hao Xiao
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package tests
+
 import com.github.kvnxiao.kommandant.Kommandant
 import com.github.kvnxiao.kommandant.command.CommandBuilder
 import com.github.kvnxiao.kommandant.command.CommandBuilder.Companion.execute
@@ -5,7 +22,9 @@ import com.github.kvnxiao.kommandant.command.CommandContext
 import com.github.kvnxiao.kommandant.command.CommandDefaults
 import com.github.kvnxiao.kommandant.command.ICommand
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Test
 import testcommands.KotlinCommand
 import testcommands.VarargCommand
@@ -64,8 +83,8 @@ class KotlinTest {
 
     @Test
     fun testVarargs() {
-        kommandant.addCommand(CommandBuilder<Unit>("varargbuilder").withAliases("builder").build(execute {context, opt ->
-           opt.forEach(::println)
+        kommandant.addCommand(CommandBuilder<Unit>("varargbuilder").withAliases("builder").build(execute { context, opt ->
+            opt.forEach(::println)
         }))
         kommandant.addCommand(object : ICommand<Unit>(CommandDefaults.PREFIX, "varargconstructor", CommandDefaults.NO_DESCRIPTION, CommandDefaults.NO_USAGE, CommandDefaults.EXEC_WITH_SUBCOMMANDS, CommandDefaults.IS_DISABLED, "constructor") {
             override fun execute(context: CommandContext, vararg opt: Any?): Unit {
@@ -80,14 +99,14 @@ class KotlinTest {
 
     @Test
     fun testSubcommands() {
-        kommandant.addCommand(CommandBuilder<Unit>("main").withAliases("main").build(execute {context, opt ->
+        kommandant.addCommand(CommandBuilder<Unit>("tests.main").withAliases("tests.main").build(execute { context, opt ->
             opt.forEach(::println)
-        }).addSubcommand(CommandBuilder<Unit>("sub").withAliases("sub").build(execute {context, opt ->
+        }).addSubcommand(CommandBuilder<Unit>("sub").withAliases("sub").build(execute { context, opt ->
             println("This is a subcommand.")
         })))
 
-        assertTrue(kommandant.process<Unit>("/main sub").success)
-        assertTrue(kommandant.process<Unit>("/main", 1, 2, 3).success)
+        assertTrue(kommandant.process<Unit>("/tests.main sub").success)
+        assertTrue(kommandant.process<Unit>("/tests.main", 1, 2, 3).success)
     }
 
 }

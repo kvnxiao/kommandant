@@ -2,13 +2,13 @@
 <HEAD>
 <meta charset="UTF-8">
 <title>CommandProperties - kommandant-core</title>
-<link rel="stylesheet" href="..\..\..\style.css">
+<link rel="stylesheet" href="../../../style.css">
 </HEAD>
 <BODY>
 <a href="../../index.html">kommandant-core</a>&nbsp;/&nbsp;<a href="../index.html">com.github.kvnxiao.kommandant.command</a>&nbsp;/&nbsp;<a href=".">CommandProperties</a><br/>
 <br/>
 <h1>CommandProperties</h1>
-<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">CommandProperties</span></code> <a href="https://github.com/kvnxiao/kommandant/tree/master/kommandant-core/src/main/kotlin/com/github/kvnxiao/kommandant/command/CommandProperties.kt#L14">(source)</a>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">CommandProperties</span></code> <a href="https://github.com/kvnxiao/kommandant/tree/master/kommandant-core/src/main/kotlin/com/github/kvnxiao/kommandant/command/CommandProperties.kt#L29">(source)</a>
 <p>A data class containing the properties of the command.</p>
 <h3>Constructors</h3>
 <table>
@@ -17,7 +17,7 @@
 <td>
 <a href="-init-.html">&lt;init&gt;</a></td>
 <td>
-<code><span class="identifier">CommandProperties</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandProperties$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.collections.List((kotlin.String)))/prefix">prefix</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span>&nbsp;<span class="symbol">=</span>&nbsp;CommandDefaults.PREFIX<span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandProperties$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.collections.List((kotlin.String)))/uniqueName">uniqueName</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandProperties$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.collections.List((kotlin.String)))/description">description</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span>&nbsp;<span class="symbol">=</span>&nbsp;CommandDefaults.NO_DESCRIPTION<span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandProperties$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.collections.List((kotlin.String)))/usage">usage</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span>&nbsp;<span class="symbol">=</span>&nbsp;CommandDefaults.NO_USAGE<span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandProperties$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.collections.List((kotlin.String)))/execWithSubcommands">execWithSubcommands</span><span class="symbol">:</span>&nbsp;<span class="identifier">Boolean</span>&nbsp;<span class="symbol">=</span>&nbsp;CommandDefaults.EXEC_WITH_SUBCOMMANDS<span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandProperties$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.collections.List((kotlin.String)))/isDisabled">isDisabled</span><span class="symbol">:</span>&nbsp;<span class="identifier">Boolean</span>&nbsp;<span class="symbol">=</span>&nbsp;CommandDefaults.IS_DISABLED<span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandProperties$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.collections.List((kotlin.String)))/aliases">aliases</span><span class="symbol">:</span>&nbsp;<span class="identifier">List</span><span class="symbol">&lt;</span><span class="identifier">String</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">=</span>&nbsp;listOf(uniqueName)<span class="symbol">)</span></code>
+<code><span class="identifier">CommandProperties</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandProperties$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.collections.List((kotlin.String)))/prefix">prefix</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span>&nbsp;<span class="symbol">=</span>&nbsp;CommandDefaults.PREFIX<span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandProperties$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.collections.List((kotlin.String)))/uniqueName">uniqueName</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandProperties$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.collections.List((kotlin.String)))/description">description</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span>&nbsp;<span class="symbol">=</span>&nbsp;CommandDefaults.NO_DESCRIPTION<span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandProperties$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.collections.List((kotlin.String)))/usage">usage</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span>&nbsp;<span class="symbol">=</span>&nbsp;CommandDefaults.NO_USAGE<span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandProperties$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.collections.List((kotlin.String)))/execWithSubcommands">execWithSubcommands</span><span class="symbol">:</span>&nbsp;<span class="identifier">Boolean</span>&nbsp;<span class="symbol">=</span>&nbsp;CommandDefaults.EXEC_WITH_SUBCOMMANDS<span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandProperties$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.collections.List((kotlin.String)))/disabled">disabled</span><span class="symbol">:</span>&nbsp;<span class="identifier">Boolean</span>&nbsp;<span class="symbol">=</span>&nbsp;CommandDefaults.IS_DISABLED<span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandProperties$<init>(kotlin.String, kotlin.String, kotlin.String, kotlin.String, kotlin.Boolean, kotlin.Boolean, kotlin.collections.List((kotlin.String)))/aliases">aliases</span><span class="symbol">:</span>&nbsp;<span class="identifier">List</span><span class="symbol">&lt;</span><span class="identifier">String</span><span class="symbol">&gt;</span>&nbsp;<span class="symbol">=</span>&nbsp;listOf(uniqueName)<span class="symbol">)</span></code>
 <p>A data class containing the properties of the command.</p>
 </td>
 </tr>
@@ -30,7 +30,7 @@
 <td>
 <a href="aliases.html">aliases</a></td>
 <td>
-<code><span class="keyword">var </span><span class="identifier">aliases</span><span class="symbol">: </span><span class="identifier">List</span><span class="symbol">&lt;</span><span class="identifier">String</span><span class="symbol">&gt;</span></code>
+<code><span class="keyword">val </span><span class="identifier">aliases</span><span class="symbol">: </span><span class="identifier">List</span><span class="symbol">&lt;</span><span class="identifier">String</span><span class="symbol">&gt;</span></code>
 <p>The command's aliases. Defaults to a singleton list containing the <a href="unique-name.html">uniqueName</a>.</p>
 </td>
 </tr>
@@ -38,31 +38,31 @@
 <td>
 <a href="description.html">description</a></td>
 <td>
-<code><span class="keyword">var </span><span class="identifier">description</span><span class="symbol">: </span><span class="identifier">String</span></code>
+<code><span class="keyword">val </span><span class="identifier">description</span><span class="symbol">: </span><span class="identifier">String</span></code>
 <p>The command's description. Defaults to <a href="../-command-defaults/-n-o_-d-e-s-c-r-i-p-t-i-o-n.html">CommandDefaults.NO_DESCRIPTION</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<a href="disabled.html">disabled</a></td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">disabled</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<p>Specifies whether the command is disabled or not. Defaults to <a href="../-command-defaults/-i-s_-d-i-s-a-b-l-e-d.html">CommandDefaults.IS_DISABLED</a>.</p>
 </td>
 </tr>
 <tr>
 <td>
 <a href="exec-with-subcommands.html">execWithSubcommands</a></td>
 <td>
-<code><span class="keyword">var </span><span class="identifier">execWithSubcommands</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<code><span class="keyword">val </span><span class="identifier">execWithSubcommands</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
 <p>Specifies whether to execute the command alongside its subcommands. Defaults to <a href="../-command-defaults/-e-x-e-c_-w-i-t-h_-s-u-b-c-o-m-m-a-n-d-s.html">CommandDefaults.EXEC_WITH_SUBCOMMANDS</a>.</p>
-</td>
-</tr>
-<tr>
-<td>
-<a href="is-disabled.html">isDisabled</a></td>
-<td>
-<code><span class="keyword">var </span><span class="identifier">isDisabled</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
-<p>Specifies whether the command is disabled or not. Defaults to <a href="../-command-defaults/-i-s_-d-i-s-a-b-l-e-d.html">CommandDefaults.IS_DISABLED</a>.</p>
 </td>
 </tr>
 <tr>
 <td>
 <a href="prefix.html">prefix</a></td>
 <td>
-<code><span class="keyword">var </span><span class="identifier">prefix</span><span class="symbol">: </span><span class="identifier">String</span></code>
+<code><span class="keyword">val </span><span class="identifier">prefix</span><span class="symbol">: </span><span class="identifier">String</span></code>
 <p>The command's prefix. Defaults to <a href="../-command-defaults/-p-r-e-f-i-x.html">CommandDefaults.PREFIX</a>.</p>
 </td>
 </tr>
@@ -78,7 +78,7 @@
 <td>
 <a href="usage.html">usage</a></td>
 <td>
-<code><span class="keyword">var </span><span class="identifier">usage</span><span class="symbol">: </span><span class="identifier">String</span></code>
+<code><span class="keyword">val </span><span class="identifier">usage</span><span class="symbol">: </span><span class="identifier">String</span></code>
 <p>The command's usage information. Defaults to <a href="../-command-defaults/-n-o_-u-s-a-g-e.html">CommandDefaults.NO_USAGE</a>.</p>
 </td>
 </tr>
