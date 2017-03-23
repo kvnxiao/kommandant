@@ -18,9 +18,6 @@ package testcommands
 import com.github.kvnxiao.kommandant.command.CommandAnn
 import com.github.kvnxiao.kommandant.command.CommandContext
 
-/**
- * Created by kxiao on 3/8/17.
- */
 class EnabledDisabledCommands {
 
     @CommandAnn(
