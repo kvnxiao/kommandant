@@ -1,12 +1,29 @@
+/*
+ * Copyright 2017 Ze Hao Xiao
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.github.kvnxiao.kommandant.impl
 
 import com.github.kvnxiao.kommandant.ICommandBank
 import com.github.kvnxiao.kommandant.Kommandant.Companion.LOGGER
+import com.github.kvnxiao.kommandant.command.CommandProperties
 import com.github.kvnxiao.kommandant.command.ICommand
 import com.github.kvnxiao.kommandant.utility.CommandMap
 import com.github.kvnxiao.kommandant.utility.ImmutableCommandMap
 import com.github.kvnxiao.kommandant.utility.PrefixMap
-import java.util.*
+import java.util.Collections
+import java.util.TreeMap
 
 /**
  * The default implementation of [ICommandBank]. Capable of adding, removing, finding, and deleting [commands][ICommand].
@@ -174,12 +191,12 @@ open class CommandBank : ICommandBank {
         removeCommand(command)
 
         // Set new prefix for command and re-add the command to bank
-        command.props.prefix = newPrefix
+        command.props = CommandProperties(newPrefix, command.props.uniqueName, command.props.description, command.props.usage, command.props.execWithSubcommands, command.props.disabled, command.props.aliases)
         if (addCommand(command)) {
             LOGGER.debug("Renamed prefix for command '${command.props.uniqueName}' from '$oldPrefix' to '${command.props.prefix}'")
         } else {
             // Re-add command to the bank with old prefix
-            command.props.prefix = oldPrefix
+            command.props = CommandProperties(oldPrefix, command.props.uniqueName, command.props.description, command.props.usage, command.props.execWithSubcommands, command.props.disabled, command.props.aliases)
             addCommand(command)
         }
         return false

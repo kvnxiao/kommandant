@@ -1,3 +1,18 @@
+/*
+ * Copyright 2017 Ze Hao Xiao
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.github.kvnxiao.kommandant.impl
 
 import com.github.kvnxiao.kommandant.ICommandExecutor
@@ -6,7 +21,6 @@ import com.github.kvnxiao.kommandant.command.CommandContext
 import com.github.kvnxiao.kommandant.command.CommandResult
 import com.github.kvnxiao.kommandant.command.ICommand
 import com.github.kvnxiao.kommandant.utility.SplitString
-import com.github.kvnxiao.kommandant.utility.StringSplitter
 import java.lang.reflect.InvocationTargetException
 
 /**
@@ -25,7 +39,7 @@ open class CommandExecutor : ICommandExecutor {
      * @return[CommandResult] The result after command execution.
      */
     override fun <T> execute(command: ICommand<*>, context: CommandContext, vararg opt: Any?): CommandResult<T> {
-        if (!command.props.isDisabled) {
+        if (!command.props.disabled) {
             if (checkOtherSettings(command, context, *opt)) {
                 try {
                     if (context.hasArgs() && command.hasSubcommands()) {
@@ -101,7 +115,7 @@ open class CommandExecutor : ICommandExecutor {
      * @param[opt] A nullable vararg of [Any] (any object)
      */
     override fun onCommandExecute(context: CommandContext, vararg opt: Any?) {
-        LOGGER.debug("Executing command '${context.command.props.uniqueName}' with args: [${if (context.hasArgs()) context.args else " "}]")
+        LOGGER.debug("Executing command '${context.properties.uniqueName}' with args: [${if (context.hasArgs()) context.args else " "}]")
     }
 
     /**
@@ -111,7 +125,7 @@ open class CommandExecutor : ICommandExecutor {
      * @param[opt] A nullable vararg of [Any] (any object)
      */
     override fun onCommandExecuteDisabled(context: CommandContext, vararg opt: Any?) {
-        LOGGER.debug("Executing command '${context.command.props.uniqueName}' ignored because the command is disabled.")
+        LOGGER.debug("Executing command '${context.properties.uniqueName}' ignored because the command is disabled.")
     }
 
     /**
@@ -122,6 +136,6 @@ open class CommandExecutor : ICommandExecutor {
      * @param[opt] A nullable vararg of [Any] (any object)
      */
     override fun onCommandExecuteSkipped(context: CommandContext, vararg opt: Any?) {
-        LOGGER.debug("Executing command '${context.command.props.uniqueName}' with args: [${if (context.hasArgs()) context.args else " "}] SKIPPED because execWithSubcommands is set to false")
+        LOGGER.debug("Executing command '${context.properties.uniqueName}' with args: [${if (context.hasArgs()) context.args else " "}] SKIPPED because execWithSubcommands is set to false")
     }
 }
