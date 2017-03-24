@@ -2,13 +2,13 @@
 <HEAD>
 <meta charset="UTF-8">
 <title>CommandContext - kommandant-core</title>
-<link rel="stylesheet" href="..\..\..\style.css">
+<link rel="stylesheet" href="../../../style.css">
 </HEAD>
 <BODY>
 <a href="../../index.html">kommandant-core</a>&nbsp;/&nbsp;<a href="../index.html">com.github.kvnxiao.kommandant.command</a>&nbsp;/&nbsp;<a href=".">CommandContext</a><br/>
 <br/>
 <h1>CommandContext</h1>
-<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">CommandContext</span></code> <a href="https://github.com/kvnxiao/kommandant/tree/master/kommandant-core/src/main/kotlin/com/github/kvnxiao/kommandant/command/CommandContext.kt#L11">(source)</a>
+<code><span class="keyword">open</span> <span class="keyword">class </span><span class="identifier">CommandContext</span></code> <a href="https://github.com/kvnxiao/kommandant/tree/master/kommandant-core/src/main/kotlin/com/github/kvnxiao/kommandant/command/CommandContext.kt#L26">(source)</a>
 <p>A data class for holding the context of the command. It parses a string and splits it in two based on the first
 available space. The first string represents the alias, and the second string represents the arguments leftover.</p>
 <h3>Constructors</h3>
@@ -18,7 +18,7 @@ available space. The first string represents the alias, and the second string re
 <td>
 <a href="-init-.html">&lt;init&gt;</a></td>
 <td>
-<code><span class="identifier">CommandContext</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandContext$<init>(kotlin.String, kotlin.String, com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)))/alias">alias</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandContext$<init>(kotlin.String, kotlin.String, com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)))/args">args</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandContext$<init>(kotlin.String, kotlin.String, com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)))/command">command</span><span class="symbol">:</span>&nbsp;<a href="../-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">)</span></code>
+<code><span class="identifier">CommandContext</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandContext$<init>(kotlin.String, kotlin.String, com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)))/alias">alias</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandContext$<init>(kotlin.String, kotlin.String, com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)))/args">args</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandContext$<init>(kotlin.String, kotlin.String, com.github.kvnxiao.kommandant.command.ICommand((kotlin.Any)))/command">command</span><span class="symbol">:</span>&nbsp;<a href="../-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span><span class="symbol">)</span></code><code><span class="identifier">CommandContext</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandContext$<init>(kotlin.String, kotlin.String, com.github.kvnxiao.kommandant.command.CommandProperties)/alias">alias</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandContext$<init>(kotlin.String, kotlin.String, com.github.kvnxiao.kommandant.command.CommandProperties)/args">args</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">?</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandContext$<init>(kotlin.String, kotlin.String, com.github.kvnxiao.kommandant.command.CommandProperties)/properties">properties</span><span class="symbol">:</span>&nbsp;<a href="../-command-properties/index.html"><span class="identifier">CommandProperties</span></a><span class="symbol">)</span></code>
 <p>A data class for holding the context of the command. It parses a string and splits it in two based on the first
 available space. The first string represents the alias, and the second string represents the arguments leftover.</p>
 </td>
@@ -46,10 +46,10 @@ available space. The first string represents the alias, and the second string re
 </tr>
 <tr>
 <td>
-<a href="command.html">command</a></td>
+<a href="properties.html">properties</a></td>
 <td>
-<code><span class="keyword">val </span><span class="identifier">command</span><span class="symbol">: </span><a href="../-i-command/index.html"><span class="identifier">ICommand</span></a><span class="symbol">&lt;</span><span class="identifier">*</span><span class="symbol">&gt;</span></code>
-<p>The command being called.</p>
+<code><span class="keyword">val </span><span class="identifier">properties</span><span class="symbol">: </span><a href="../-command-properties/index.html"><span class="identifier">CommandProperties</span></a></code>
+<p>The properties of the command being called.</p>
 </td>
 </tr>
 </tbody>
@@ -59,11 +59,29 @@ available space. The first string represents the alias, and the second string re
 <tbody>
 <tr>
 <td>
+<a href="equals.html">equals</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">equals</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.command.CommandContext$equals(kotlin.Any)/other">other</span><span class="symbol">:</span>&nbsp;<span class="identifier">Any</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code></td>
+</tr>
+<tr>
+<td>
 <a href="has-args.html">hasArgs</a></td>
 <td>
 <code><span class="keyword">fun </span><span class="identifier">hasArgs</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
 <p>Whether the command context contains arguments for the command.</p>
 </td>
+</tr>
+<tr>
+<td>
+<a href="hash-code.html">hashCode</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">hashCode</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Int</span></code></td>
+</tr>
+<tr>
+<td>
+<a href="to-string.html">toString</a></td>
+<td>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">toString</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">String</span></code></td>
 </tr>
 </tbody>
 </table>
