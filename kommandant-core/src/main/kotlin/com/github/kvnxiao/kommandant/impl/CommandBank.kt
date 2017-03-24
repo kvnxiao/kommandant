@@ -234,6 +234,6 @@ open class CommandBank : ICommandBank {
      * @param[aliases] The list of aliases for the specified prefix.
      * @return[Boolean] Whether the provided prefix and aliases clash with any of the existing commands in the registry.
      */
-    open fun isAliasClash(prefix: String, aliases: List<String>): Boolean = aliases.any { commandMap.containsKey(prefix + it) }
+    open fun isAliasClash(prefix: String, aliases: Set<String>): Boolean = aliases.any { commandMap.containsKey(prefix + it) }
 
 }
