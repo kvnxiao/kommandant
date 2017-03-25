@@ -2,7 +2,7 @@
 <HEAD>
 <meta charset="UTF-8">
 <title>CommandBank - kommandant-core</title>
-<link rel="stylesheet" href="../../../style.css">
+<link rel="stylesheet" href="..\..\..\style.css">
 </HEAD>
 <BODY>
 <a href="../../index.html">kommandant-core</a>&nbsp;/&nbsp;<a href="../index.html">com.github.kvnxiao.kommandant.impl</a>&nbsp;/&nbsp;<a href=".">CommandBank</a><br/>
@@ -159,7 +159,7 @@ if the alias does not exist in the <a href="prefix-set.html">prefixSet</a>.</p>
 <td>
 <a href="is-alias-clash.html">isAliasClash</a></td>
 <td>
-<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">isAliasClash</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandBank$isAliasClash(kotlin.String, kotlin.collections.List((kotlin.String)))/prefix">prefix</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandBank$isAliasClash(kotlin.String, kotlin.collections.List((kotlin.String)))/aliases">aliases</span><span class="symbol">:</span>&nbsp;<span class="identifier">List</span><span class="symbol">&lt;</span><span class="identifier">String</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
+<code><span class="keyword">open</span> <span class="keyword">fun </span><span class="identifier">isAliasClash</span><span class="symbol">(</span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandBank$isAliasClash(kotlin.String, kotlin.collections.Set((kotlin.String)))/prefix">prefix</span><span class="symbol">:</span>&nbsp;<span class="identifier">String</span><span class="symbol">, </span><span class="identifier" id="com.github.kvnxiao.kommandant.impl.CommandBank$isAliasClash(kotlin.String, kotlin.collections.Set((kotlin.String)))/aliases">aliases</span><span class="symbol">:</span>&nbsp;<span class="identifier">Set</span><span class="symbol">&lt;</span><span class="identifier">String</span><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><span class="identifier">Boolean</span></code>
 <p>Checks whether the provided prefix and aliases clash with the prefix and aliases of existing commands in the registry.</p>
 </td>
 </tr>

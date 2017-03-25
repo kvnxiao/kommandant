@@ -41,12 +41,12 @@ abstract class ICommand<T>(var props: CommandProperties) : ICommandExecutable<T>
     /**
      * Constructor which takes in values for [CommandProperties] directly.
      */
-    constructor(prefix: String, uniqueName: String, description: String, usage: String, execWithSubcommands: Boolean, isDisabled: Boolean, vararg aliases: String) : this(CommandProperties(prefix, uniqueName, description, usage, execWithSubcommands, isDisabled, aliases.asList()))
+    constructor(prefix: String, uniqueName: String, description: String, usage: String, execWithSubcommands: Boolean, isDisabled: Boolean, vararg aliases: String) : this(CommandProperties(prefix, uniqueName, description, usage, execWithSubcommands, isDisabled, aliases.toSet()))
 
     /**
      * Constructor which takes in values for [CommandProperties] directly.
      */
-    constructor(prefix: String, uniqueName: String, description: String, usage: String, execWithSubcommands: Boolean, isDisabled: Boolean, aliases: List<String>) : this(CommandProperties(prefix, uniqueName, description, usage, execWithSubcommands, isDisabled, aliases))
+    constructor(prefix: String, uniqueName: String, description: String, usage: String, execWithSubcommands: Boolean, isDisabled: Boolean, aliases: Set<String>) : this(CommandProperties(prefix, uniqueName, description, usage, execWithSubcommands, isDisabled, aliases))
 
     /**
      * Adds a provided command as a subcommand to this command.

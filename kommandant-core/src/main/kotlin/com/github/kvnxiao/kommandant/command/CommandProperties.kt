@@ -33,7 +33,7 @@ data class CommandProperties(
     val usage: String = CommandDefaults.NO_USAGE,
     val execWithSubcommands: Boolean = CommandDefaults.EXEC_WITH_SUBCOMMANDS,
     val disabled: Boolean = CommandDefaults.IS_DISABLED,
-    val aliases: List<String> = listOf(uniqueName)) {
+    val aliases: Set<String> = setOf(uniqueName)) {
 
     /**
      * Overrided toString method returns the [uniqueName].

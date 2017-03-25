@@ -1,6 +1,10 @@
 kotlin { experimental { coroutines 'enable' } }
 
+repositories {
+    maven { url "https://kotlin.bintray.com/kotlinx/" }
+}
+
 dependencies {
     compile project(":kommandant-core")
-    compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.12'
+    compile 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.14'
 }

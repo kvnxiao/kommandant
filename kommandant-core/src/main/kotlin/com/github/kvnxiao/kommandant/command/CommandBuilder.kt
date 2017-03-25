@@ -16,7 +16,6 @@
 package com.github.kvnxiao.kommandant.command
 
 import java.lang.reflect.InvocationTargetException
-import java.util.Collections
 
 /**
  * A builder class that helps define a command without needing to specify all the properties for the [ICommand] constructor.
@@ -37,7 +36,7 @@ open class CommandBuilder<T>(private val uniqueName: String) {
      * The aliases of the command to build, represented as a (nullable) list of strings. If the list is null, the builder
      * will default to using the command's [uniqueName] as the command's alias.
      */
-    private var aliases: List<String>? = null
+    private var aliases: Set<String>? = null
 
     /**
      * The description of the command to build. Defaults to [CommandDefaults.NO_DESCRIPTION].
@@ -111,7 +110,7 @@ open class CommandBuilder<T>(private val uniqueName: String) {
      * @return The current [CommandBuilder] instance.
      */
     fun withAliases(vararg aliases: String): CommandBuilder<T> {
-        this.aliases = aliases.asList()
+        this.aliases = aliases.toSet()
         return this
     }
 
@@ -120,7 +119,7 @@ open class CommandBuilder<T>(private val uniqueName: String) {
      *
      * @return The current [CommandBuilder] instance.
      */
-    fun withAliases(aliases: List<String>): CommandBuilder<T> {
+    fun withAliases(aliases: Set<String>): CommandBuilder<T> {
         this.aliases = aliases
         return this
     }
@@ -141,10 +140,10 @@ open class CommandBuilder<T>(private val uniqueName: String) {
      * @return[ICommand] The built command.
      */
     fun build(executor: ICommandExecutable<T>): ICommand<T> {
-        if (aliases === null) aliases = Collections.singletonList(uniqueName)
+        if (aliases === null) aliases = setOf(uniqueName)
         return object : ICommand<T>(prefix, uniqueName, description, usage, execWithSubcommands, isDisabled, aliases!!) {
             @Throws(InvocationTargetException::class, IllegalAccessException::class)
-            override fun execute(context: CommandContext, vararg opt: Any?): T {
+            override fun execute(context: CommandContext, vararg opt: Any?): T? {
                 return executor.execute(context, *opt)
             }
         }
