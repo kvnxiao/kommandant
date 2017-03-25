@@ -16,7 +16,6 @@
 package com.github.kvnxiao.kommandant.command
 
 import java.lang.reflect.InvocationTargetException
-import java.util.Collections
 
 /**
  * A builder class that helps define a command without needing to specify all the properties for the [ICommand] constructor.
@@ -144,7 +143,7 @@ open class CommandBuilder<T>(private val uniqueName: String) {
         if (aliases === null) aliases = setOf(uniqueName)
         return object : ICommand<T>(prefix, uniqueName, description, usage, execWithSubcommands, isDisabled, aliases!!) {
             @Throws(InvocationTargetException::class, IllegalAccessException::class)
-            override fun execute(context: CommandContext, vararg opt: Any?): T {
+            override fun execute(context: CommandContext, vararg opt: Any?): T? {
                 return executor.execute(context, *opt)
             }
         }

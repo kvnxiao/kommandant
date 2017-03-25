@@ -34,6 +34,6 @@ interface ICommandExecutable<out T> {
      * @return[T] Returns the result of the execution.
      */
     @Throws(InvocationTargetException::class, IllegalAccessException::class)
-    fun execute(context: CommandContext, vararg opt: Any?): T
+    fun execute(context: CommandContext, vararg opt: Any?): T?
 
 }

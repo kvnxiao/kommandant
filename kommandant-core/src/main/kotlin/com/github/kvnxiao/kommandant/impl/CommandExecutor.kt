@@ -92,8 +92,8 @@ open class CommandExecutor : ICommandExecutor {
      */
     @Suppress("UNCHECKED_CAST")
     @Throws(InvocationTargetException::class, IllegalAccessException::class)
-    open protected fun <T> executeCommand(command: ICommand<*>, context: CommandContext, vararg opt: Any?): T {
-        return command.execute(context, *opt) as T
+    open protected fun <T> executeCommand(command: ICommand<*>, context: CommandContext, vararg opt: Any?): T? {
+        return command.execute(context, *opt) as T?
     }
 
     /**
