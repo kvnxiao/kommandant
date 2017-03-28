@@ -24,16 +24,13 @@ import com.github.kvnxiao.kommandant.command.ICommand
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import testcommands.KotlinCommand
+import testcommands.TertiaryCommand
 import testcommands.VarargCommand
 
-/**
- * Created on:   2017-03-05
- * Author:       Kevin Xiao (github.com/alphahelix00)
- *
- */
 class KotlinTest {
 
     companion object {
@@ -107,6 +104,14 @@ class KotlinTest {
 
         assertTrue(kommandant.process<Unit>("/tests.main sub").success)
         assertTrue(kommandant.process<Unit>("/tests.main", 1, 2, 3).success)
+
+        kommandant.addAnnotatedCommands(TertiaryCommand::class)
+        assertTrue(kommandant.process<String>("/primary").success)
+        assertTrue(kommandant.process<String>("/primary secondary").success)
+        assertTrue(kommandant.process<String>("/primary secondary tertiary").success)
+        assertTrue(kommandant.process<String>("/primary secondary tertiary quaternary").success)
+        assertTrue(kommandant.process<String>("/primary secondary tertiary quad").success)
+        assertEquals("this is a tertiary command!", kommandant.process<String>("/primary secondary tertiary quat").result)
     }
 
 }
