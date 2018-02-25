@@ -13,10 +13,6 @@
  *   See the License for the specific language governing commandSettings and
  *   limitations under the License.
  */
-package com.github.kvnxiao.kommandant.command.annotations
+package com.github.kvnxiao.kommandant.utility
 
-@Retention(AnnotationRetention.RUNTIME)
-@Target(AnnotationTarget.CLASS)
-annotation class CommandGroup(
-    val groupName: String
-)
+val LINE_SEPARATOR: String = System.lineSeparator()

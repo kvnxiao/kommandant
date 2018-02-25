@@ -29,8 +29,6 @@ open class SplitString(content: String) {
         private const val R: Char = '\r'
         private const val N: Char = '\n'
         private const val SPACE: Char = ' '
-        @JvmStatic
-        private val LINE_SEPARATOR: String = System.lineSeparator()
     }
 
     val first: String

@@ -42,6 +42,6 @@ open class CommandPackage<T>(
     }
 
     override fun toString(): String {
-        return "CommandPackage(id=${properties.id}, prefix=${properties.prefix}, aliases=${properties.aliases})"
+        return "CommandPackage(id=${properties.id}, prefix=${properties.prefix}, aliases=${properties.aliases}, parentId=${properties.parentId})"
     }
 }

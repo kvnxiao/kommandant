@@ -15,10 +15,12 @@
  */
 package com.github.kvnxiao.kommandant.command.annotations
 
+import com.github.kvnxiao.kommandant.command.CommandDefaults
+
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FUNCTION)
 annotation class Command(
     val id: String,
     val aliases: Array<String>,
-    val parentId: String
+    val parentId: String = CommandDefaults.PARENT_ID
 )

@@ -45,7 +45,7 @@ open class Kommandant(
     }
 
     override fun <T> processAsync(input: String, opt: Array<Any>?): Future<Either<Exception, T>> {
-        LOGGER.debug { "Processing input string $input" }
+        LOGGER.debug { "Processing input string: $input" }
         val (alias, args) = SplitString(input)
         val command = registry.getCommandByAlias(alias)
         return if (command != null) {

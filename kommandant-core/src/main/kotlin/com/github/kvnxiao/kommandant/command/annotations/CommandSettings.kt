@@ -15,9 +15,12 @@
  */
 package com.github.kvnxiao.kommandant.command.annotations
 
+import com.github.kvnxiao.kommandant.command.CommandDefaults
+
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FUNCTION)
 annotation class CommandSettings(
-    val execWithSubCommands: Boolean,
-    val isDisabled: Boolean
+    val execWithSubCommands: Boolean = CommandDefaults.EXEC_WITH_SUBCOMMANDS,
+    val isDisabled: Boolean = CommandDefaults.IS_DISABLED,
+    val isRegistryAware: Boolean = CommandDefaults.IS_REGISTRY_AWARE
 )
