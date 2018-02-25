@@ -16,8 +16,9 @@
 package com.github.kvnxiao.kommandant
 
 import arrow.core.Either
-import com.github.kvnxiao.kommandant.command.Context
+import com.github.kvnxiao.kommandant.command.CommandDefaults
 import com.github.kvnxiao.kommandant.command.CommandPackage
+import com.github.kvnxiao.kommandant.command.Context
 import com.github.kvnxiao.kommandant.command.errors.CommandNotFoundException
 import com.github.kvnxiao.kommandant.command.executor.CommandExecutor
 import com.github.kvnxiao.kommandant.command.executor.CommandExecutorImpl
@@ -81,7 +82,44 @@ open class Kommandant(
     }
 
     override fun addAnnotatedCommands(vararg instances: Any): Boolean {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val list = instances.flatMap { annotationParser.parseAnnotations(it) }
+        return if (validate(list)) {
+            list.forEach {
+                // Register root-level commands
+                if (it.properties.parentId == CommandDefaults.PARENT_ID) {
+                    this.addCommand(it)
+                } else {
+                    // Register sub-commands
+                    this.addSubCommand(it, it.properties.parentId)
+                }
+            }
+            true
+        } else {
+            false
+        }
+    }
+
+    protected fun validate(commands: List<CommandPackage<*>>): Boolean {
+        val aliasList = commands.flatMap { pkg -> pkg.properties.aliases.map { pkg.properties.prefix + it } }
+        val idList = commands.map { it.properties.id }
+        when {
+            idList.toSet().size != idList.size -> {
+                LOGGER.error { "Some of the annotated commands have conflicting unique ids." }
+                return false
+            }
+            aliasList.toSet().size != aliasList.size -> {
+                LOGGER.error { "Some of the annotated commands have conflicting aliases between one another." }
+                return false
+            }
+            !commands.all {
+                registry.validateAliases(it.properties.prefix, it.properties.aliases)
+                    && registry.validateUniqueId(it.properties.id)
+            } -> {
+                LOGGER.error { "Some of the annotated commands have conflicting aliases or unique ids with the current registry." }
+                return false
+            }
+            else -> return true
+        }
     }
 
     override fun addCommand(command: CommandPackage<*>): Boolean = registry.addCommand(command)

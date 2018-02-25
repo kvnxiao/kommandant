@@ -39,7 +39,7 @@ open class AnnotationParserImpl : AnnotationParser {
     override fun parseAnnotations(instance: Any): List<CommandPackage<*>> {
         val clazz = instance::class.java
 
-        // Prerequisite check
+        // Preconditions check
         val methodSet = clazz.methods.filter { it.isAnnotationPresent(Command::class.java) }.toMutableSet()
         if (methodSet.isEmpty()) {
             LOGGER.debug { "Skipping class ${clazz.name} as there are no methods annotated with @${Command::class.java.simpleName}" }
@@ -145,7 +145,7 @@ open class AnnotationParserImpl : AnnotationParser {
         else null
 
     protected fun Method.getPrefix(): String? =
-        if (this.isAnnotationPresent(CommandGroup::class.java)) this.getAnnotation(Prefix::class.java).prefix
+        if (this.isAnnotationPresent(Prefix::class.java)) this.getAnnotation(Prefix::class.java).prefix
         else null
 
     protected fun Method.getCommandInfo(): CommandInfo? =

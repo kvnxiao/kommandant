@@ -15,4 +15,7 @@
  */
 package com.github.kvnxiao.kommandant.registry
 
-abstract class CommandRegistry : ReadCommandRegistry, WriteCommandRegistry
+abstract class CommandRegistry : ReadCommandRegistry, WriteCommandRegistry {
+    abstract fun validateAliases(prefix: String, aliases: Set<String>): Boolean
+    abstract fun validateUniqueId(id: String): Boolean
+}

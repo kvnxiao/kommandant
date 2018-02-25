@@ -43,14 +43,14 @@ open class CommandRegistryImpl : CommandRegistry() {
     /**
      * Ensure that before adding a new command, none of the prefix + alias combinations already exist in the registry
      */
-    protected fun validateAliases(prefix: String, aliases: Set<String>): Boolean {
+    override fun validateAliases(prefix: String, aliases: Set<String>): Boolean {
         return aliases.none { aliasIdMap.containsKey(prefix + it) }
     }
 
     /**
      * Ensure that before adding a new command, the unique identifier does not already exist in the registry
      */
-    protected fun validateUniqueId(id: String): Boolean {
+    override fun validateUniqueId(id: String): Boolean {
         return !idCommandMap.containsKey(id)
     }
 
