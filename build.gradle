@@ -35,6 +35,7 @@ subprojects {
     }
 
     apply plugin: 'kotlin'
+    apply plugin: 'jacoco'
     apply plugin: 'com.github.johnrengelman.shadow'
     apply plugin: 'com.diffplug.gradle.spotless'
 
@@ -81,5 +82,19 @@ subprojects {
     artifacts {
         archives sourcesJar
         archives javadocJar
+    }
+
+    jacoco {
+        toolVersion = "0.8.0"
+        reportsDir = file("$buildDir/reports")
+    }
+
+    jacocoTestReport.dependsOn test
+    jacocoTestReport {
+        reports {
+            xml.enabled = true
+            csv.enabled = true
+            html.destination file("${buildDir}/jacocoHtml")
+        }
     }
 }
