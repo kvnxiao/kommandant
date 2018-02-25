@@ -1,47 +1,38 @@
 /*
- * Copyright 2017 Ze Hao Xiao
+ *   Copyright (C) 2017-2018 Ze Hao Xiao
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *   Licensed under the Apache License, Version 2.0 (the "License");
+ *   you may not use this file except in compliance with the License.
+ *   You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *       http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *   Unless required by applicable law or agreed to in writing, software
+ *   distributed under the License is distributed on an "AS IS" BASIS,
+ *   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *   See the License for the specific language governing commandSettings and
+ *   limitations under the License.
  */
 package com.github.kvnxiao.kommandant.command
 
 /**
- * A data class containing the properties of the command.
- *
- * @property[prefix] The command's prefix. Defaults to [CommandDefaults.PREFIX].
- * @property[uniqueName] The command's unique name / identifier.
- * @property[description] The command's description. Defaults to [CommandDefaults.NO_DESCRIPTION].
- * @property[usage] The command's usage information. Defaults to [CommandDefaults.NO_USAGE].
- * @property[execWithSubcommands] Specifies whether to execute the command alongside its subcommands. Defaults to [CommandDefaults.EXEC_WITH_SUBCOMMANDS].
- * @property[disabled] Specifies whether the command is disabled or not. Defaults to [CommandDefaults.IS_DISABLED].
- * @property[aliases] The command's aliases. Defaults to a singleton list containing the [uniqueName].
+ * Properties associated with every command.
  */
 data class CommandProperties(
-    val prefix: String = CommandDefaults.PREFIX,
-    val uniqueName: String,
+    // Required
+    val id: String,
+    val aliases: Set<String> = setOf(id),
+    val prefix: String = CommandDefaults.NO_PREFIX,
+    // Parent command id
+    val parentId: String = CommandDefaults.PARENT_ID,
+    // Metadata
     val description: String = CommandDefaults.NO_DESCRIPTION,
     val usage: String = CommandDefaults.NO_USAGE,
-    val execWithSubcommands: Boolean = CommandDefaults.EXEC_WITH_SUBCOMMANDS,
-    val disabled: Boolean = CommandDefaults.IS_DISABLED,
-    val aliases: Set<String> = setOf(uniqueName)) {
-
-    /**
-     * Overrided toString method returns the [uniqueName].
-     *
-     * @return[uniqueName] The command's unique name / identifier.
-     */
-    override fun toString(): String {
-        return this.uniqueName
+    // Command settings
+    val execWithSubCommands: Boolean = CommandDefaults.EXEC_WITH_SUBCOMMANDS,
+    val isDisabled: Boolean = CommandDefaults.IS_DISABLED
+) {
+    init {
+        check(aliases.isNotEmpty(), { "CommandProperties aliases cannot be empty!" })
     }
-
 }

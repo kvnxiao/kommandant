@@ -17,17 +17,6 @@ buildNumber.properties
 .idea/
 *.ipr
 
-# Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
-# Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
-
-# Sensitive or high-churn files:
-.idea/dataSources.ids
-.idea/dataSources.xml
-.idea/dataSources.local.xml
-.idea/sqlDataSources.xml
-.idea/dynamic.xml
-.idea/uiDesigner.xml
-
 # Gradle:
 .gradle/
 gradle-app.setting
@@ -41,7 +30,7 @@ gradle-app.setting
 ## Plugin-specific files:
 
 # IntelliJ
-/out/
+*/out/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -61,3 +50,4 @@ modules/
 /kommandant-configurable/kommandant
 kommandant.json
 config
+token.txt

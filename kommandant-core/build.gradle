@@ -1,10 +1,12 @@
-plugins {
-    id "me.champeau.gradle.jmh" version "0.3.1"
+buildscript {
+    ext.arrow_version = '0.6.1'
 }
-
-apply plugin: 'me.champeau.gradle.jmh'
 
 dependencies {
-    jmh "org.openjdk.jmh:jmh-core:1.17.5"
-    jmh "ch.qos.logback:logback-classic:$logback_version"
+    compile "io.arrow-kt:arrow-core:$arrow_version"
+//    compile "io.arrow-kt:arrow-typeclasses:$arrow_version"
+//    compile "io.arrow-kt:arrow-instances:$arrow_version"
+//    compile "io.arrow-kt:arrow-data:$arrow_version"
+//    compile "io.arrow-kt:arrow-syntax:$arrow_version"
 }
+

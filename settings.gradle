@@ -1,5 +1,3 @@
 rootProject.name = 'kommandant'
 
 include 'kommandant-core'
-include 'kommandant-configurable'
-include 'kommandant-async'
