@@ -131,8 +131,8 @@ open class AnnotationParserImpl : AnnotationParser {
             parentId = newParentId,
             description = commandInfo?.description ?: CommandDefaults.NO_DESCRIPTION,
             usage = commandInfo?.usage ?: CommandDefaults.NO_USAGE,
-            execWithSubCommands = CommandDefaults.EXEC_WITH_SUBCOMMANDS,
-            isDisabled = CommandDefaults.IS_DISABLED
+            execWithSubCommands = commandSettings?.execWithSubCommands ?: CommandDefaults.EXEC_WITH_SUBCOMMANDS,
+            isDisabled = commandSettings?.isDisabled ?: CommandDefaults.IS_DISABLED
         )
     }
 

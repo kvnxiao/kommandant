@@ -13,7 +13,7 @@
  *   See the License for the specific language governing commandSettings and
  *   limitations under the License.
  */
-package com.github.kvnxiao.kommandant.registry
+package com.github.kvnxiao.kommandant.command.registry
 
 import com.github.kvnxiao.kommandant.command.CommandDefaults
 import com.github.kvnxiao.kommandant.command.CommandPackage
@@ -152,18 +152,11 @@ open class CommandRegistryImpl : CommandRegistry() {
      * Adds a sub-command to a parent command
      */
     override fun addSubCommand(subCommand: CommandPackage<*>, parentId: String): Boolean {
+        // TODO: fix parentId in CommandProperties of sub-command if not adding through annotations
         // Update command registry
         val subCommandRegistry = parentIdSubCommandsMap.getOrPut(parentId, { SubCommandRegistryImpl() })
         // Add sub-command
-        val success = subCommandRegistry.addSubCommand(subCommand, parentId)
-        return if (success) {
-            true
-        } else {
-            if (!subCommandRegistry.containsCommands()) {
-                parentIdSubCommandsMap.remove(parentId)
-            }
-            false
-        }
+        return subCommandRegistry.addSubCommand(subCommand, parentId)
     }
 
     /**
@@ -171,7 +164,11 @@ open class CommandRegistryImpl : CommandRegistry() {
      */
     override fun removeSubCommand(subCommandId: String, parentId: String): Boolean {
         val subCommandRegistry = parentIdSubCommandsMap[parentId] ?: return false
-        return subCommandRegistry.removeSubCommand(subCommandId)
+        val success = subCommandRegistry.removeSubCommand(subCommandId)
+        if (success && !subCommandRegistry.containsCommands()) {
+            parentIdSubCommandsMap.remove(parentId)
+        }
+        return success
     }
 
     override fun deleteCommand(id: String): Boolean {

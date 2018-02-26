@@ -24,8 +24,8 @@ import com.github.kvnxiao.kommandant.command.executor.CommandExecutor
 import com.github.kvnxiao.kommandant.command.executor.CommandExecutorImpl
 import com.github.kvnxiao.kommandant.command.parser.AnnotationParser
 import com.github.kvnxiao.kommandant.command.parser.AnnotationParserImpl
-import com.github.kvnxiao.kommandant.registry.CommandRegistry
-import com.github.kvnxiao.kommandant.registry.CommandRegistryImpl
+import com.github.kvnxiao.kommandant.command.registry.CommandRegistry
+import com.github.kvnxiao.kommandant.command.registry.CommandRegistryImpl
 import com.github.kvnxiao.kommandant.utility.SplitString
 import mu.KotlinLogging
 import java.util.concurrent.CompletableFuture
@@ -82,7 +82,10 @@ open class Kommandant(
     }
 
     override fun addAnnotatedCommands(vararg instances: Any): Boolean {
+        // Get commands created by annotation parser
         val list = instances.flatMap { annotationParser.parseAnnotations(it) }
+        if (list.isEmpty()) return false
+        // Validate commands before adding to registry
         return if (validate(list)) {
             list.forEach {
                 // Register root-level commands

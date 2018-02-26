@@ -13,7 +13,7 @@
  *   See the License for the specific language governing commandSettings and
  *   limitations under the License.
  */
-package com.github.kvnxiao.kommandant.registry
+package com.github.kvnxiao.kommandant.command.registry
 
 import com.github.kvnxiao.kommandant.command.CommandPackage
 import mu.KotlinLogging

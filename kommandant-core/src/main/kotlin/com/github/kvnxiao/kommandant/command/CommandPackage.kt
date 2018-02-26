@@ -23,25 +23,21 @@ open class CommandPackage<T>(
     val errorHandler: CommandErrorHandler = DefaultErrorHandler()
 ) {
 
+    override fun toString(): String {
+        return "CommandPackage(id=${properties.id}, prefix=${properties.prefix}, aliases=${properties.aliases}, parentId=${properties.parentId})"
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is CommandPackage<*>) return false
 
-        if (executable != other.executable) return false
         if (properties != other.properties) return false
-        if (errorHandler != other.errorHandler) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        var result = executable.hashCode()
-        result = 31 * result + properties.hashCode()
-        result = 31 * result + errorHandler.hashCode()
-        return result
+        return properties.hashCode()
     }
 
-    override fun toString(): String {
-        return "CommandPackage(id=${properties.id}, prefix=${properties.prefix}, aliases=${properties.aliases}, parentId=${properties.parentId})"
-    }
 }
