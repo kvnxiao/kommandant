@@ -26,7 +26,7 @@ class CommandExecutorImpl : CommandExecutor {
     @Suppress("UNCHECKED_CAST")
     override fun <T> execute(command: CommandPackage<*>, context: Context, opt: Array<Any>?): Either<Exception, T> {
         return try {
-            LOGGER.error { "Executing command $command" }
+            LOGGER.debug { "Executing command $command" }
             val response = command.executable.execute(context, opt)
             Either.right(response as T)
         } catch (ex: Exception) {
