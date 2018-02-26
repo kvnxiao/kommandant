@@ -17,7 +17,7 @@ package com.github.kvnxiao.kommandant.command.parser
 
 import com.github.kvnxiao.kommandant.DefaultErrorHandler
 import com.github.kvnxiao.kommandant.command.CommandDefaults
-import com.github.kvnxiao.kommandant.command.CommandErrorHandler
+import com.github.kvnxiao.kommandant.command.ExecutionErrorHandler
 import com.github.kvnxiao.kommandant.command.CommandExecutable
 import com.github.kvnxiao.kommandant.command.CommandPackage
 import com.github.kvnxiao.kommandant.command.CommandProperties
@@ -26,9 +26,11 @@ import com.github.kvnxiao.kommandant.command.annotations.Command
 import com.github.kvnxiao.kommandant.command.annotations.CommandGroup
 import com.github.kvnxiao.kommandant.command.annotations.CommandInfo
 import com.github.kvnxiao.kommandant.command.annotations.CommandSettings
+import com.github.kvnxiao.kommandant.command.annotations.CommandErrorHandler
 import com.github.kvnxiao.kommandant.command.annotations.Prefix
 import com.github.kvnxiao.kommandant.utility.LINE_SEPARATOR
 import mu.KotlinLogging
+import java.beans.Introspector
 import java.lang.reflect.Method
 import java.util.ArrayDeque
 import java.util.Queue
@@ -38,6 +40,15 @@ private val LOGGER = KotlinLogging.logger { }
 open class AnnotationParserImpl : AnnotationParser {
     override fun parseAnnotations(instance: Any): List<CommandPackage<*>> {
         val clazz = instance::class.java
+
+        // Get error handler from class instance
+        val errorHandlerMethod = Introspector.getBeanInfo(clazz).propertyDescriptors.map { it.readMethod }.filter { it.isAnnotationPresent(CommandErrorHandler::class.java) }
+        require(errorHandlerMethod.size <= 1, { "Cannot have more than one error handler declared!" })
+        val errorHandler: ExecutionErrorHandler = if (errorHandlerMethod.isNotEmpty()) {
+            errorHandlerMethod[0].invoke(instance) as ExecutionErrorHandler
+        } else {
+            DefaultErrorHandler()
+        }
 
         // Preconditions check
         val methodSet = clazz.methods.filter { it.isAnnotationPresent(Command::class.java) }.toMutableSet()
@@ -93,11 +104,11 @@ open class AnnotationParserImpl : AnnotationParser {
         val globalPrefix: String? = instance::class.java.getGlobalPrefix()
 
         return idToMethodMap.map { (id, method) ->
-            this.createCommand(method, method.commandAnn(), commandGroup + id, globalPrefix, instance)
+            this.createCommand(method, method.commandAnn(), commandGroup + id, globalPrefix, errorHandler, instance)
         }.toList()
     }
 
-    protected open fun createCommand(method: Method, commandAnn: Command, id: String, globalPrefix: String?, instance: Any): CommandPackage<*> {
+    protected open fun createCommand(method: Method, commandAnn: Command, id: String, globalPrefix: String?, errorHandler: ExecutionErrorHandler, instance: Any): CommandPackage<*> {
         // Check if there is a local prefix -- Global prefix will always override local prefix -- Default to empty string ""
         val prefix = globalPrefix ?: method.getPrefix() ?: CommandDefaults.NO_PREFIX
         // Check if there is a @CommandInfo annotation
@@ -118,7 +129,6 @@ open class AnnotationParserImpl : AnnotationParser {
                 return method.invoke(instance, context, opt)
             }
         }
-        val errorHandler: CommandErrorHandler = DefaultErrorHandler()
         return CommandPackage(executable, properties, errorHandler)
     }
 

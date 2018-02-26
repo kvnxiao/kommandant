@@ -20,7 +20,7 @@ import com.github.kvnxiao.kommandant.DefaultErrorHandler
 open class CommandPackage<T>(
     val executable: CommandExecutable<T>,
     val properties: CommandProperties,
-    val errorHandler: CommandErrorHandler = DefaultErrorHandler()
+    val errorHandler: ExecutionErrorHandler = DefaultErrorHandler()
 ) {
 
     override fun toString(): String {

@@ -13,15 +13,8 @@
  *   See the License for the specific language governing commandSettings and
  *   limitations under the License.
  */
-package com.github.kvnxiao.kommandant
+package com.github.kvnxiao.kommandant.command
 
-import com.github.kvnxiao.kommandant.command.ExecutionErrorHandler
-import com.github.kvnxiao.kommandant.command.CommandPackage
-import mu.KotlinLogging
-
-private val LOGGER = KotlinLogging.logger { }
-class DefaultErrorHandler : ExecutionErrorHandler {
-    override fun onError(command: CommandPackage<*>, ex: Exception) {
-        LOGGER.error(ex) { "An error has occurred for $command." }
-    }
+interface ExecutionErrorHandler {
+    fun onError(command: CommandPackage<*>, ex: Exception)
 }

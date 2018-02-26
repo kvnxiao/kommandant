@@ -13,8 +13,8 @@
  *   See the License for the specific language governing commandSettings and
  *   limitations under the License.
  */
-package com.github.kvnxiao.kommandant.command
+package com.github.kvnxiao.kommandant.command.annotations
 
-interface CommandErrorHandler {
-    fun onError(command: CommandPackage<*>, ex: Exception)
-}
+@Retention(AnnotationRetention.RUNTIME)
+@Target(AnnotationTarget.PROPERTY_GETTER)
+annotation class CommandErrorHandler

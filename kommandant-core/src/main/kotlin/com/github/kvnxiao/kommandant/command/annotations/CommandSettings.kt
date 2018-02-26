@@ -21,6 +21,5 @@ import com.github.kvnxiao.kommandant.command.CommandDefaults
 @Target(AnnotationTarget.FUNCTION)
 annotation class CommandSettings(
     val execWithSubCommands: Boolean = CommandDefaults.EXEC_WITH_SUBCOMMANDS,
-    val isDisabled: Boolean = CommandDefaults.IS_DISABLED,
-    val isRegistryAware: Boolean = CommandDefaults.IS_REGISTRY_AWARE
+    val isDisabled: Boolean = CommandDefaults.IS_DISABLED
 )

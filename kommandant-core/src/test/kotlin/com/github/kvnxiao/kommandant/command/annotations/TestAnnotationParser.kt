@@ -15,6 +15,8 @@
  */
 package com.github.kvnxiao.kommandant.command.annotations
 
+import com.github.kvnxiao.kommandant.command.ExecutionErrorHandler
+import com.github.kvnxiao.kommandant.command.CommandPackage
 import com.github.kvnxiao.kommandant.command.Context
 import com.github.kvnxiao.kommandant.command.parser.AnnotationParser
 import com.github.kvnxiao.kommandant.command.parser.AnnotationParserImpl
@@ -105,6 +107,28 @@ class TestAnnotationParser {
         val instance = AnnotatedCommandInvalidParentId()
         annotationParser.parseAnnotations(instance)
     }
+
+    @Test
+    fun `test custom error handler kotlin`() {
+        val annotationParser: AnnotationParser = AnnotationParserImpl()
+        val instance = AnnotatedCommandWithErrorHandler()
+        val commandPackages = annotationParser.parseAnnotations(instance)
+        assertEquals(1, commandPackages.size)
+        commandPackages[0].let {
+            it.errorHandler.onError(it, UnsupportedOperationException())
+        }
+    }
+
+    @Test
+    fun `test custom error handler java`() {
+        val annotationParser: AnnotationParser = AnnotationParserImpl()
+        val instance = AnnotatedCommandWithErrorHandlerJava()
+        val commandPackages = annotationParser.parseAnnotations(instance)
+        assertEquals(1, commandPackages.size)
+        commandPackages[0].let {
+            it.errorHandler.onError(it, UnsupportedOperationException())
+        }
+    }
 }
 
 @CommandGroup("test")
@@ -194,6 +218,7 @@ class AnnotatedCommandNonUniqueId {
     fun commandSame1(context: Context, opt: Array<Any>?): Int {
         return 1
     }
+
     @Command(
         id = "same",
         aliases = ["s2"]
@@ -221,6 +246,25 @@ class AnnotatedCommandInvalidParentId {
         parentId = "nobody"
     )
     fun commandSelf(context: Context, opt: Array<Any>?): Int {
+        return 1
+    }
+}
+
+class AnnotatedCommandWithErrorHandler {
+
+    val errorHandler: ExecutionErrorHandler = object : ExecutionErrorHandler {
+        override fun onError(command: CommandPackage<*>, ex: Exception) {
+            println("Calling custom error handler from Kotlin")
+            assertEquals(command.properties.id, "self_kotlin")
+        }
+    }
+        @CommandErrorHandler get
+
+    @Command(
+        id = "self_kotlin",
+        aliases = ["sk"]
+    )
+    fun commandErrorHandler(context: Context, opt: Array<Any>?): Int {
         return 1
     }
 }

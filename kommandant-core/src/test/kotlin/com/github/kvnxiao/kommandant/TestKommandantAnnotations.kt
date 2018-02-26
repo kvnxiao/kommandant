@@ -26,7 +26,6 @@ import com.github.kvnxiao.kommandant.command.annotations.Prefix
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Test
@@ -98,7 +97,7 @@ class TestKommandantAnnotations {
     fun `test command properties and context`() {
         val kommandant: CommandManager = Kommandant()
         assertTrue(kommandant.addAnnotatedCommands(CustomAnnotatedCommand()))
-        assertTrue(kommandant.process<Boolean>("-test value").getOrElse { false })
+        assertTrue(kommandant.process<Boolean>("-test value", arrayOf(1)).getOrElse { false })
     }
 
     @Test
@@ -193,7 +192,9 @@ class CustomAnnotatedCommand {
         assertEquals("some usage information goes here.", context.properties.usage)
         assertTrue(context.properties.execWithSubCommands)
         assertTrue(context.properties.isDisabled)
-        assertNull(opt)
+        assertNotNull(opt!!)
+        assertEquals(1, opt.size)
+        assertEquals(1, opt[0])
         return true
     }
 }

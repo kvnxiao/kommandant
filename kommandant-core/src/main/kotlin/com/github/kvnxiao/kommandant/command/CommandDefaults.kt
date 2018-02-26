@@ -40,8 +40,4 @@ object CommandDefaults {
      * The default setting for whether the command is disabled, set as false (commands default to enabled).
      */
     const val IS_DISABLED = false
-    /**
-     * The default setting for whether commands can read the command registry (default to false).
-     */
-    const val IS_REGISTRY_AWARE = false
 }
