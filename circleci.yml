@@ -2,6 +2,10 @@ machine:
   timezone:
     America/Toronto
 
+dependencies:
+  pre:
+    - chmod +x gradlew
+
 test:
   post:
     - ./gradlew jacocoTestReport

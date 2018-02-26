@@ -1,6 +1,7 @@
 <h1>Kommandant &nbsp;<sup><sup><sub><i>[origin: German] (noun): commander</i></sub></sup></sup></h1>
 
-[![CircleCI](https://circleci.com/gh/kvnxiao/kommandant/tree/master.svg?style=shield)](https://circleci.com/gh/kvnxiao/kommandant/tree/master)
+[![CircleCI](https://circleci.com/gh/kvnxiao/kommandant/tree/dev.svg?style=shield)](https://circleci.com/gh/kvnxiao/kommandant/tree/master)
+[![codecov](https://codecov.io/gh/kvnxiao/kommandant/branch/dev/graph/badge.svg)](https://codecov.io/gh/kvnxiao/kommandant)
 [![Release](https://jitpack.io/v/kvnxiao/kommandant.svg)](https://jitpack.io/#kvnxiao/kommandant)
 [![Apache License](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 
