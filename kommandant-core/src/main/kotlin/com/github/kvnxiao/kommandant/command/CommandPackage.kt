@@ -39,5 +39,4 @@ open class CommandPackage<T>(
     override fun hashCode(): Int {
         return properties.hashCode()
     }
-
 }

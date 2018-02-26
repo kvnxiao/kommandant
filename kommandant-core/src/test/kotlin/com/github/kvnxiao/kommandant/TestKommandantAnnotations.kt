@@ -16,7 +16,6 @@
 package com.github.kvnxiao.kommandant
 
 import arrow.core.getOrElse
-import arrow.core.getOrHandle
 import com.github.kvnxiao.kommandant.command.CommandDefaults
 import com.github.kvnxiao.kommandant.command.Context
 import com.github.kvnxiao.kommandant.command.annotations.Command
