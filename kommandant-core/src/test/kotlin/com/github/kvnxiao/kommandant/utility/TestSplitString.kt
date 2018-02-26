@@ -13,9 +13,8 @@
  *   See the License for the specific language governing commandSettings and
  *   limitations under the License.
  */
-package com.github.kvnxiao.kommandant
+package com.github.kvnxiao.kommandant.utility
 
-import com.github.kvnxiao.kommandant.utility.SplitString
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
@@ -81,5 +80,15 @@ class TestSplitString {
         val (first, second) = SplitString("hello")
         assertEquals("hello", first)
         assertNull(second)
+    }
+
+    @Test
+    fun `test new-line splitting with new-line characters in string`() {
+        val (first, second) = SplitString("Hello\r\nworld!")
+        assertEquals("Hello", first)
+        assertEquals("world!", second)
+        val (third, fourth) = SplitString("Hello\nworld!")
+        assertEquals("Hello", third)
+        assertEquals("world!", fourth)
     }
 }

@@ -16,12 +16,18 @@
 package com.github.kvnxiao.kommandant
 
 import arrow.core.getOrElse
+import arrow.core.getOrHandle
+import com.github.kvnxiao.kommandant.command.CommandDefaults
 import com.github.kvnxiao.kommandant.command.Context
 import com.github.kvnxiao.kommandant.command.annotations.Command
 import com.github.kvnxiao.kommandant.command.annotations.CommandGroup
+import com.github.kvnxiao.kommandant.command.annotations.CommandInfo
+import com.github.kvnxiao.kommandant.command.annotations.CommandSettings
 import com.github.kvnxiao.kommandant.command.annotations.Prefix
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotNull
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Test
@@ -81,6 +87,25 @@ class TestKommandantAnnotations {
         assertFalse(kommandant.addAnnotatedCommands(
             AnnotatedCommands()
         ))
+        assertFalse(kommandant.addAnnotatedCommands(
+            AnnotatedCommandsDuplicateId()
+        ))
+        assertFalse(kommandant.addAnnotatedCommands(
+            AnnotatedCommandsDuplicateAlias()
+        ))
+    }
+
+    @Test
+    fun `test command properties and context`() {
+        val kommandant: CommandManager = Kommandant()
+        assertTrue(kommandant.addAnnotatedCommands(CustomAnnotatedCommand()))
+        assertTrue(kommandant.process<Boolean>("-test value").getOrElse { false })
+    }
+
+    @Test
+    fun `test invalid object to parse`() {
+        val kommandant: CommandManager = Kommandant()
+        assertFalse(kommandant.addAnnotatedCommands(Object()))
     }
 }
 
@@ -143,5 +168,33 @@ class AnnotatedCommandsDuplicateAlias {
     )
     fun commandReturnsInt(context: Context, opt: Array<Any>?): Int {
         return 1
+    }
+}
+
+@CommandGroup("test")
+class CustomAnnotatedCommand {
+    @Command(
+        id = "returns_true",
+        aliases = ["test"]
+    )
+    @Prefix("-")
+    @CommandInfo(description = "some description goes here.", usage = "some usage information goes here.")
+    @CommandSettings(execWithSubCommands = true, isDisabled = true)
+    fun commandReturnsTrue(context: Context, opt: Array<Any>?): Boolean {
+        // expect test case to pass in "value" for args
+        assertEquals("-test", context.alias)
+        assertNotNull(context.args)
+        assertEquals("value", context.args)
+        assertEquals("test.returns_true", context.properties.id)
+        assertEquals(1, context.properties.aliases.size)
+        assertTrue(context.properties.aliases.contains("test"))
+        assertEquals(CommandDefaults.PARENT_ID, context.properties.parentId)
+        assertEquals("-", context.properties.prefix)
+        assertEquals("some description goes here.", context.properties.description)
+        assertEquals("some usage information goes here.", context.properties.usage)
+        assertTrue(context.properties.execWithSubCommands)
+        assertTrue(context.properties.isDisabled)
+        assertNull(opt)
+        return true
     }
 }

@@ -13,7 +13,7 @@
  *   See the License for the specific language governing commandSettings and
  *   limitations under the License.
  */
-package com.github.kvnxiao.kommandant.registry
+package com.github.kvnxiao.kommandant.command.registry
 
 import com.github.kvnxiao.kommandant.command.Context
 import com.github.kvnxiao.kommandant.command.CommandExecutable
@@ -329,6 +329,42 @@ class TestCommandRegistry {
         assertFalse(registry.addSubCommand(subCommandB, command.properties.id))
         assertEquals(1, registry.getSubCommandRegistry(command.properties.id)!!.getAllSubCommandIds().size)
         assertEquals(2, registry.getSubCommandRegistry(command.properties.id)!!.getAllSubCommandAliases().size)
+    }
+
+    @Test
+    fun `test remove sub-command`() {
+        val registry: CommandRegistry = CommandRegistryImpl()
+        val command = CommandPackage(
+            emptyCommandExecutable(),
+            CommandProperties(
+                "test sub-commands in registry",
+                setOf("parent", "p"),
+                "-"
+            )
+        )
+        val subCommandA = CommandPackage(
+            emptyCommandExecutable(),
+            CommandProperties(
+                "test sub-commands in registry.subCommandA",
+                setOf("subA", "a")
+            )
+        )
+        assertTrue(registry.addCommand(command))
+        assertEquals(registry.getAllCommands(true).sortedBy { it.properties.id }, registry.getAllCommands(false).sortedBy { it.properties.id })
+        assertEquals(registry.getAllCommandAliases(true).sorted(), registry.getAllCommandAliases(false).sorted())
+        val commands = registry.getAllCommands(false)
+        assertEquals(1, commands.size)
+        assertTrue(registry.addSubCommand(subCommandA, command.properties.id))
+        assertFalse(registry.removeSubCommand("invalid subCommand", "test sub-commands in registry"))
+        assertTrue(registry.removeSubCommand("test sub-commands in registry.subCommandA", "test sub-commands in registry"))
+        // Re-add and remove again
+        assertTrue(registry.addSubCommand(subCommandA, command.properties.id))
+        val subCommandRegistry = registry.getSubCommandRegistry(commands.first().properties.id)!!
+        assertEquals(subCommandRegistry.getAllSubCommandAliases(true).sorted(), subCommandRegistry.getAllSubCommandAliases(false).sorted())
+        assertEquals(subCommandRegistry.getAllSubCommandIds(true).sorted(), subCommandRegistry.getAllSubCommandIds(false).sorted())
+        assertTrue(subCommandRegistry.containsCommands())
+        assertTrue(registry.removeSubCommand("test sub-commands in registry.subCommandA", "test sub-commands in registry"))
+        assertNull(registry.getSubCommandRegistry(commands.first().properties.id))
     }
 
     private fun emptyCommandExecutable(): CommandExecutable<Unit> = object : CommandExecutable<Unit> {

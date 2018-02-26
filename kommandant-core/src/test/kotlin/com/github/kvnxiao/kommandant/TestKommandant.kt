@@ -17,12 +17,14 @@ package com.github.kvnxiao.kommandant
 
 import arrow.core.getOrElse
 import arrow.core.getOrHandle
-import com.github.kvnxiao.kommandant.command.Context
 import com.github.kvnxiao.kommandant.command.CommandExecutable
 import com.github.kvnxiao.kommandant.command.CommandPackage
 import com.github.kvnxiao.kommandant.command.CommandProperties
+import com.github.kvnxiao.kommandant.command.Context
 import com.github.kvnxiao.kommandant.command.errors.CommandNotFoundException
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Test
@@ -102,5 +104,94 @@ class TestKommandant {
         assertEquals(1000, (1..1000).map {
             kommandant.process<Int>("-root").get()
         }.foldRight(0, { total, next -> total + next }))
+    }
+
+    @Test
+    fun `test adding two of the same commands`() {
+        val kommandant: CommandManager = Kommandant()
+        val commandA = CommandPackage(object : CommandExecutable<Int> {
+            override fun execute(context: Context, opt: Array<Any>?): Int = 1
+        }, CommandProperties("same_command", setOf("same"), "-"))
+        val commandB = CommandPackage(object : CommandExecutable<Int> {
+            override fun execute(context: Context, opt: Array<Any>?): Int = 1
+        }, CommandProperties("same_command", setOf("same"), "-"))
+        assertEquals(commandA, commandB)
+        assertEquals(commandA.hashCode(), commandB.hashCode())
+        assertTrue(kommandant.addCommand(commandA))
+        assertFalse(kommandant.addCommand(commandA))
+        assertFalse(kommandant.addCommand(commandB))
+        assertEquals(1, kommandant.process<Int>("-same").getOrElse { fail() })
+    }
+
+    @Test
+    fun `test adding two clashing commands`() {
+        val kommandant: CommandManager = Kommandant()
+        val commandA = CommandPackage(object : CommandExecutable<Int> {
+            override fun execute(context: Context, opt: Array<Any>?): Int = 1
+        }, CommandProperties("same_command", setOf("same_alias"), "-"))
+        val commandB = CommandPackage(object : CommandExecutable<Int> {
+            override fun execute(context: Context, opt: Array<Any>?): Int = 1
+        }, CommandProperties("not_same_command", setOf("same_alias"), "-"))
+        assertNotEquals(commandA, commandB)
+        assertTrue(kommandant.addCommand(commandA))
+        assertFalse(kommandant.addCommand(commandA))
+        assertFalse(kommandant.addCommand(commandB))
+        assertEquals(1, kommandant.process<Int>("-same_alias").getOrElse { fail() })
+    }
+
+    @Test
+    fun `test adding two different commands`() {
+        val kommandant: CommandManager = Kommandant()
+        val commandA = CommandPackage(object : CommandExecutable<Int> {
+            override fun execute(context: Context, opt: Array<Any>?): Int = 1
+        }, CommandProperties("same_command", setOf("same"), "-"))
+        val commandB = CommandPackage(object : CommandExecutable<Int> {
+            override fun execute(context: Context, opt: Array<Any>?): Int = 2
+        }, CommandProperties("different_command", setOf("different"), "-"))
+        assertNotEquals(commandA, commandB)
+        assertNotEquals(commandA, kommandant)
+        assertTrue(kommandant.addCommand(commandA))
+        assertFalse(kommandant.addCommand(commandA))
+        assertTrue(kommandant.addCommand(commandB))
+        assertFalse(kommandant.addCommand(commandB))
+        assertEquals(1, kommandant.process<Int>("-same").getOrElse { fail() })
+        assertEquals(2, kommandant.process<Int>("-different").getOrElse { fail() })
+    }
+
+    @Test
+    fun `test exec with sub-commands`() {
+        val kommandant: CommandManager = Kommandant()
+
+        assertTrue(kommandant.addCommand(CommandPackage(object : CommandExecutable<Int> {
+            override fun execute(context: Context, opt: Array<Any>?): Int = 200
+        }, CommandProperties("parent", setOf("parent", "p"), "-", execWithSubCommands = true))))
+        assertEquals(200, kommandant.process<Int>("-parent").getOrElse { fail() })
+        assertEquals(200, kommandant.process<Int>("-p").getOrElse { fail() })
+
+        assertTrue(kommandant.addSubCommand(CommandPackage(object : CommandExecutable<Int> {
+            override fun execute(context: Context, opt: Array<Any>?): Int = 400
+        }, CommandProperties("parent.child", setOf("child", "c"), "-")), "parent"))
+        assertEquals(400, kommandant.process<Int>("-parent child").getOrElse { fail() })
+        assertEquals(400, kommandant.process<Int>("-parent c").getOrElse { fail() })
+        assertEquals(400, kommandant.process<Int>("-p child").getOrElse { fail() })
+        assertEquals(400, kommandant.process<Int>("-p c").getOrElse { fail() })
+        assertEquals(200, kommandant.process<Int>("-p nothing").getOrElse { fail() })
+    }
+
+    @Test
+    fun `test kommandant constructor`() {
+        Kommandant()
+        val kommandant = KommandantSubclass()
+        kommandant.test()
+    }
+
+    class KommandantSubclass : Kommandant() {
+        fun test() {
+            this.registry
+            this.scheduler
+            this.executor
+            this.registry
+            this.annotationParser
+        }
     }
 }

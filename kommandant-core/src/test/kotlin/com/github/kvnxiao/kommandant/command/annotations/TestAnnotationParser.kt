@@ -13,12 +13,9 @@
  *   See the License for the specific language governing commandSettings and
  *   limitations under the License.
  */
-package com.github.kvnxiao.kommandant.annotations
+package com.github.kvnxiao.kommandant.command.annotations
 
 import com.github.kvnxiao.kommandant.command.Context
-import com.github.kvnxiao.kommandant.command.annotations.Command
-import com.github.kvnxiao.kommandant.command.annotations.CommandGroup
-import com.github.kvnxiao.kommandant.command.annotations.Prefix
 import com.github.kvnxiao.kommandant.command.parser.AnnotationParser
 import com.github.kvnxiao.kommandant.command.parser.AnnotationParserImpl
 import org.junit.Assert.assertEquals
