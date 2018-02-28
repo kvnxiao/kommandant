@@ -13,12 +13,23 @@
  *   See the License for the specific language governing commandSettings and
  *   limitations under the License.
  */
-package com.github.kvnxiao.kommandant.command
+package com.github.kvnxiao.kommandant.command.annotations
 
-interface CommandExecutable<out T> {
+import com.github.kvnxiao.kommandant.command.CommandDefaults
+
+/**
+ * Runtime annotation for methods to specify the metadata of an annotated command.
+ * This includes the description and usage of the command.
+ */
+@Retention(AnnotationRetention.RUNTIME)
+@Target(AnnotationTarget.FUNCTION)
+annotation class Info(
     /**
-     * Performs an action with the given command context and optional arguments,
-     * and returns a possible exception or valid value.
+     * Description of the annotated command.
      */
-    fun execute(context: Context, opt: Array<Any>?): T
-}
+    val description: String = CommandDefaults.NO_DESCRIPTION,
+    /**
+     * String describing how the annotated command should be used.
+     */
+    val usage: String = CommandDefaults.NO_USAGE
+)

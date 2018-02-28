@@ -15,23 +15,8 @@
  */
 package com.github.kvnxiao.kommandant.command.registry
 
-import com.github.kvnxiao.kommandant.command.CommandPackage
-
-interface SubCommandRegistry {
-
-    // Get sub-command by its id
-    fun getSubCommandById(id: String): CommandPackage<*>?
-    fun getSubCommandIdByAlias(alias: String): String?
-
-    // Get list of all sub-command ids
-    fun getAllSubCommandIds(sortById: Boolean = true): List<String>
-    // Get list of all sub-command aliases
-    fun getAllSubCommandAliases(sorted: Boolean = true): List<String>
-
-    // Adding and removing sub-commands
-    fun addSubCommand(subCommand: CommandPackage<*>, parentId: String): Boolean
-    fun removeSubCommand(subCommandId: String): Boolean
-
-    // Check if the registry is not empty
-    fun containsCommands(): Boolean
-}
+/**
+ * Abstract class for a sub-command registry that takes into account [ReadSubCommandRegistry],
+ * [WriteSubCommandRegistry], and [CommandRegistryValidator] interfaces.
+ */
+abstract class SubCommandRegistry : ReadSubCommandRegistry, WriteSubCommandRegistry, CommandRegistryValidator

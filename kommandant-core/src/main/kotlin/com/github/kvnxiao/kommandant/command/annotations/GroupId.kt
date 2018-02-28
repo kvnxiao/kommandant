@@ -15,6 +15,17 @@
  */
 package com.github.kvnxiao.kommandant.command.annotations
 
+/**
+ * Runtime annotation for classes to specify a group parent id for all annotated commands declared in the class.
+ *
+ * For example, an annotated command with an id of "command" declared in a class annotated with a command group annotation
+ * value of "group", will have an effective id of "group.command" once parsed by the annotation parser.
+ */
 @Retention(AnnotationRetention.RUNTIME)
-@Target(AnnotationTarget.PROPERTY_GETTER)
-annotation class CommandErrorHandler
+@Target(AnnotationTarget.CLASS)
+annotation class GroupId(
+    /**
+     * The group id / name for the annotated commands declared in this class.
+     */
+    val groupName: String
+)

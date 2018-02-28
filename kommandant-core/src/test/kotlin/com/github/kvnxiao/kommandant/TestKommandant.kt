@@ -17,10 +17,10 @@ package com.github.kvnxiao.kommandant
 
 import arrow.core.getOrElse
 import arrow.core.getOrHandle
-import com.github.kvnxiao.kommandant.command.CommandExecutable
 import com.github.kvnxiao.kommandant.command.CommandPackage
 import com.github.kvnxiao.kommandant.command.CommandProperties
 import com.github.kvnxiao.kommandant.command.Context
+import com.github.kvnxiao.kommandant.command.ExecutableAction
 import com.github.kvnxiao.kommandant.command.errors.CommandNotFoundException
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
@@ -34,7 +34,7 @@ class TestKommandant {
     @Test
     fun `test executing root level command`() {
         val kommandant: CommandManager = Kommandant()
-        kommandant.addCommand(CommandPackage(object : CommandExecutable<Int> {
+        kommandant.addCommand(CommandPackage(object : ExecutableAction<Int> {
             override fun execute(context: Context, opt: Array<Any>?): Int = 100
         }, CommandProperties("root_level_command", setOf("root"), "-")))
 
@@ -51,15 +51,15 @@ class TestKommandant {
     fun `test executing sub level command`() {
         val kommandant: CommandManager = Kommandant()
 
-        assertTrue(kommandant.addCommand(CommandPackage(object : CommandExecutable<Int> {
+        assertTrue(kommandant.addCommand(CommandPackage(object : ExecutableAction<Int> {
             override fun execute(context: Context, opt: Array<Any>?): Int = 200
         }, CommandProperties("parent", setOf("parent", "p"), "-"))))
         assertEquals(200, kommandant.process<Int>("-parent").getOrElse { fail() })
         assertEquals(200, kommandant.process<Int>("-p").getOrElse { fail() })
 
-        assertTrue(kommandant.addSubCommand(CommandPackage(object : CommandExecutable<Int> {
+        assertTrue(kommandant.addSubCommand(CommandPackage(object : ExecutableAction<Int> {
             override fun execute(context: Context, opt: Array<Any>?): Int = 400
-        }, CommandProperties("parent.child", setOf("child", "c"), "-")), "parent"))
+        }, CommandProperties("parent.child", setOf("child", "c"), "-", parentId = "parent")), "parent"))
         assertEquals(400, kommandant.process<Int>("-parent child").getOrElse { fail() })
         assertEquals(400, kommandant.process<Int>("-parent c").getOrElse { fail() })
         assertEquals(400, kommandant.process<Int>("-p child").getOrElse { fail() })
@@ -70,7 +70,7 @@ class TestKommandant {
     fun `test exception from command`() {
         val kommandant: CommandManager = Kommandant()
 
-        assertTrue(kommandant.addCommand(CommandPackage(object : CommandExecutable<Int> {
+        assertTrue(kommandant.addCommand(CommandPackage(object : ExecutableAction<Int> {
             override fun execute(context: Context, opt: Array<Any>?): Int {
                 throw UnsupportedOperationException("UnsupportedOperationException")
             }
@@ -85,7 +85,7 @@ class TestKommandant {
     @Test
     fun `test async command`() {
         val kommandant: CommandManager = Kommandant()
-        kommandant.addCommand(CommandPackage(object : CommandExecutable<Int> {
+        kommandant.addCommand(CommandPackage(object : ExecutableAction<Int> {
             override fun execute(context: Context, opt: Array<Any>?): Int = 100
         }, CommandProperties("root_level_command", setOf("root"), "-")))
         val future = kommandant.processAsync<Int>("-root")
@@ -97,7 +97,7 @@ class TestKommandant {
     @Test
     fun `test loop fold of integer-return command`() {
         val kommandant: CommandManager = Kommandant()
-        kommandant.addCommand(CommandPackage(object : CommandExecutable<Int> {
+        kommandant.addCommand(CommandPackage(object : ExecutableAction<Int> {
             override fun execute(context: Context, opt: Array<Any>?): Int = 1
         }, CommandProperties("root_level_command", setOf("root"), "-")))
 
@@ -109,10 +109,10 @@ class TestKommandant {
     @Test
     fun `test adding two of the same commands`() {
         val kommandant: CommandManager = Kommandant()
-        val commandA = CommandPackage(object : CommandExecutable<Int> {
+        val commandA = CommandPackage(object : ExecutableAction<Int> {
             override fun execute(context: Context, opt: Array<Any>?): Int = 1
         }, CommandProperties("same_command", setOf("same"), "-"))
-        val commandB = CommandPackage(object : CommandExecutable<Int> {
+        val commandB = CommandPackage(object : ExecutableAction<Int> {
             override fun execute(context: Context, opt: Array<Any>?): Int = 1
         }, CommandProperties("same_command", setOf("same"), "-"))
         assertEquals(commandA, commandB)
@@ -126,10 +126,10 @@ class TestKommandant {
     @Test
     fun `test adding two clashing commands`() {
         val kommandant: CommandManager = Kommandant()
-        val commandA = CommandPackage(object : CommandExecutable<Int> {
+        val commandA = CommandPackage(object : ExecutableAction<Int> {
             override fun execute(context: Context, opt: Array<Any>?): Int = 1
         }, CommandProperties("same_command", setOf("same_alias"), "-"))
-        val commandB = CommandPackage(object : CommandExecutable<Int> {
+        val commandB = CommandPackage(object : ExecutableAction<Int> {
             override fun execute(context: Context, opt: Array<Any>?): Int = 1
         }, CommandProperties("not_same_command", setOf("same_alias"), "-"))
         assertNotEquals(commandA, commandB)
@@ -142,10 +142,10 @@ class TestKommandant {
     @Test
     fun `test adding two different commands`() {
         val kommandant: CommandManager = Kommandant()
-        val commandA = CommandPackage(object : CommandExecutable<Int> {
+        val commandA = CommandPackage(object : ExecutableAction<Int> {
             override fun execute(context: Context, opt: Array<Any>?): Int = 1
         }, CommandProperties("same_command", setOf("same"), "-"))
-        val commandB = CommandPackage(object : CommandExecutable<Int> {
+        val commandB = CommandPackage(object : ExecutableAction<Int> {
             override fun execute(context: Context, opt: Array<Any>?): Int = 2
         }, CommandProperties("different_command", setOf("different"), "-"))
         assertNotEquals(commandA, commandB)
@@ -162,15 +162,15 @@ class TestKommandant {
     fun `test exec with sub-commands`() {
         val kommandant: CommandManager = Kommandant()
 
-        assertTrue(kommandant.addCommand(CommandPackage(object : CommandExecutable<Int> {
+        assertTrue(kommandant.addCommand(CommandPackage(object : ExecutableAction<Int> {
             override fun execute(context: Context, opt: Array<Any>?): Int = 200
         }, CommandProperties("parent", setOf("parent", "p"), "-", execWithSubCommands = true))))
         assertEquals(200, kommandant.process<Int>("-parent").getOrElse { fail() })
         assertEquals(200, kommandant.process<Int>("-p").getOrElse { fail() })
 
-        assertTrue(kommandant.addSubCommand(CommandPackage(object : CommandExecutable<Int> {
-            override fun execute(context: Context, opt: Array<Any>?): Int = 400
-        }, CommandProperties("parent.child", setOf("child", "c"), "-")), "parent"))
+        assertTrue( kommandant.addSubCommand( CommandPackage(object : ExecutableAction<Int> {
+                    override fun execute(context: Context, opt: Array<Any>?): Int = 400
+                }, CommandProperties("parent.child", setOf("child", "c"), "-", parentId = "parent")), "parent") )
         assertEquals(400, kommandant.process<Int>("-parent child").getOrElse { fail() })
         assertEquals(400, kommandant.process<Int>("-parent c").getOrElse { fail() })
         assertEquals(400, kommandant.process<Int>("-p child").getOrElse { fail() })

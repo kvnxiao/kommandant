@@ -33,10 +33,28 @@ import java.util.concurrent.Executors
 import java.util.concurrent.Future
 import java.util.concurrent.ScheduledExecutorService
 
+/**
+ * The default command manager implementation.
+ * Capable of adding commands, processing input strings, and executing commands.
+ *
+ * @see CommandManager
+ */
 open class Kommandant(
+    /**
+     * The command registry for adding, retrieving, and removing commands.
+     */
     protected val registry: CommandRegistry = CommandRegistryImpl(),
+    /**
+     * The executor processor for executing commands and catching errors to forward to the error handlers.
+     */
     protected val executor: CommandExecutor = CommandExecutorImpl(),
+    /**
+     * The annotation parser for creating annotation based commands.
+     */
     protected val annotationParser: AnnotationParser = AnnotationParserImpl(),
+    /**
+     * Scheduled thread pool for executing multiple commands asynchronously.
+     */
     protected val scheduler: ScheduledExecutorService = Executors.newScheduledThreadPool(2)
 ) : CommandManager {
 
@@ -57,6 +75,9 @@ open class Kommandant(
         }
     }
 
+    /**
+     * Called by [processAsync] to check the input string for potential sub-commands to execute.
+     */
     protected fun <T> processNext(command: CommandPackage<*>, context: Context, opt: Array<Any>?): Future<Either<Exception, T>> {
         // Check sub-commands
         val args = context.args
@@ -102,6 +123,10 @@ open class Kommandant(
         }
     }
 
+    /**
+     * Validates a list of commands for insertion into the registry. Checks for conflicting unique ids and aliases
+     * between each command, as well as within the registry.
+     */
     protected fun validate(commands: List<CommandPackage<*>>): Boolean {
         val aliasList = commands.flatMap { pkg -> pkg.properties.aliases.map { pkg.properties.prefix + it } }
         val idList = commands.map { it.properties.id }

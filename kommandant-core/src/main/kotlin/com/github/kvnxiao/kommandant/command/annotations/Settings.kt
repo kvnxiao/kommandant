@@ -15,8 +15,21 @@
  */
 package com.github.kvnxiao.kommandant.command.annotations
 
+import com.github.kvnxiao.kommandant.command.CommandDefaults
+
+/**
+ * Runtime annotation for methods to specify the command settings of an annotated command.
+ */
 @Retention(AnnotationRetention.RUNTIME)
-@Target(AnnotationTarget.CLASS)
-annotation class CommandGroup(
-    val groupName: String
+@Target(AnnotationTarget.FUNCTION)
+annotation class Settings(
+    /**
+     * The setting for whether the annotated command should be executed along with its sub-commmands
+     * in a fire-and-forget manner. Only applies when one of the sub-commands are called.
+     */
+    val execWithSubCommands: Boolean = CommandDefaults.EXEC_WITH_SUBCOMMANDS,
+    /**
+     * The setting for whether the annotated command is enabled or disabled.
+     */
+    val isDisabled: Boolean = CommandDefaults.IS_DISABLED
 )

@@ -21,6 +21,10 @@ import mu.KotlinLogging
 
 private val LOGGER = KotlinLogging.logger { }
 
+/**
+ * The default command registry implementation used for registering and de-registering commands and sub-commands.
+ * When dealing with sub-commands, the registry will use a [SubCommandRegistryImpl] underneath the hood.
+ */
 open class CommandRegistryImpl : CommandRegistry() {
 
     /**
@@ -29,7 +33,8 @@ open class CommandRegistryImpl : CommandRegistry() {
     protected val idCommandMap: MutableMap<String, CommandPackage<*>> = mutableMapOf()
 
     /**
-     * The root-level map of command aliases to their respective commands (does not contain sub-commands).
+     * The root-level map of command aliases to their respective commands (does not contain sub-commands,
+     * i.e. commands that are children to this command).
      */
     protected val aliasIdMap: MutableMap<String, String> = mutableMapOf()
 
@@ -40,40 +45,23 @@ open class CommandRegistryImpl : CommandRegistry() {
      */
     protected val parentIdSubCommandsMap: MutableMap<String, SubCommandRegistry> = mutableMapOf()
 
-    /**
-     * Ensure that before adding a new command, none of the prefix + alias combinations already exist in the registry
-     */
     override fun validateAliases(prefix: String, aliases: Set<String>): Boolean {
         return aliases.none { aliasIdMap.containsKey(prefix + it) }
     }
 
-    /**
-     * Ensure that before adding a new command, the unique identifier does not already exist in the registry
-     */
     override fun validateUniqueId(id: String): Boolean {
         return !idCommandMap.containsKey(id)
     }
 
-    /**
-     * Gets a command from the registry based on its prefix + alias.
-     * If the prefix + alias does not exist in the registry, null is returned.
-     */
     override fun getCommandByAlias(alias: String): CommandPackage<*>? {
         val id = aliasIdMap[alias] ?: return null
         return idCommandMap[id]
     }
 
-    /**
-     * Gets a command from the registry based on its unique identifier.
-     * If the unique identifier does not exist in the registry, null is returned.
-     */
     override fun getCommandById(id: String): CommandPackage<*>? {
         return idCommandMap[id]
     }
 
-    /**
-     * Returns a list of all root-level commands (i.e., commands with parent identifiers being an empty string "").
-     */
     override fun getAllCommands(sortById: Boolean): List<CommandPackage<*>> {
         return if (sortById) {
             idCommandMap.values
@@ -87,9 +75,6 @@ open class CommandRegistryImpl : CommandRegistry() {
         }
     }
 
-    /**
-     * Returns a list of all root-level command aliases (prefix + alias).
-     */
     override fun getAllCommandAliases(sorted: Boolean): List<String> {
         return if (sorted) {
             aliasIdMap.keys.sorted().toList()
@@ -98,34 +83,20 @@ open class CommandRegistryImpl : CommandRegistry() {
         }
     }
 
-    /**
-     * Returns whether or not a parent command has any sub-commands
-     */
-    override fun hasSubCommands(parentId: String): Boolean {
-        return parentIdSubCommandsMap.containsKey(parentId)
+    override fun hasSubCommands(id: String): Boolean {
+        return parentIdSubCommandsMap.containsKey(id)
     }
 
-    /**
-     * Gets the sub-command registry of a given parent command.
-     * Returns null if the parent command does not have any sub-commands.
-     */
-    override fun getSubCommandRegistry(parentId: String): SubCommandRegistry? {
-        return parentIdSubCommandsMap[parentId]
+    override fun getSubCommandRegistry(parentCommandId: String): SubCommandRegistry? {
+        return parentIdSubCommandsMap[parentCommandId]
     }
 
-    /**
-     * Gets the sub-command of a given parent command by the sub-command's alias (prefix + alias).
-     * Returns null if no match is found.
-     */
     override fun getSubCommandByAlias(alias: String, parentId: String): CommandPackage<*>? {
         val registry = this.getSubCommandRegistry(parentId) ?: return null
         val subCommandId = registry.getSubCommandIdByAlias(alias) ?: return null
         return registry.getSubCommandById(subCommandId)
     }
 
-    /**
-     * Adds a command to the registry
-     */
     override fun addCommand(command: CommandPackage<*>): Boolean {
         // Check for valid alias
         if (!validateAliases(command.properties.prefix, command.properties.aliases)) {
@@ -148,20 +119,19 @@ open class CommandRegistryImpl : CommandRegistry() {
         return true
     }
 
-    /**
-     * Adds a sub-command to a parent command
-     */
     override fun addSubCommand(subCommand: CommandPackage<*>, parentId: String): Boolean {
-        // TODO: fix parentId in CommandProperties of sub-command if not adding through annotations
+        // Require that the subCommand's parentId and supplied parent id are the same
+        if (subCommand.properties.parentId != parentId) {
+            LOGGER.warn { "Attempted to add a sub-command to the registry but the parent id property did not match!" +
+                "Expected ${subCommand.properties.parentId} from the sub-command's properties, but was looking for $parentId" }
+            return false
+        }
         // Update command registry
         val subCommandRegistry = parentIdSubCommandsMap.getOrPut(parentId, { SubCommandRegistryImpl() })
         // Add sub-command
         return subCommandRegistry.addSubCommand(subCommand, parentId)
     }
 
-    /**
-     * Removes a sub-command from a parent command
-     */
     override fun removeSubCommand(subCommandId: String, parentId: String): Boolean {
         val subCommandRegistry = parentIdSubCommandsMap[parentId] ?: return false
         val success = subCommandRegistry.removeSubCommand(subCommandId)

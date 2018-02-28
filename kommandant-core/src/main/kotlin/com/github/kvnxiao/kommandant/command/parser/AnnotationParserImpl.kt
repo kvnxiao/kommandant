@@ -17,17 +17,17 @@ package com.github.kvnxiao.kommandant.command.parser
 
 import com.github.kvnxiao.kommandant.DefaultErrorHandler
 import com.github.kvnxiao.kommandant.command.CommandDefaults
-import com.github.kvnxiao.kommandant.command.ExecutionErrorHandler
-import com.github.kvnxiao.kommandant.command.CommandExecutable
 import com.github.kvnxiao.kommandant.command.CommandPackage
 import com.github.kvnxiao.kommandant.command.CommandProperties
 import com.github.kvnxiao.kommandant.command.Context
+import com.github.kvnxiao.kommandant.command.ExecutableAction
+import com.github.kvnxiao.kommandant.command.ExecutionErrorHandler
 import com.github.kvnxiao.kommandant.command.annotations.Command
-import com.github.kvnxiao.kommandant.command.annotations.CommandGroup
-import com.github.kvnxiao.kommandant.command.annotations.CommandInfo
-import com.github.kvnxiao.kommandant.command.annotations.CommandSettings
-import com.github.kvnxiao.kommandant.command.annotations.CommandErrorHandler
+import com.github.kvnxiao.kommandant.command.annotations.ErrorHandler
+import com.github.kvnxiao.kommandant.command.annotations.GroupId
+import com.github.kvnxiao.kommandant.command.annotations.Info
 import com.github.kvnxiao.kommandant.command.annotations.Prefix
+import com.github.kvnxiao.kommandant.command.annotations.Settings
 import com.github.kvnxiao.kommandant.utility.LINE_SEPARATOR
 import mu.KotlinLogging
 import java.beans.Introspector
@@ -37,12 +37,33 @@ import java.util.Queue
 
 private val LOGGER = KotlinLogging.logger { }
 
+/**
+ * The default annotation parser implementation. Parses a class instance to create a list of commands from the class.
+ *
+ * The only required annotation to define a command is the [Command] annotation. The annotation parser will parse
+ * [Command] annotations on methods with a two parameter signature, a [Context] and a nullable [Array] of objects,
+ * to create the base command.
+ *
+ * Optionally, the annotation parser will also parse:
+ * - [ErrorHandler] annotations on a getter method returning [ExecutionErrorHandler] for custom error
+ * handlers.
+ * - [GroupId] annotations for setting the group parent id of all commands declared in the class instance.
+ * - [Prefix] annotations on a class level to globally set the prefix for all commands, and on a method level
+ * to locally set the prefix for each individual command.
+ * - [Info] annotations for setting the command metadata (i.e. description, usage).
+ * - [Settings] annotations for enabling or disabling certain command settings.
+ *
+ * Optional annotations that are not declared in the class instance will result in the command defaulting to values
+ * declared in [CommandDefaults].
+ *
+ * @see [AnnotationParser]
+ */
 open class AnnotationParserImpl : AnnotationParser {
     override fun parseAnnotations(instance: Any): List<CommandPackage<*>> {
         val clazz = instance::class.java
 
         // Get error handler from class instance
-        val errorHandlerMethod = Introspector.getBeanInfo(clazz).propertyDescriptors.map { it.readMethod }.filter { it.isAnnotationPresent(CommandErrorHandler::class.java) }
+        val errorHandlerMethod = Introspector.getBeanInfo(clazz).propertyDescriptors.map { it.readMethod }.filter { it.isAnnotationPresent(ErrorHandler::class.java) }
         require(errorHandlerMethod.size <= 1, { "Cannot have more than one error handler declared!" })
         val errorHandler: ExecutionErrorHandler = if (errorHandlerMethod.isNotEmpty()) {
             errorHandlerMethod[0].invoke(instance) as ExecutionErrorHandler
@@ -108,12 +129,15 @@ open class AnnotationParserImpl : AnnotationParser {
         }.toList()
     }
 
+    /**
+     * Creates a command from the given method, class instance, command annotation, and other provided parameters describing the command.
+     */
     protected open fun createCommand(method: Method, commandAnn: Command, id: String, globalPrefix: String?, errorHandler: ExecutionErrorHandler, instance: Any): CommandPackage<*> {
         // Check if there is a local prefix -- Global prefix will always override local prefix -- Default to empty string ""
         val prefix = globalPrefix ?: method.getPrefix() ?: CommandDefaults.NO_PREFIX
-        // Check if there is a @CommandInfo annotation
+        // Check if there is a @Info annotation
         val commandInfo = method.getCommandInfo()
-        // Check if there is a @CommandSettings annotation
+        // Check if there is a @Settings annotation
         val commandSettings = method.getCommandSettings()
 
         val properties = createProperties(
@@ -124,7 +148,7 @@ open class AnnotationParserImpl : AnnotationParser {
             commandInfo = commandInfo,
             commandSettings = commandSettings
         )
-        val executable = object : CommandExecutable<Any?> {
+        val executable = object : ExecutableAction<Any?> {
             override fun execute(context: Context, opt: Array<Any>?): Any? {
                 return method.invoke(instance, context, opt)
             }
@@ -132,8 +156,11 @@ open class AnnotationParserImpl : AnnotationParser {
         return CommandPackage(executable, properties, errorHandler)
     }
 
+    /**
+     * Creates the command properties for the command, using the provided parameters describing the command.
+     */
     protected open fun createProperties(id: String, prefix: String, newParentId: String,
-                                        commandAnn: Command, commandInfo: CommandInfo?, commandSettings: CommandSettings?): CommandProperties {
+                                        commandAnn: Command, commandInfo: Info?, commandSettings: Settings?): CommandProperties {
         return CommandProperties(
             id = id,
             prefix = prefix,
@@ -146,25 +173,43 @@ open class AnnotationParserImpl : AnnotationParser {
         )
     }
 
+    /**
+     * Gets the [GroupId] annotation from the class instance.
+     */
     protected fun Class<out Any>.getCommandGroup(): String? =
-        if (this.isAnnotationPresent(CommandGroup::class.java)) this.getAnnotation(CommandGroup::class.java).groupName + "."
+        if (this.isAnnotationPresent(GroupId::class.java)) this.getAnnotation(GroupId::class.java).groupName + "."
         else null
 
+    /**
+     * Gets the [Prefix] annotation from the class instance, for defining a global prefix.
+     */
     protected fun Class<out Any>.getGlobalPrefix(): String? =
         if (this.isAnnotationPresent(Prefix::class.java)) this.getAnnotation(Prefix::class.java).prefix
         else null
 
+    /**
+     * Gets the [Prefix] annotation from a method declaration, for defining a local prefix.
+     */
     protected fun Method.getPrefix(): String? =
         if (this.isAnnotationPresent(Prefix::class.java)) this.getAnnotation(Prefix::class.java).prefix
         else null
 
-    protected fun Method.getCommandInfo(): CommandInfo? =
-        if (this.isAnnotationPresent(CommandInfo::class.java)) this.getAnnotation(CommandInfo::class.java)
+    /**
+     * Gets the [Info] annotation from a method declaration.
+     */
+    protected fun Method.getCommandInfo(): Info? =
+        if (this.isAnnotationPresent(Info::class.java)) this.getAnnotation(Info::class.java)
         else null
 
-    protected fun Method.getCommandSettings(): CommandSettings? =
-        if (this.isAnnotationPresent(CommandSettings::class.java)) this.getAnnotation(CommandSettings::class.java)
+    /**
+     * Gets the [Settings] annotation from a method declaration.
+     */
+    protected fun Method.getCommandSettings(): Settings? =
+        if (this.isAnnotationPresent(Settings::class.java)) this.getAnnotation(Settings::class.java)
         else null
 
+    /**
+     * Gets the [Command] annotation from a method declaration.
+     */
     protected fun Method.commandAnn(): Command = this.getAnnotation(Command::class.java)
 }

@@ -15,8 +15,14 @@
  */
 package com.github.kvnxiao.kommandant.command.annotations
 
+/**
+ * Runtime annotation for classes and methods to specify the prefix of an annotated command.
+ */
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION)
 annotation class Prefix(
+    /**
+     * The prefix for the annotated command.
+     */
     val prefix: String
 )

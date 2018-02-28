@@ -17,10 +17,24 @@ package com.github.kvnxiao.kommandant.command.annotations
 
 import com.github.kvnxiao.kommandant.command.CommandDefaults
 
+/**
+ * Runtime annotation to describe annotated commands. This includes the command's unique id, aliases, and optionally the
+ * parent command's unique id as well.
+ */
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FUNCTION)
 annotation class Command(
+    /**
+     * The unique id of the command.
+     */
     val id: String,
+    /**
+     * The set of aliases used for calling the command.
+     */
     val aliases: Array<String>,
+    /**
+     * The unique id of the parent command. This is optional as it defaults to an empty string to signify that this
+     * command has no parent.
+     */
     val parentId: String = CommandDefaults.PARENT_ID
 )

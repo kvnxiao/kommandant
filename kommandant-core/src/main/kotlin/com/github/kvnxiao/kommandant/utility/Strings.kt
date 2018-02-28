@@ -15,4 +15,8 @@
  */
 package com.github.kvnxiao.kommandant.utility
 
+/**
+ * Gets the line separator string for the system by calling `System.lineSeparator()`.
+ * "\r\n" on Windows, "\n" otherwise.
+ */
 val LINE_SEPARATOR: String = System.lineSeparator()

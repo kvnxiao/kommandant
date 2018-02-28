@@ -1,6 +1,6 @@
 buildscript {
     ext.kotlin_version = '1.2.21'
-    ext.dokka_version = '0.9.15'
+    ext.dokka_version = '0.9.16'
     ext.shadow_version = '1.2.4'
     ext.slf4j_version = '1.7.25'
     ext.logback_version = '1.2.3'
@@ -36,6 +36,7 @@ subprojects {
 
     apply plugin: 'kotlin'
     apply plugin: 'jacoco'
+    apply plugin: 'org.jetbrains.dokka'
     apply plugin: 'com.github.johnrengelman.shadow'
     apply plugin: 'com.diffplug.gradle.spotless'
 
@@ -68,6 +69,10 @@ subprojects {
         }
     }
 
+    dokka {
+        outputFormat = 'html'
+        outputDirectory = "$buildDir/javadoc"
+    }
 
     task sourcesJar(type: Jar, dependsOn: classes) {
         classifier = 'sources'

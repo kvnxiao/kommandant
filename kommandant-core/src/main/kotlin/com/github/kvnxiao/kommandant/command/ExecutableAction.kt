@@ -16,11 +16,13 @@
 package com.github.kvnxiao.kommandant.command
 
 /**
- * An interface describing how an error or exception should be handled when encountered during command execution.
+ * A functional interface which describes an executable action with a possible return value.
  */
-interface ExecutionErrorHandler {
+@FunctionalInterface
+interface ExecutableAction<out T> {
     /**
-     * Method called when the execution of a command encounters an exception.
+     * Performs an action with the given command context and optional arguments,
+     * and returns a possible exception or valid value.
      */
-    fun onError(command: CommandPackage<*>, ex: Exception)
+    fun execute(context: Context, opt: Array<Any>?): T
 }

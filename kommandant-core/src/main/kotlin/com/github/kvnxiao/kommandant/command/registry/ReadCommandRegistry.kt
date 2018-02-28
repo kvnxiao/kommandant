@@ -17,19 +17,46 @@ package com.github.kvnxiao.kommandant.command.registry
 
 import com.github.kvnxiao.kommandant.command.CommandPackage
 
+/**
+ * Interface which defines the ready-only methods required by a command registry
+ */
 interface ReadCommandRegistry {
 
-    // Get command by prefixed alias
+    /**
+     * Gets a command from the registry by its prefixed alias (prefix + one of the command's aliases).
+     * Returns null if the command with the supplied prefixed alias does not exist.
+     */
     fun getCommandByAlias(alias: String): CommandPackage<*>?
+
+    /**
+     * Gets a command from the registry by its unique id.
+     * Returns null if the command with the supplied id does not exist.
+     */
     fun getCommandById(id: String): CommandPackage<*>?
+
+    /**
+     * Gets a sub-command from the registry by the sub-command's alias and its parent's unique id.
+     * Returns null if either the parent id is invalid, or the command with the supplied alias does not exist.
+     */
     fun getSubCommandByAlias(alias: String, parentId: String): CommandPackage<*>?
 
-    // Get list of all top-level commands
+    /**
+     * Gets the list of all top-level commands (commands with no parent) from the registry.
+     */
     fun getAllCommands(sortById: Boolean = false): List<CommandPackage<*>>
-    // Get list of all prefixed aliases
+
+    /**
+     * Gets the list of all prefixed command aliases as a string.
+     */
     fun getAllCommandAliases(sorted: Boolean = false): List<String>
 
-    // Sub-command info
-    fun hasSubCommands(parentId: String): Boolean
-    fun getSubCommandRegistry(parentId: String): SubCommandRegistry?
+    /**
+     * Returns whether the command with the specified id has sub-commands or not.
+     */
+    fun hasSubCommands(id: String): Boolean
+
+    /**
+     * Gets the sub-command registry belonging to the command with the specified id.
+     */
+    fun getSubCommandRegistry(parentCommandId: String): SubCommandRegistry?
 }

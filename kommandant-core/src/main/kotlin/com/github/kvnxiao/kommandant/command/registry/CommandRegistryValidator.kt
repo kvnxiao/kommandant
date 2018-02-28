@@ -13,13 +13,22 @@
  *   See the License for the specific language governing commandSettings and
  *   limitations under the License.
  */
-package com.github.kvnxiao.kommandant.command.annotations
+package com.github.kvnxiao.kommandant.command.registry
 
 import com.github.kvnxiao.kommandant.command.CommandDefaults
 
-@Retention(AnnotationRetention.RUNTIME)
-@Target(AnnotationTarget.FUNCTION)
-annotation class CommandSettings(
-    val execWithSubCommands: Boolean = CommandDefaults.EXEC_WITH_SUBCOMMANDS,
-    val isDisabled: Boolean = CommandDefaults.IS_DISABLED
-)
+/**
+ * Interface which defines the methods required to validate a command's information before allowing it to be added
+ * into the registry.
+ */
+interface CommandRegistryValidator {
+    /**
+     * Ensure that before adding a new command, none of the prefix + alias combinations already exist in the registry
+     */
+    fun validateAliases(prefix: String = CommandDefaults.NO_PREFIX, aliases: Set<String>): Boolean
+
+    /**
+     * Ensure that before adding a new command, the unique identifier does not already exist in the registry
+     */
+    fun validateUniqueId(id: String): Boolean
+}

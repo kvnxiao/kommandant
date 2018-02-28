@@ -15,10 +15,10 @@
  */
 package com.github.kvnxiao.kommandant.command.registry
 
-import com.github.kvnxiao.kommandant.command.Context
-import com.github.kvnxiao.kommandant.command.CommandExecutable
 import com.github.kvnxiao.kommandant.command.CommandPackage
 import com.github.kvnxiao.kommandant.command.CommandProperties
+import com.github.kvnxiao.kommandant.command.Context
+import com.github.kvnxiao.kommandant.command.ExecutableAction
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
@@ -61,35 +61,40 @@ class TestCommandRegistry {
             emptyCommandExecutable(),
             CommandProperties(
                 "test sub-commands in registry.subCommandA",
-                setOf("subA", "a")
+                setOf("subA", "a"),
+                parentId = command.properties.id
             )
         )
         val subCommandB = CommandPackage(
             emptyCommandExecutable(),
             CommandProperties(
                 "test sub-commands in registry.subCommandB",
-                setOf("subB", "b")
+                setOf("subB", "b"),
+                parentId = command.properties.id
             )
         )
         val subCommandC = CommandPackage(
             emptyCommandExecutable(),
             CommandProperties(
                 "test sub-commands in registry.subCommandC",
-                setOf("subC", "c")
+                setOf("subC", "c"),
+                parentId = command.properties.id
             )
         )
         val subCommandDofC = CommandPackage(
             emptyCommandExecutable(),
             CommandProperties(
                 "test sub-commands in registry.subCommandC.subCommandD",
-                setOf("subD", "d")
+                setOf("subD", "d"),
+                parentId = subCommandC.properties.id
             )
         )
         val subCommandEofC = CommandPackage(
             emptyCommandExecutable(),
             CommandProperties(
                 "test sub-commands in registry.subCommandC.subCommandE",
-                setOf("subE", "e")
+                setOf("subE", "e"),
+                parentId = subCommandC.properties.id
             )
         )
         assertTrue(registry.addCommand(command))
@@ -265,7 +270,8 @@ class TestCommandRegistry {
             emptyCommandExecutable(),
             CommandProperties(
                 "test unique id clash on sub-command level.child",
-                setOf("child", "c")
+                setOf("child", "c"),
+                parentId = command.properties.id
             )
         )
         assertTrue(registry.addSubCommand(subCommandA, command.properties.id))
@@ -308,7 +314,8 @@ class TestCommandRegistry {
             emptyCommandExecutable(),
             CommandProperties(
                 "test alias clash on sub-command level.child",
-                setOf("child", "c")
+                setOf("child", "c"),
+                parentId = command.properties.id
             )
         )
         assertTrue(registry.addSubCommand(subCommandA, command.properties.id))
@@ -323,7 +330,8 @@ class TestCommandRegistry {
             emptyCommandExecutable(),
             CommandProperties(
                 "test alias clash on sub-command level.child2",
-                setOf("child2", "c")
+                setOf("child2", "c"),
+                parentId = command.properties.id
             )
         )
         assertFalse(registry.addSubCommand(subCommandB, command.properties.id))
@@ -346,7 +354,8 @@ class TestCommandRegistry {
             emptyCommandExecutable(),
             CommandProperties(
                 "test sub-commands in registry.subCommandA",
-                setOf("subA", "a")
+                setOf("subA", "a"),
+                parentId = command.properties.id
             )
         )
         assertTrue(registry.addCommand(command))
@@ -367,7 +376,7 @@ class TestCommandRegistry {
         assertNull(registry.getSubCommandRegistry(commands.first().properties.id))
     }
 
-    private fun emptyCommandExecutable(): CommandExecutable<Unit> = object : CommandExecutable<Unit> {
+    private fun emptyCommandExecutable(): ExecutableAction<Unit> = object : ExecutableAction<Unit> {
         override fun execute(context: Context, opt: Array<Any>?) {}
     }
 }

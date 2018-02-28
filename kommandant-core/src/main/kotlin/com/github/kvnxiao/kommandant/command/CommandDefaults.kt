@@ -15,6 +15,9 @@
  */
 package com.github.kvnxiao.kommandant.command
 
+/**
+ * Default values for command properties and settings.
+ */
 object CommandDefaults {
     /**
      * The default parent id, set as an empty string.

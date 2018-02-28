@@ -20,16 +20,27 @@ import mu.KotlinLogging
 
 private val LOGGER = KotlinLogging.logger { }
 
-open class SubCommandRegistryImpl : SubCommandRegistry {
+/**
+ * The default sub-command registry implementation used for registering and de-registering sub-commands.
+ */
+open class SubCommandRegistryImpl : SubCommandRegistry() {
 
-    protected val aliasIdMap: MutableMap<String, String> = mutableMapOf()
+    /**
+     * The sub-command-level map of unique command identifiers to the respective commands.
+     */
     protected val subIdCommandMap: MutableMap<String, CommandPackage<*>> = mutableMapOf()
 
-    protected fun validateAliases(aliases: Set<String>): Boolean {
+    /**
+     * The sub-command-level map of command aliases to their respective commands (does not contain further sub-commands,
+     * i.e. commands that are children to this command).
+     */
+    protected val aliasIdMap: MutableMap<String, String> = mutableMapOf()
+
+    override fun validateAliases(prefix: String, aliases: Set<String>): Boolean {
         return aliases.none { aliasIdMap.containsKey(it) }
     }
 
-    protected fun validateUniqueId(id: String): Boolean {
+    override fun validateUniqueId(id: String): Boolean {
         return !subIdCommandMap.containsKey(id)
     }
 
@@ -49,7 +60,7 @@ open class SubCommandRegistryImpl : SubCommandRegistry {
 
     override fun addSubCommand(subCommand: CommandPackage<*>, parentId: String): Boolean {
         // Validate aliases
-        if (!validateAliases(subCommand.properties.aliases)) {
+        if (!validateAliases(aliases = subCommand.properties.aliases)) {
             LOGGER.error { "Could not register sub-command $subCommand to $parentId due to it clashing with existing sub-command aliases." }
             return false
         } else if (!validateUniqueId(subCommand.properties.id)) {

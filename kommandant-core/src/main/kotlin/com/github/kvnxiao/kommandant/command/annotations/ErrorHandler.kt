@@ -15,11 +15,11 @@
  */
 package com.github.kvnxiao.kommandant.command.annotations
 
-import com.github.kvnxiao.kommandant.command.CommandDefaults
-
+/**
+ * Runtime annotation targeting getter methods for specifying the custom error handler for an annotated command.
+ *
+ * @see ErrorHandler
+ */
 @Retention(AnnotationRetention.RUNTIME)
-@Target(AnnotationTarget.FUNCTION)
-annotation class CommandInfo(
-    val description: String = CommandDefaults.NO_DESCRIPTION,
-    val usage: String = CommandDefaults.NO_USAGE
-)
+@Target(AnnotationTarget.PROPERTY_GETTER)
+annotation class ErrorHandler

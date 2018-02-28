@@ -19,10 +19,10 @@ import arrow.core.getOrElse
 import com.github.kvnxiao.kommandant.command.CommandDefaults
 import com.github.kvnxiao.kommandant.command.Context
 import com.github.kvnxiao.kommandant.command.annotations.Command
-import com.github.kvnxiao.kommandant.command.annotations.CommandGroup
-import com.github.kvnxiao.kommandant.command.annotations.CommandInfo
-import com.github.kvnxiao.kommandant.command.annotations.CommandSettings
+import com.github.kvnxiao.kommandant.command.annotations.GroupId
+import com.github.kvnxiao.kommandant.command.annotations.Info
 import com.github.kvnxiao.kommandant.command.annotations.Prefix
+import com.github.kvnxiao.kommandant.command.annotations.Settings
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
@@ -107,7 +107,7 @@ class TestKommandantAnnotations {
     }
 }
 
-@CommandGroup("test")
+@GroupId("test")
 @Prefix("--")
 class AnnotatedCommands {
     @Command(
@@ -145,7 +145,7 @@ class AnnotatedCommands {
     }
 }
 
-@CommandGroup("test")
+@GroupId("test")
 @Prefix("--")
 class AnnotatedCommandsDuplicateId {
     @Command(
@@ -157,7 +157,7 @@ class AnnotatedCommandsDuplicateId {
     }
 }
 
-@CommandGroup("test")
+@GroupId("test")
 @Prefix("--")
 class AnnotatedCommandsDuplicateAlias {
     @Command(
@@ -169,15 +169,15 @@ class AnnotatedCommandsDuplicateAlias {
     }
 }
 
-@CommandGroup("test")
+@GroupId("test")
 class CustomAnnotatedCommand {
     @Command(
         id = "returns_true",
         aliases = ["test"]
     )
     @Prefix("-")
-    @CommandInfo(description = "some description goes here.", usage = "some usage information goes here.")
-    @CommandSettings(execWithSubCommands = true, isDisabled = true)
+    @Info(description = "some description goes here.", usage = "some usage information goes here.")
+    @Settings(execWithSubCommands = true, isDisabled = true)
     fun commandReturnsTrue(context: Context, opt: Array<Any>?): Boolean {
         // expect test case to pass in "value" for args
         assertEquals("-test", context.alias)

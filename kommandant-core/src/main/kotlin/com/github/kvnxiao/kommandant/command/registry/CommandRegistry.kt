@@ -15,7 +15,8 @@
  */
 package com.github.kvnxiao.kommandant.command.registry
 
-abstract class CommandRegistry : ReadCommandRegistry, WriteCommandRegistry {
-    abstract fun validateAliases(prefix: String, aliases: Set<String>): Boolean
-    abstract fun validateUniqueId(id: String): Boolean
-}
+/**
+ * Abstract class for a command registry that takes into account [ReadCommandRegistry], [WriteCommandRegistry],
+ * and [CommandRegistryValidator] interfaces.
+ */
+abstract class CommandRegistry : ReadCommandRegistry, WriteCommandRegistry, CommandRegistryValidator

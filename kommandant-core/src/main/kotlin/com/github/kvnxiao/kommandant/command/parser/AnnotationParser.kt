@@ -17,6 +17,14 @@ package com.github.kvnxiao.kommandant.command.parser
 
 import com.github.kvnxiao.kommandant.command.CommandPackage
 
+/**
+ * The interface defining the annotation parser for parsing class instances to create annotated commands.
+ */
 interface AnnotationParser {
+    /**
+     * Parses a class instance and returns a list of commands if successfully parsed.
+     *
+     * @throws [IllegalArgumentException] upon unsuccessful parsing
+     */
     fun parseAnnotations(instance: Any): List<CommandPackage<*>>
 }

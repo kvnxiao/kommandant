@@ -17,9 +17,26 @@ package com.github.kvnxiao.kommandant.command
 
 import com.github.kvnxiao.kommandant.DefaultErrorHandler
 
-open class CommandPackage<T>(
-    val executable: CommandExecutable<T>,
+/**
+ * A container class that represents a "fully functional command". Holds the command executable, command properties,
+ * and error handler for the command.
+ *
+ * @see CommandPackage
+ * @see CommandProperties
+ * @see ExecutionErrorHandler
+ */
+open class CommandPackage<out T>(
+    /**
+     * The executable action for the command.
+     */
+    val executable: ExecutableAction<T>,
+    /**
+     * The properties of the command
+     */
     val properties: CommandProperties,
+    /**
+     * The error handler for the command.
+     */
     val errorHandler: ExecutionErrorHandler = DefaultErrorHandler()
 ) {
 

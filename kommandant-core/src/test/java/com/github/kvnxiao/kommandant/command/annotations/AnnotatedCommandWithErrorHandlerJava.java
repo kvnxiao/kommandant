@@ -15,26 +15,26 @@
  */
 package com.github.kvnxiao.kommandant.command.annotations;
 
-import static org.junit.Assert.assertEquals;
-
 import com.github.kvnxiao.kommandant.command.Context;
 import com.github.kvnxiao.kommandant.command.ExecutionErrorHandler;
 
+import static org.junit.Assert.assertEquals;
+
 public class AnnotatedCommandWithErrorHandlerJava {
 
-  private final ExecutionErrorHandler errorHandler =
-      (command, ex) -> {
-        System.out.println("Calling custom error handler from Java");
-        assertEquals(command.getProperties().getId(), "self_java");
-      };
+    private final ExecutionErrorHandler errorHandler =
+            (command, ex) -> {
+                System.out.println("Calling custom error handler from Java");
+                assertEquals(command.getProperties().getId(), "self_java");
+            };
 
-  @CommandErrorHandler
-  public ExecutionErrorHandler getErrorHandler() {
-    return this.errorHandler;
-  }
+    @ErrorHandler
+    public ExecutionErrorHandler getErrorHandler() {
+        return this.errorHandler;
+    }
 
-  @Command(id = "self_java", aliases = "sj")
-  public int commandErrorHandler(Context context, Object[] opt) {
-    return 1;
-  }
+    @Command(id = "self_java", aliases = "sj")
+    public int commandErrorHandler(Context context, Object[] opt) {
+        return 1;
+    }
 }

@@ -16,20 +16,45 @@
 package com.github.kvnxiao.kommandant.command
 
 /**
- * Properties associated with every command.
+ * Data class containing properties associated with every command.
  */
 data class CommandProperties(
     // Required
+    /**
+     * Unique id of the command.
+     */
     val id: String,
+    /**
+     * Set of aliases belonging to the command. Will use the value of [id] if not set.
+     */
     val aliases: Set<String> = setOf(id),
+    /**
+     * Prefix used by the command. Defaults to [CommandDefaults.NO_PREFIX].
+     */
     val prefix: String = CommandDefaults.NO_PREFIX,
     // Parent command id
+    /**
+     * Unique id of the parent command. Defaults to [CommandDefaults.PARENT_ID].
+     */
     val parentId: String = CommandDefaults.PARENT_ID,
     // Metadata
+    /**
+     * The description of what the command does. Defaults to [CommandDefaults.NO_DESCRIPTION].
+     */
     val description: String = CommandDefaults.NO_DESCRIPTION,
+    /**
+     * The usage information describing how the command should be used. Defaults to [CommandDefaults.NO_USAGE].
+     */
     val usage: String = CommandDefaults.NO_USAGE,
     // Command settings
+    /**
+     * The command setting for whether this command should be executed along with its sub-commands in a fire-and-forget
+     * manner. Only applies to when the sub-commands of this command are executed.
+     */
     val execWithSubCommands: Boolean = CommandDefaults.EXEC_WITH_SUBCOMMANDS,
+    /**
+     * The command setting for whether this command is enabled or disabled.
+     */
     val isDisabled: Boolean = CommandDefaults.IS_DISABLED
 ) {
     init {

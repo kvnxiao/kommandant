@@ -15,9 +15,9 @@
  */
 package com.github.kvnxiao.kommandant.command.annotations
 
-import com.github.kvnxiao.kommandant.command.ExecutionErrorHandler
 import com.github.kvnxiao.kommandant.command.CommandPackage
 import com.github.kvnxiao.kommandant.command.Context
+import com.github.kvnxiao.kommandant.command.ExecutionErrorHandler
 import com.github.kvnxiao.kommandant.command.parser.AnnotationParser
 import com.github.kvnxiao.kommandant.command.parser.AnnotationParserImpl
 import org.junit.Assert.assertEquals
@@ -131,7 +131,7 @@ class TestAnnotationParser {
     }
 }
 
-@CommandGroup("test")
+@GroupId("test")
 @Prefix("--")
 class AnnotatedCommandTestWithGlobalPrefix {
     @Command(
@@ -169,7 +169,7 @@ class AnnotatedCommandTestWithGlobalPrefix {
     }
 }
 
-@CommandGroup("test")
+@GroupId("test")
 class AnnotatedCommandTestWithLocalPrefix {
     @Command(
         id = "returns_int",
@@ -258,7 +258,7 @@ class AnnotatedCommandWithErrorHandler {
             assertEquals(command.properties.id, "self_kotlin")
         }
     }
-        @CommandErrorHandler get
+        @ErrorHandler get
 
     @Command(
         id = "self_kotlin",

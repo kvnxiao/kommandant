@@ -15,4 +15,7 @@
  */
 package com.github.kvnxiao.kommandant.command.errors
 
+/**
+ * Exception thrown when a command with a specified alias could not be found in the registry.
+ */
 class CommandNotFoundException(alias: String) : Exception("The specified command with alias '$alias' could not be found.")

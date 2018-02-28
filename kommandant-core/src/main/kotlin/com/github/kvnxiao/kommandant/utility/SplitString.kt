@@ -31,8 +31,18 @@ open class SplitString(content: String) {
         private const val SPACE: Char = ' '
     }
 
+    /**
+     * The first element after splitting the string. Will return the original string if the string could not be split.
+     */
     val first: String
+    /**
+     * The second element after splitting the string. Will return null if the string could not be split.
+     */
     val second: String?
+    /**
+     * The delimiter string used for the splitting (space or new-line). Will return an empty string if the string could
+     * not be split.
+     */
     val delimiter: String
 
     init {
@@ -61,21 +71,32 @@ open class SplitString(content: String) {
                 break
             }
         }
-        if (indexSpace > -1) {
-            this.first = content.substring(0, indexSpace)
-            this.second = content.substring(nextIndex, max)
-            this.delimiter = SPACE.toString()
-        } else if (indexNewLine > -1) {
-            this.first = content.substring(0, indexNewLine)
-            this.second = content.substring(nextIndex, max)
-            this.delimiter = LINE_SEPARATOR
-        } else {
-            this.first = content
-            this.second = null
-            this.delimiter = ""
+        when {
+            indexSpace > -1 -> {
+                this.first = content.substring(0, indexSpace)
+                this.second = content.substring(nextIndex, max)
+                this.delimiter = SPACE.toString()
+            }
+            indexNewLine > -1 -> {
+                this.first = content.substring(0, indexNewLine)
+                this.second = content.substring(nextIndex, max)
+                this.delimiter = LINE_SEPARATOR
+            }
+            else -> {
+                this.first = content
+                this.second = null
+                this.delimiter = ""
+            }
         }
     }
 
+    /**
+     * Kotlin helper function for destructuring to return the first element.
+     */
     operator fun component1(): String = this.first
+
+    /**
+     * Kotlin helper function for destructuring to return the second element.
+     */
     operator fun component2(): String? = this.second
 }

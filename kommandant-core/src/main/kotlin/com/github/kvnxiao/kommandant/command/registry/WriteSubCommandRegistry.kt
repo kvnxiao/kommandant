@@ -13,26 +13,23 @@
  *   See the License for the specific language governing commandSettings and
  *   limitations under the License.
  */
-package com.github.kvnxiao.kommandant
+package com.github.kvnxiao.kommandant.command.registry
 
 import com.github.kvnxiao.kommandant.command.CommandPackage
-import com.github.kvnxiao.kommandant.command.ExecutionErrorHandler
-import mu.KotlinLogging
-
-private val LOGGER = KotlinLogging.logger { }
 
 /**
- * The default error handler for commands, which simply logs that an error has occurred for the command
- * to the underlying SLF4J logger.
- *
- * @see ExecutionErrorHandler
+ * Interface which defines the write-only methods required by a command registry, for sub-commands only.
  */
-class DefaultErrorHandler : ExecutionErrorHandler {
+interface WriteSubCommandRegistry {
     /**
-     * Method called when the execution of a command encounters an exception, which simply logs an error message to the
-     * underlying SLF4J logger.
+     * Links the supplied sub-command to the parent command specified by the supplied parent command id.
+     * Will return false if the parent is invalid.
      */
-    override fun onError(command: CommandPackage<*>, ex: Exception) {
-        LOGGER.error(ex) { "An error has occurred for $command." }
-    }
+    fun addSubCommand(subCommand: CommandPackage<*>, parentId: String): Boolean
+
+    /**
+     * Unlinks the supplied sub-command from the parent command specified by the supplied parent command id.
+     * Will return false if the parent is invalid.
+     */
+    fun removeSubCommand(subCommandId: String): Boolean
 }

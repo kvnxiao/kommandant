@@ -16,12 +16,18 @@
 package com.github.kvnxiao.kommandant.command.executor
 
 import arrow.core.Either
-import com.github.kvnxiao.kommandant.command.Context
 import com.github.kvnxiao.kommandant.command.CommandPackage
+import com.github.kvnxiao.kommandant.command.Context
 import mu.KotlinLogging
 
 private val LOGGER = KotlinLogging.logger { }
 
+/**
+ * The default implementation of the command executor interface, which tries to execute a command and catches any
+ * raised exception during the command execution.
+ *
+ * @see [CommandExecutor]
+ */
 class CommandExecutorImpl : CommandExecutor {
     @Suppress("UNCHECKED_CAST")
     override fun <T> execute(command: CommandPackage<*>, context: Context, opt: Array<Any>?): Either<Exception, T> {

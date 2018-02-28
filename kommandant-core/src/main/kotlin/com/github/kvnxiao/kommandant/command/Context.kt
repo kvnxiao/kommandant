@@ -15,9 +15,22 @@
  */
 package com.github.kvnxiao.kommandant.command
 
+/**
+ * Represents the context during runtime when a command is processed from a string.
+ * This includes the command alias, (nullable) arguments, and the properties of the command.
+ */
 open class Context(
+    /**
+     * The alias used to call the command (this includes the command's prefix + the individual alias concatenated into a single string).
+     */
     val alias: String,
+    /**
+     * The nullable string argument supplied to the command for execution. Will be null if the processed input string was only the prefixed alias of the command.
+     */
     val args: String?,
+    /**
+     * The properties describing the command being executed.
+     */
     val properties: CommandProperties
 ) {
 

@@ -17,16 +17,43 @@ package com.github.kvnxiao.kommandant.command.registry
 
 import com.github.kvnxiao.kommandant.command.CommandPackage
 
+/**
+ * Interface which defines the write-only methods required by a command registry
+ */
 interface WriteCommandRegistry {
-    // Add and delete commands
+    /**
+     * Adds a command into the registry and returns true if successful, false otherwise.
+     */
     fun addCommand(command: CommandPackage<*>): Boolean
+
+    /**
+     * Deletes a command with the specified id from the registry and returns true if successful, false otherwise.
+     */
     fun deleteCommand(id: String): Boolean
 
-    // Enable and disable commands
+    /**
+     * Enables a command with the specified id in the registry.
+     */
     fun enableCommand(id: String)
+
+    /**
+     * Disables a command with the specified id in the registry.
+     */
     fun disableCommand(id: String)
 
-    // Sub-command linking
+    /**
+     * Links the supplied sub-command to the parent command specified by the supplied parent command id.
+     * Will return false if the parent is invalid.
+     *
+     * @see [WriteSubCommandRegistry.addSubCommand]
+     */
     fun addSubCommand(subCommand: CommandPackage<*>, parentId: String): Boolean
+
+    /**
+     * Unlinks the supplied sub-command from the parent command specified by the supplied parent command id.
+     * Will return false if the parent is invalid.
+     *
+     * @see [WriteSubCommandRegistry.removeSubCommand]
+     */
     fun removeSubCommand(subCommandId: String, parentId: String): Boolean
 }
