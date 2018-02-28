@@ -13,11 +13,8 @@
  *   See the License for the specific language governing commandSettings and
  *   limitations under the License.
  */
-package com.github.kvnxiao.kommandant
+package com.github.kvnxiao.kommandant.command
 
-import com.github.kvnxiao.kommandant.command.CommandDefaults
-import com.github.kvnxiao.kommandant.command.CommandProperties
-import com.github.kvnxiao.kommandant.command.Context
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Test
