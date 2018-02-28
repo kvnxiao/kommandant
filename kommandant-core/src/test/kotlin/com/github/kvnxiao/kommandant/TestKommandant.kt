@@ -168,14 +168,32 @@ class TestKommandant {
         assertEquals(200, kommandant.process<Int>("-parent").getOrElse { fail() })
         assertEquals(200, kommandant.process<Int>("-p").getOrElse { fail() })
 
-        assertTrue( kommandant.addSubCommand( CommandPackage(object : ExecutableAction<Int> {
-                    override fun execute(context: Context, opt: Array<Any>?): Int = 400
-                }, CommandProperties("parent.child", setOf("child", "c"), "-", parentId = "parent")), "parent") )
+        assertTrue(kommandant.addSubCommand(CommandPackage(object : ExecutableAction<Int> {
+            override fun execute(context: Context, opt: Array<Any>?): Int = 400
+        }, CommandProperties("parent.child", setOf("child", "c"), "-", parentId = "parent")), "parent"))
         assertEquals(400, kommandant.process<Int>("-parent child").getOrElse { fail() })
         assertEquals(400, kommandant.process<Int>("-parent c").getOrElse { fail() })
         assertEquals(400, kommandant.process<Int>("-p child").getOrElse { fail() })
         assertEquals(400, kommandant.process<Int>("-p c").getOrElse { fail() })
         assertEquals(200, kommandant.process<Int>("-p nothing").getOrElse { fail() })
+    }
+
+    @Test
+    fun `test invalid sub-command adding`() {
+        val kommandant: CommandManager = Kommandant()
+
+        assertTrue(kommandant.addCommand(CommandPackage(object : ExecutableAction<Int> {
+            override fun execute(context: Context, opt: Array<Any>?): Int = 200
+        }, CommandProperties("parent", setOf("parent", "p"), "-", execWithSubCommands = true))))
+        assertEquals(200, kommandant.process<Int>("-parent").getOrElse { fail() })
+        assertEquals(200, kommandant.process<Int>("-p").getOrElse { fail() })
+
+        assertFalse(kommandant.addSubCommand(CommandPackage(object : ExecutableAction<Int> {
+            override fun execute(context: Context, opt: Array<Any>?): Int = 400
+        }, CommandProperties("parent.child", setOf("child", "c"), "-")), "parent"))
+        assertTrue(kommandant.addSubCommand(CommandPackage(object : ExecutableAction<Int> {
+            override fun execute(context: Context, opt: Array<Any>?): Int = 400
+        }, CommandProperties("parent.child", setOf("child", "c"), "-", parentId = "parent")), "parent"))
     }
 
     @Test
