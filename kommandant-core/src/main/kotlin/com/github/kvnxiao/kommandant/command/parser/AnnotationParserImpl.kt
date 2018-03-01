@@ -62,15 +62,6 @@ open class AnnotationParserImpl : AnnotationParser {
     override fun parseAnnotations(instance: Any): List<CommandPackage<*>> {
         val clazz = instance::class.java
 
-        // Get error handler from class instance
-        val errorHandlerMethod = Introspector.getBeanInfo(clazz).propertyDescriptors.map { it.readMethod }.filter { it.isAnnotationPresent(ErrorHandler::class.java) }
-        require(errorHandlerMethod.size <= 1, { "Cannot have more than one error handler declared!" })
-        val errorHandler: ExecutionErrorHandler = if (errorHandlerMethod.isNotEmpty()) {
-            errorHandlerMethod[0].invoke(instance) as ExecutionErrorHandler
-        } else {
-            DefaultErrorHandler()
-        }
-
         // Preconditions check
         val methodSet = clazz.methods.filter { it.isAnnotationPresent(Command::class.java) }.toMutableSet()
         if (methodSet.isEmpty()) {
@@ -125,14 +116,24 @@ open class AnnotationParserImpl : AnnotationParser {
         val globalPrefix: String? = instance::class.java.getGlobalPrefix()
 
         return idToMethodMap.map { (id, method) ->
-            this.createCommand(method, method.commandAnn(), commandGroup + id, globalPrefix, errorHandler, instance)
+            this.createCommand(method, method.commandAnn(), commandGroup + id, globalPrefix, instance)
         }.toList()
     }
 
     /**
      * Creates a command from the given method, class instance, command annotation, and other provided parameters describing the command.
      */
-    protected open fun createCommand(method: Method, commandAnn: Command, id: String, globalPrefix: String?, errorHandler: ExecutionErrorHandler, instance: Any): CommandPackage<*> {
+    protected open fun createCommand(method: Method, commandAnn: Command, id: String, globalPrefix: String?, instance: Any): CommandPackage<*> {
+        val properties = createProperties(method, id, globalPrefix, commandAnn)
+        val executable = createExecutable(method, instance)
+        val errorHandler = createErrorHandler(method, instance)
+        return CommandPackage(executable, properties, errorHandler)
+    }
+
+    /**
+     * Creates the command properties for the command, using the provided parameters describing the command.
+     */
+    protected open fun createProperties(method: Method, id: String, globalPrefix: String?, commandAnn: Command): CommandProperties {
         // Check if there is a local prefix -- Global prefix will always override local prefix -- Default to empty string ""
         val prefix = globalPrefix ?: method.getPrefix() ?: CommandDefaults.NO_PREFIX
         // Check if there is a @Info annotation
@@ -140,37 +141,43 @@ open class AnnotationParserImpl : AnnotationParser {
         // Check if there is a @Settings annotation
         val commandSettings = method.getCommandSettings()
 
-        val properties = createProperties(
-            id = id,
-            prefix = prefix,
-            newParentId = if (commandAnn.parentId == CommandDefaults.PARENT_ID) CommandDefaults.PARENT_ID else id.substring(0, id.length - commandAnn.id.length - 1),
-            commandAnn = commandAnn,
-            commandInfo = commandInfo,
-            commandSettings = commandSettings
-        )
-        val executable = object : ExecutableAction<Any?> {
-            override fun execute(context: Context, opt: Array<Any>?): Any? {
-                return method.invoke(instance, context, opt)
-            }
-        }
-        return CommandPackage(executable, properties, errorHandler)
-    }
-
-    /**
-     * Creates the command properties for the command, using the provided parameters describing the command.
-     */
-    protected open fun createProperties(id: String, prefix: String, newParentId: String,
-                                        commandAnn: Command, commandInfo: Info?, commandSettings: Settings?): CommandProperties {
         return CommandProperties(
             id = id,
             prefix = prefix,
             aliases = commandAnn.aliases.toSet(),
-            parentId = newParentId,
+            parentId = if (commandAnn.parentId == CommandDefaults.PARENT_ID) CommandDefaults.PARENT_ID else id.substring(0, id.length - commandAnn.id.length - 1),
             description = commandInfo?.description ?: CommandDefaults.NO_DESCRIPTION,
             usage = commandInfo?.usage ?: CommandDefaults.NO_USAGE,
             execWithSubCommands = commandSettings?.execWithSubCommands ?: CommandDefaults.EXEC_WITH_SUBCOMMANDS,
             isDisabled = commandSettings?.isDisabled ?: CommandDefaults.IS_DISABLED
         )
+    }
+
+    /**
+     * Creates the command executable action for the provided method and class instance.
+     */
+    protected open fun createExecutable(method: Method, instance: Any): ExecutableAction<Any?> {
+        return object : ExecutableAction<Any?> {
+            override fun execute(context: Context, opt: Array<Any>?): Any? {
+                return method.invoke(instance, context, opt)
+            }
+        }
+    }
+
+    /**
+     * Creates the error handler for the provided command's class instance.
+     */
+    protected open fun createErrorHandler(method: Method, instance: Any): ExecutionErrorHandler {
+        // Get error handler from class instance
+        val clazz = instance::class.java
+        val errorHandlerMethod = Introspector.getBeanInfo(clazz).propertyDescriptors.map { it.readMethod }.filter { it.isAnnotationPresent(ErrorHandler::class.java) }
+        require(errorHandlerMethod.size <= 1, { "Cannot have more than one error handler declared!" })
+
+        return if (errorHandlerMethod.isNotEmpty()) {
+            errorHandlerMethod[0].invoke(instance) as ExecutionErrorHandler
+        } else {
+            DefaultErrorHandler()
+        }
     }
 
     /**
