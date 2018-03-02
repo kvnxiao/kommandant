@@ -167,7 +167,7 @@ open class AnnotationParserImpl : AnnotationParser {
     /**
      * Creates the error handler for the provided command's class instance.
      */
-    protected open fun createErrorHandler(method: Method, instance: Any): ExecutionErrorHandler {
+    protected open fun createErrorHandler(method: Method, instance: Any, defaultHandler: () -> ExecutionErrorHandler = { DefaultErrorHandler() }): ExecutionErrorHandler {
         // Get error handler from class instance
         val clazz = instance::class.java
         val errorHandlerMethod = Introspector.getBeanInfo(clazz).propertyDescriptors.map { it.readMethod }.filter { it.isAnnotationPresent(ErrorHandler::class.java) }
@@ -176,7 +176,7 @@ open class AnnotationParserImpl : AnnotationParser {
         return if (errorHandlerMethod.isNotEmpty()) {
             errorHandlerMethod[0].invoke(instance) as ExecutionErrorHandler
         } else {
-            DefaultErrorHandler()
+            defaultHandler()
         }
     }
 
