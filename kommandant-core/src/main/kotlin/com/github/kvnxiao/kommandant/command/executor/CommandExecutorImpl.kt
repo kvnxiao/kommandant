@@ -36,7 +36,7 @@ class CommandExecutorImpl : CommandExecutor {
             val response = command.executable.execute(context, opt)
             Either.right(response as T)
         } catch (ex: Exception) {
-            LOGGER.error(ex) { "Encountered an exception when executing $command:" }
+            LOGGER.error { "Encountered ${ex::class.java} when executing $command:" }
             command.errorHandler.onError(command, ex)
             Either.left(ex)
         }
