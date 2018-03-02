@@ -18,6 +18,7 @@ package com.github.kvnxiao.kommandant
 import arrow.core.Either
 import com.github.kvnxiao.kommandant.command.CommandDefaults
 import com.github.kvnxiao.kommandant.command.CommandPackage
+import com.github.kvnxiao.kommandant.command.CommandProperties
 import com.github.kvnxiao.kommandant.command.Context
 import com.github.kvnxiao.kommandant.command.errors.CommandNotFoundException
 import com.github.kvnxiao.kommandant.command.executor.CommandExecutor
@@ -68,7 +69,7 @@ open class Kommandant(
         val (alias, args) = SplitString(input)
         val command = registry.getCommandByAlias(alias)
         return if (command != null) {
-            val context = Context(alias, args, command.properties)
+            val context = createContext(alias, args, command.properties)
             this.processNext(command, context, opt)
         } else {
             CompletableFuture.completedFuture(Either.left(CommandNotFoundException(alias)))
@@ -78,7 +79,7 @@ open class Kommandant(
     /**
      * Called by [processAsync] to check the input string for potential sub-commands to execute.
      */
-    protected fun <T> processNext(command: CommandPackage<*>, context: Context, opt: Array<Any>?): Future<Either<Exception, T>> {
+    protected open fun <T> processNext(command: CommandPackage<*>, context: Context, opt: Array<Any>?): Future<Either<Exception, T>> {
         // Check sub-commands
         val args = context.args
         if (args != null && registry.hasSubCommands(context.properties.id)) {
@@ -87,7 +88,7 @@ open class Kommandant(
             val subCommand = registry.getSubCommandByAlias(subAlias, context.properties.id)
             subCommand?.let {
                 // Create new command context for sub-command
-                val subContext = Context(subAlias, subArgs, it.properties)
+                val subContext = createContext(subAlias, subArgs, it.properties)
                 // Execute parent command if the execWithSubCommands value is set to true
                 if (context.properties.execWithSubCommands) command.executable.execute(context, opt)
                 return processNext(subCommand, subContext, opt)
@@ -100,6 +101,14 @@ open class Kommandant(
         return scheduler.submit<Either<Exception, T>> {
             executor.execute(command, context, opt)
         }
+    }
+
+    /**
+     * An overridable method that creates the command's context for execution. One might wish to sub-class the [Context]
+     * class with extra properties in their own implementations.
+     */
+    protected open fun createContext(alias: String, args: String?, properties: CommandProperties, opt: Array<Any>? = null): Context {
+        return Context(alias, args, properties)
     }
 
     override fun addAnnotatedCommands(vararg instances: Any): Boolean {
@@ -127,7 +136,7 @@ open class Kommandant(
      * Validates a list of commands for insertion into the registry. Checks for conflicting unique ids and aliases
      * between each command, as well as within the registry.
      */
-    protected fun validate(commands: List<CommandPackage<*>>): Boolean {
+    protected open fun validate(commands: List<CommandPackage<*>>): Boolean {
         val aliasList = commands.flatMap { pkg -> pkg.properties.aliases.map { pkg.properties.prefix + it } }
         val idList = commands.map { it.properties.id }
         when {
