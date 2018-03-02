@@ -68,7 +68,7 @@ open class Kommandant(
         val (alias, args) = SplitString(input)
         val command = registry.getCommandByAlias(alias)
         return if (command != null) {
-            val context = createContext(alias, args, command)
+            val context = createContext(alias, args, command, opt)
             this.processNext(command, context, opt)
         } else {
             CompletableFuture.completedFuture(Either.left(CommandNotFoundException(alias)))
@@ -87,7 +87,7 @@ open class Kommandant(
             val subCommand = registry.getSubCommandByAlias(subAlias, context.properties.id)
             subCommand?.let {
                 // Create new command context for sub-command
-                val subContext = createContext(subAlias, subArgs, it)
+                val subContext = createContext(subAlias, subArgs, it, opt)
                 // Execute parent command if the execWithSubCommands value is set to true
                 if (context.properties.execWithSubCommands) command.executable.execute(context, opt)
                 return processNext(subCommand, subContext, opt)
@@ -106,7 +106,7 @@ open class Kommandant(
      * An overridable method that creates the command's context for execution. One might wish to sub-class the [Context]
      * class with extra properties in their own implementations.
      */
-    protected open fun createContext(alias: String, args: String?, command: CommandPackage<*>, opt: Array<Any>? = null): Context {
+    protected open fun createContext(alias: String, args: String?, command: CommandPackage<*>, opt: Array<Any>?): Context {
         return Context(alias, args, command.properties)
     }
 
