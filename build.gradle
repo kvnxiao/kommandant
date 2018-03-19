@@ -4,7 +4,7 @@ buildscript {
     ext.shadow_version = '1.2.4'
     ext.slf4j_version = '1.7.25'
     ext.logback_version = '1.2.3'
-    ext.kotlin_logging_version = '1.4.9'
+    ext.kotlin_logging_version = '1.5.4'
     ext.spotless_version = '3.10.0'
 
     repositories {
@@ -16,6 +16,7 @@ buildscript {
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokka_version"
         classpath "com.github.jengelman.gradle.plugins:shadow:$shadow_version"
         classpath "com.diffplug.spotless:spotless-plugin-gradle:$spotless_version"
+        classpath "com.github.ben-manes:gradle-versions-plugin:0.17.0"
     }
 }
 
@@ -39,6 +40,7 @@ subprojects {
     apply plugin: 'org.jetbrains.dokka'
     apply plugin: 'com.github.johnrengelman.shadow'
     apply plugin: 'com.diffplug.gradle.spotless'
+    apply plugin: 'com.github.ben-manes.versions'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
