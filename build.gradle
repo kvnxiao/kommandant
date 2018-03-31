@@ -1,28 +1,22 @@
 buildscript {
     ext.kotlin_version = '1.2.31'
-    ext.dokka_version = '0.9.16'
-    ext.shadow_version = '1.2.4'
     ext.slf4j_version = '1.7.25'
     ext.logback_version = '1.2.3'
     ext.kotlin_logging_version = '1.5.4'
-    ext.spotless_version = '3.10.0'
+    ext.ktlint_version = '0.21.0'
+}
 
-    repositories {
-        jcenter()
-        maven { url "https://plugins.gradle.org/m2/" }
-    }
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokka_version"
-        classpath "com.github.jengelman.gradle.plugins:shadow:$shadow_version"
-        classpath "com.diffplug.spotless:spotless-plugin-gradle:$spotless_version"
-        classpath "com.github.ben-manes:gradle-versions-plugin:0.17.0"
-    }
+plugins {
+    id "org.jetbrains.kotlin.jvm" version "1.2.31"
+    id "org.jetbrains.dokka" version "0.9.16"
+    id "com.github.johnrengelman.shadow" version "2.0.3"
+    id "com.diffplug.gradle.spotless" version "3.10.0"
+    id "com.github.ben-manes.versions" version "0.17.0"
 }
 
 allprojects {
-    group 'com.github.kvnxiao'
-    version '2.0.0-SNAPSHOT'
+    group = "com.github.kvnxiao"
+    version = "2.0.0-SNAPSHOT"
 
     task wrapper(type: Wrapper) {
         gradleVersion = '4.6'
@@ -66,7 +60,7 @@ subprojects {
         kotlin {
             trimTrailingWhitespace()
             endWithNewline()
-            ktlint("0.15.1")
+            ktlint("$ktlint_version")
             licenseHeaderFile "${rootProject.projectDir}/LICENSE_HEADER"
         }
     }
@@ -92,7 +86,7 @@ subprojects {
     }
 
     jacoco {
-        toolVersion = "0.8.0"
+        toolVersion = "0.8.1"
         reportsDir = file("$buildDir/reports")
     }
 
@@ -100,10 +94,10 @@ subprojects {
     jacocoTestReport {
         reports {
             xml.enabled = true
-            xml.destination file("${buildDir}/reports/jacoco/report.xml")
+            xml.setDestination file("${buildDir}/reports/jacoco/report.xml")
             csv.enabled = true
-            html.destination file("${buildDir}/reports/jacoco/html")
-            csv.destination file("${buildDir}/reports/jacoco/jacocoTestReport.csv")
+            html.setDestination file("${buildDir}/reports/jacoco/html")
+            csv.setDestination file("${buildDir}/reports/jacoco/jacocoTestReport.csv")
         }
     }
 }

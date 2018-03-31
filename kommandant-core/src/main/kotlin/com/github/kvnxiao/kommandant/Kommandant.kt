@@ -148,8 +148,8 @@ open class Kommandant(
                 return false
             }
             !commands.all {
-                registry.validateAliases(it.properties.prefix, it.properties.aliases)
-                    && registry.validateUniqueId(it.properties.id)
+                registry.validateAliases(it.properties.prefix, it.properties.aliases) &&
+                    registry.validateUniqueId(it.properties.id)
             } -> {
                 LOGGER.error { "Some of the annotated commands have conflicting aliases or unique ids with the current registry." }
                 return false
