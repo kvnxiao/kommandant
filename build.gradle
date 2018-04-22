@@ -1,5 +1,5 @@
 buildscript {
-    ext.kotlin_version = '1.2.31'
+    ext.kotlin_version = '1.2.40'
     ext.slf4j_version = '1.7.25'
     ext.logback_version = '1.2.3'
     ext.kotlin_logging_version = '1.5.4'
@@ -7,7 +7,7 @@ buildscript {
 }
 
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "1.2.31"
+    id "org.jetbrains.kotlin.jvm" version "1.2.40"
     id "org.jetbrains.dokka" version "0.9.16"
     id "com.github.johnrengelman.shadow" version "2.0.3"
     id "com.diffplug.gradle.spotless" version "3.10.0"
@@ -19,7 +19,7 @@ allprojects {
     version = "2.0.0-SNAPSHOT"
 
     task wrapper(type: Wrapper) {
-        gradleVersion = '4.6'
+        gradleVersion = '4.7'
         distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
     }
 }
