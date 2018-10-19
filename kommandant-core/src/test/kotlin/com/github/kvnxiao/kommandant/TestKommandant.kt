@@ -15,13 +15,14 @@
  */
 package com.github.kvnxiao.kommandant
 
-import arrow.core.getOrElse
-import arrow.core.getOrHandle
 import com.github.kvnxiao.kommandant.command.CommandPackage
 import com.github.kvnxiao.kommandant.command.CommandProperties
 import com.github.kvnxiao.kommandant.command.Context
 import com.github.kvnxiao.kommandant.command.ExecutableAction
 import com.github.kvnxiao.kommandant.command.errors.CommandNotFoundException
+import com.github.kvnxiao.kommandant.command.getOrElse
+import com.github.kvnxiao.kommandant.command.getOrHandle
+import com.github.kvnxiao.kommandant.command.isError
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotEquals
@@ -38,12 +39,12 @@ class TestKommandant {
             override fun execute(context: Context, opt: Array<Any>?): Int = 100
         }, CommandProperties("root_level_command", setOf("root"), "-")))
 
-        assertTrue(kommandant.process<Int>("something").isLeft())
+        assertTrue(kommandant.process<Int>("something").isError())
         kommandant.process<Int>("something").getOrHandle {
             assertEquals(CommandNotFoundException::class.java, it::class.java)
         }
         val result = kommandant.process<Int>("-root")
-        assertTrue(result.isRight())
+        assertFalse(result.isError())
         assertEquals(100, result.getOrElse { fail() })
     }
 
@@ -76,7 +77,7 @@ class TestKommandant {
             }
         }, CommandProperties("exception", setOf("e"), "-"))))
         val result = kommandant.process<Int>("-e")
-        assertTrue(result.isLeft())
+        assertTrue(result.isError())
         result.getOrHandle {
             assertEquals(UnsupportedOperationException::class.java, it::class.java)
         }
@@ -90,7 +91,7 @@ class TestKommandant {
         }, CommandProperties("root_level_command", setOf("root"), "-")))
         val future = kommandant.processAsync<Int>("-root")
         val result = future.get()
-        assertTrue(result.isRight())
+        assertFalse(result.isError())
         assertEquals(100, result.getOrElse { fail() })
     }
 
@@ -102,8 +103,8 @@ class TestKommandant {
         }, CommandProperties("root_level_command", setOf("root"), "-")))
 
         assertEquals(1000, (1..1000).map {
-            kommandant.process<Int>("-root").get()
-        }.foldRight(0, { total, next -> total + next }))
+            kommandant.process<Int>("-root").getOrElse { 0 }
+        }.foldRight(0) { total, next -> total + next })
     }
 
     @Test

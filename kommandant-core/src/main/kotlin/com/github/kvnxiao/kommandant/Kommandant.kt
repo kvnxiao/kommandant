@@ -15,9 +15,9 @@
  */
 package com.github.kvnxiao.kommandant
 
-import arrow.core.Either
 import com.github.kvnxiao.kommandant.command.CommandDefaults
 import com.github.kvnxiao.kommandant.command.CommandPackage
+import com.github.kvnxiao.kommandant.command.CommandResult
 import com.github.kvnxiao.kommandant.command.Context
 import com.github.kvnxiao.kommandant.command.errors.CommandNotFoundException
 import com.github.kvnxiao.kommandant.command.executor.CommandExecutor
@@ -63,7 +63,7 @@ open class Kommandant(
         protected val LOGGER = KotlinLogging.logger(Kommandant::class.java.name)
     }
 
-    override fun <T> processAsync(input: String, opt: Array<Any>?): Future<Either<Exception, T>> {
+    override fun <T> processAsync(input: String, opt: Array<Any>?): Future<CommandResult<T>> {
         LOGGER.debug { "Processing input string: $input" }
         val (alias, args) = SplitString(input)
         val command = registry.getCommandByAlias(alias)
@@ -71,14 +71,14 @@ open class Kommandant(
             val context = createContext(alias, args, command, opt)
             this.processNext(command, context, opt)
         } else {
-            CompletableFuture.completedFuture(Either.left(CommandNotFoundException(alias)))
+            CompletableFuture.completedFuture(CommandResult.Error(CommandNotFoundException(alias)))
         }
     }
 
     /**
      * Called by [processAsync] to check the input string for potential sub-commands to execute.
      */
-    protected open fun <T> processNext(command: CommandPackage<*>, context: Context, opt: Array<Any>?): Future<Either<Exception, T>> {
+    protected open fun <T> processNext(command: CommandPackage<*>, context: Context, opt: Array<Any>?): Future<CommandResult<T>> {
         // Check sub-commands
         val args = context.args
         if (args != null && registry.hasSubCommands(context.properties.id)) {
@@ -96,8 +96,8 @@ open class Kommandant(
         return execute(command, context, opt)
     }
 
-    override fun <T> execute(command: CommandPackage<*>, context: Context, opt: Array<Any>?): Future<Either<Exception, T>> {
-        return scheduler.submit<Either<Exception, T>> {
+    override fun <T> execute(command: CommandPackage<*>, context: Context, opt: Array<Any>?): Future<CommandResult<T>> {
+        return scheduler.submit<CommandResult<T>> {
             executor.execute(command, context, opt)
         }
     }

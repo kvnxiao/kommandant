@@ -1,26 +1,33 @@
 buildscript {
-    ext.kotlin_version = '1.2.40'
+    ext.kotlin_version = '1.2.71'
     ext.slf4j_version = '1.7.25'
     ext.logback_version = '1.2.3'
-    ext.kotlin_logging_version = '1.5.4'
-    ext.ktlint_version = '0.21.0'
+    ext.kotlin_logging_version = '1.6.10'
+    ext.ktlint_version = '0.29.0'
+
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
 }
 
 plugins {
-    id "org.jetbrains.kotlin.jvm" version "1.2.40"
-    id "org.jetbrains.dokka" version "0.9.16"
-    id "com.github.johnrengelman.shadow" version "2.0.3"
-    id "com.diffplug.gradle.spotless" version "3.10.0"
-    id "com.github.ben-manes.versions" version "0.17.0"
+    id "org.jetbrains.dokka" version "0.9.17"
+    id "com.github.johnrengelman.shadow" version "2.0.4"
+    id "com.diffplug.gradle.spotless" version "3.15.0"
+    id "com.github.ben-manes.versions" version "0.20.0"
 }
 
 allprojects {
     group = "com.github.kvnxiao"
     version = "2.0.0-SNAPSHOT"
 
-    task wrapper(type: Wrapper) {
-        gradleVersion = '4.7'
-        distributionUrl = "https://services.gradle.org/distributions/gradle-$gradleVersion-all.zip"
+    wrapper {
+        distributionType = Wrapper.DistributionType.ALL
+        gradleVersion = '4.10.2'
     }
 }
 
@@ -40,8 +47,10 @@ subprojects {
     targetCompatibility = 1.8
 
     dependencies {
-        implementation "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+        implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
         implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+        testImplementation "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+        testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
         implementation "org.slf4j:slf4j-api:$slf4j_version"
         implementation "io.github.microutils:kotlin-logging:$kotlin_logging_version"
         testImplementation "org.slf4j:slf4j-api:$slf4j_version"

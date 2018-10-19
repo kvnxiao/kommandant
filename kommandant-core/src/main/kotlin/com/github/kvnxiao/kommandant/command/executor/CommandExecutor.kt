@@ -15,8 +15,8 @@
  */
 package com.github.kvnxiao.kommandant.command.executor
 
-import arrow.core.Either
 import com.github.kvnxiao.kommandant.command.CommandPackage
+import com.github.kvnxiao.kommandant.command.CommandResult
 import com.github.kvnxiao.kommandant.command.Context
 
 /**
@@ -28,5 +28,5 @@ interface CommandExecutor {
      * Executes the command with the given [Context] and an optional array of additional objects as extra arguments,
      * and returns the result of the command execution or an exception raised during execution.
      */
-    fun <T> execute(command: CommandPackage<*>, context: Context, opt: Array<Any>?): Either<Exception, T>
+    fun <T> execute(command: CommandPackage<*>, context: Context, opt: Array<Any>?): CommandResult<T>
 }

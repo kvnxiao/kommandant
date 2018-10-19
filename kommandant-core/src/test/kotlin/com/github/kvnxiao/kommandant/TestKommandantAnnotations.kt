@@ -15,7 +15,6 @@
  */
 package com.github.kvnxiao.kommandant
 
-import arrow.core.getOrElse
 import com.github.kvnxiao.kommandant.command.CommandDefaults
 import com.github.kvnxiao.kommandant.command.Context
 import com.github.kvnxiao.kommandant.command.annotations.Command
@@ -23,6 +22,7 @@ import com.github.kvnxiao.kommandant.command.annotations.GroupId
 import com.github.kvnxiao.kommandant.command.annotations.Info
 import com.github.kvnxiao.kommandant.command.annotations.Prefix
 import com.github.kvnxiao.kommandant.command.annotations.Settings
+import com.github.kvnxiao.kommandant.command.getOrElse
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull

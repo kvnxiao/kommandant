@@ -1,8 +1,0 @@
-buildscript {
-    ext.arrow_version = '0.7.1'
-}
-
-dependencies {
-    compile "io.arrow-kt:arrow-core:$arrow_version"
-}
-

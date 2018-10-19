@@ -15,9 +15,10 @@
  */
 package com.github.kvnxiao.kommandant.command.executor
 
-import arrow.core.Either
 import com.github.kvnxiao.kommandant.command.CommandPackage
+import com.github.kvnxiao.kommandant.command.CommandResult
 import com.github.kvnxiao.kommandant.command.Context
+import com.github.kvnxiao.kommandant.command.tryExecute
 import mu.KotlinLogging
 
 private val LOGGER = KotlinLogging.logger { }
@@ -29,16 +30,15 @@ private val LOGGER = KotlinLogging.logger { }
  * @see [CommandExecutor]
  */
 class CommandExecutorImpl : CommandExecutor {
+
     @Suppress("UNCHECKED_CAST")
-    override fun <T> execute(command: CommandPackage<*>, context: Context, opt: Array<Any>?): Either<Exception, T> {
-        return try {
+    override fun <T> execute(command: CommandPackage<*>, context: Context, opt: Array<Any>?): CommandResult<T> {
+        return tryExecute({
             LOGGER.debug { "Executing command $command" }
-            val response = command.executable.execute(context, opt)
-            Either.right(response as T)
-        } catch (ex: Exception) {
-            LOGGER.error { "Encountered ${ex::class.java} when executing $command:" }
-            command.errorHandler.onError(command, ex)
-            Either.left(ex)
-        }
+            command.executable.execute(context, opt) as T
+        }, {
+            LOGGER.error { "Encountered ${it::class.java} when executing $command:" }
+            command.errorHandler.onError(command, it)
+        })
     }
 }

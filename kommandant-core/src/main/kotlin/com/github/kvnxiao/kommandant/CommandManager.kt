@@ -15,8 +15,8 @@
  */
 package com.github.kvnxiao.kommandant
 
-import arrow.core.Either
 import com.github.kvnxiao.kommandant.command.CommandPackage
+import com.github.kvnxiao.kommandant.command.CommandResult
 import com.github.kvnxiao.kommandant.command.Context
 import java.util.concurrent.Future
 
@@ -36,7 +36,7 @@ interface CommandManager {
      *
      * @param opt the optional array of extra arguments to supply to the command during execution.
      */
-    fun <T> processAsync(input: String, opt: Array<Any>? = null): Future<Either<Exception, T>>
+    fun <T> processAsync(input: String, opt: Array<Any>? = null): Future<CommandResult<T>>
 
     /**
      * Synchronously processes an input string for potential commands (all possible command prefixes),
@@ -46,12 +46,12 @@ interface CommandManager {
      *
      * @param opt the optional array of extra arguments to supply to the command during execution.
      */
-    fun <T> process(input: String, opt: Array<Any>? = null): Either<Exception, T> = processAsync<T>(input, opt).get()
+    fun <T> process(input: String, opt: Array<Any>? = null): CommandResult<T> = processAsync<T>(input, opt).get()
 
     /**
      * Executes the supplied command with the given context and optional array of extra arguments.
      */
-    fun <T> execute(command: CommandPackage<*>, context: Context, opt: Array<Any>? = null): Future<Either<Exception, T>>
+    fun <T> execute(command: CommandPackage<*>, context: Context, opt: Array<Any>? = null): Future<CommandResult<T>>
 
     /**
      * Parses class instances for annotated command annotations to create and add annotated commands into the registry.
